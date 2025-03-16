@@ -9,10 +9,12 @@ namespace Data.Models.DynamicData
     public class GameData
     {
         public List<DynamicStatData> StatDatas;
+        public List<GrassAreaData> GrasAreaDatas;
 
-        public GameData(List<DynamicStatData> statDatas)
+        public GameData(List<DynamicStatData> statDatas, List<GrassAreaData> grassAreaDatas)
         {
             StatDatas = statDatas;
+            GrasAreaDatas = grassAreaDatas;
         }
     }
 }

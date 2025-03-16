@@ -75,7 +75,7 @@ namespace Data.Controllers
             DynamicStatData xpData = new DynamicStatData(4, 0);
             DynamicStatData moneyData = new DynamicStatData(5, 0);
 
-            GameData gameData = new GameData(new List<DynamicStatData> { wheatData, flourData, breadData, levelData, xpData, moneyData });
+            GameData gameData = new GameData(new List<DynamicStatData> { wheatData, flourData, breadData, levelData, xpData, moneyData }, new List<GrassAreaData>{});
 
 
             return gameData;
