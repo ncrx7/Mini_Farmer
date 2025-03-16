@@ -8,6 +8,7 @@ public class GameEventHandler : MonoBehaviour
     #region Main Menu Scene
     public static Action OnMainSceneStart;
     public static Action OnMainSceneExit;
+    public static Action OnStartDataLoad;
     public static Action OnCompleteDataLoad;
     public static Action<int> OnClickStartButton;
     #endregion
@@ -16,5 +17,7 @@ public class GameEventHandler : MonoBehaviour
     #region Farm Scene
     public static Action OnFarmSceneStart;
     public static Action OnFarmSceneExit;
+    public static Action OnStartEntitesLoad;
+    public static Action OnCompleteEntitiesLoad;
     #endregion
 }

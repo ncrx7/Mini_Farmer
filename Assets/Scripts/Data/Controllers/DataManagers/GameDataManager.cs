@@ -34,6 +34,8 @@ namespace Data.Controllers
 
         private async void InitializeData()
         {
+            GameEventHandler.OnStartDataLoad?.Invoke();
+            
             await LoadGameDataFile();
             await LoadStatFixedData();
 

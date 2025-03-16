@@ -11,14 +11,16 @@ namespace NodeGridSystem.Controllers
 {
     public class GridBoardManager : SingletonBehavior<GridBoardManager>
     {
-        [Header("Node Grid Settings")]
+        [SerializeField] private EntityLoader _entityLoader;
+
+        [Header("Grid Settings")]
         [SerializeField] private int _width = 6;
         [SerializeField] private int _height = 6;
         [SerializeField] private float _cellSize = 1f;
         [SerializeField] private Vector3 _originPosition = Vector3.zero;
         [SerializeField] private bool _debug = true;
 
-        private GridSystem2D<GridObject<GrassAreaManager>> _nodeGrid;
+        private GridSystem2D<GridObject<GrassAreaManager>> _gridSystem;
 
         private void Start()
         {
@@ -27,27 +29,26 @@ namespace NodeGridSystem.Controllers
 
         private async void InitializeBoard()
         {
-            _nodeGrid = GridSystem2D<GridObject<GrassAreaManager>>.HorizontalGrid(_width, _height, _cellSize, _originPosition, _debug);
+            _gridSystem = GridSystem2D<GridObject<GrassAreaManager>>.HorizontalGrid(_width, _height, _cellSize, _originPosition, _debug);
           
             //MiniEventSystem.ActivateLoadingUI?.Invoke();
             //GameManager.Instance.IsGamePaused = true;
 
-            await InitNodes();
-            //await InitNeigbours();
-            //await InitMiddleArea();
+            await InitBoard();
+            
             await UniTask.Delay(1000);
 
             //GameManager.Instance.IsGamePaused = false;
             //MiniEventSystem.DeactivateLoadingUI?.Invoke();
         }
 
-        private async UniTask InitNodes()
+        private async UniTask InitBoard()
         {
             for (int x = 0; x < _width; x++)
             {
                 for (int y = 0; y < _height; y++)
                 {
-                    //MiniEventSystem.OnCreateEntity?.Invoke(EntityType.NodeGrid, x, y, _nodeGrid, _middleObjectGrid, 1);
+                    _entityLoader.LoadEntities(_gridSystem);
                 }
             }
 
@@ -57,7 +58,7 @@ namespace NodeGridSystem.Controllers
         public float GetCellSize => _cellSize;
         public int GetWidth => _width;
         public int GetHeight => _height;
-        public GridSystem2D<GridObject<GrassAreaManager>> GetNodeGridSystem2D => _nodeGrid;
+        public GridSystem2D<GridObject<GrassAreaManager>> GetNodeGridSystem2D => _gridSystem;
 
     }
 }
