@@ -39,7 +39,7 @@ namespace Data.Controllers
 
             AreDataLoadFinished = true;
  
-            //GameEventHandler.OnCompleteDataLoad?.Invoke();
+            GameEventHandler.OnCompleteDataLoad?.Invoke();
         }
 
         private async UniTask LoadGameDataFile()
@@ -58,7 +58,7 @@ namespace Data.Controllers
                 stat.FixedStatData = _fixedStatDatas.FirstOrDefault(fixedStatData => fixedStatData.StatId == stat.StatId);
             }
 
-            await UniTask.Delay(1000);
+            await UniTask.Delay(1500);
         }
 
         public void UpdatePlayerDataFile()
