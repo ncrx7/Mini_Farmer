@@ -9,6 +9,7 @@ public class GameEventHandler : MonoBehaviour
     public static Action OnMainSceneStart;
     public static Action OnMainSceneExit;
     public static Action OnCompleteDataLoad;
+    public static Action<int> OnClickStartButton;
     #endregion
 
 
