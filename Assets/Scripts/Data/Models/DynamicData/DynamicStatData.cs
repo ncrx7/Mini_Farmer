@@ -12,5 +12,11 @@ namespace Data.Models.DynamicData
         public int StatId;
         public int Amount;
         public FixedStatData FixedStatData;
+
+        public DynamicStatData(int statId, int amount)
+        {
+            StatId = statId;
+            Amount = amount;
+        }
     }
 }

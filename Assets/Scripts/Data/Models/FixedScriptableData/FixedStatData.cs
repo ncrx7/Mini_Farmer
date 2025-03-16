@@ -6,7 +6,6 @@ using UnityEngine;
 namespace Data.Models.FixedScriptableData
 {
     [CreateAssetMenu(fileName = "StatData", menuName = "Scriptable Objects/StatData")]
-    [Serializable]
     public class FixedStatData : ScriptableObject
     {
         public int StatId;
