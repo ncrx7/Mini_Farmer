@@ -35,7 +35,7 @@ namespace Data.Controllers
         private async void InitializeData()
         {
             GameEventHandler.OnStartDataLoad?.Invoke();
-            
+
             await LoadGameDataFile();
             await LoadStatFixedData();
 
@@ -77,7 +77,17 @@ namespace Data.Controllers
             DynamicStatData xpData = new DynamicStatData(4, 0);
             DynamicStatData moneyData = new DynamicStatData(5, 0);
 
-            GameData gameData = new GameData(new List<DynamicStatData> { wheatData, flourData, breadData, levelData, xpData, moneyData }, new List<GrassAreaData>{});
+            GrassAreaData tempData = new GrassAreaData();
+            tempData.XGridPosition = 0;
+            tempData.YGridPosition = 0;
+            tempData.IsEmpty = true;
+
+            GrassAreaData tempData2 = new GrassAreaData();
+            tempData2.XGridPosition = 1;
+            tempData2.YGridPosition = 2;
+            tempData2.IsEmpty = true;
+
+            GameData gameData = new GameData(new List<DynamicStatData> { wheatData, flourData, breadData, levelData, xpData, moneyData }, new List<GrassAreaData>{tempData, tempData2});
 
 
             return gameData;

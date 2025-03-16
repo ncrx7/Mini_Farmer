@@ -17,7 +17,11 @@ public class GameEventHandler : MonoBehaviour
     #region Farm Scene
     public static Action OnFarmSceneStart;
     public static Action OnFarmSceneExit;
+
     public static Action OnStartEntitesLoad;
     public static Action OnCompleteEntitiesLoad;
+
+    public static Action OnStartStatUILoad;
+    public static Action OnCompleteStatUILoad;
     #endregion
 }

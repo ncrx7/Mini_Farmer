@@ -35,7 +35,7 @@ namespace NodeGridSystem.Controllers
             //GameManager.Instance.IsGamePaused = true;
 
             await InitBoard();
-            
+
             await UniTask.Delay(1000);
 
             //GameManager.Instance.IsGamePaused = false;
@@ -59,6 +59,7 @@ namespace NodeGridSystem.Controllers
         public int GetWidth => _width;
         public int GetHeight => _height;
         public GridSystem2D<GridObject<GrassAreaManager>> GetNodeGridSystem2D => _gridSystem;
+        public EntityLoader GetEntityLoader => _entityLoader;
 
     }
 }

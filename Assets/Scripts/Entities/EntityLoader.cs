@@ -29,15 +29,15 @@ public class EntityLoader : MonoBehaviour
     {
         foreach (var grassAreaData in GameDataManager.Instance.GetGameDataReference.GrasAreaDatas)
         {
-            Vector2 gridWorldPosition = gridSystem2D.GetWorldPositionCenter(grassAreaData.XGridPosition, grassAreaData.YGridPosition);
-
-            Vector3 grassWorldPosition = new Vector3(gridWorldPosition.x, 0, gridWorldPosition.y);
+            Vector3 grassWorldPosition = gridSystem2D.GetWorldPositionCenter(grassAreaData.XGridPosition, grassAreaData.YGridPosition);
 
             GrassAreaManager grassArea = Instantiate(_grassAreaPrefab, grassWorldPosition, Quaternion.identity, transform);
 
             _grassAreaManagers.Add(grassArea);
 
             grassArea.grassAreaData = grassAreaData;
+
+            await UniTask.Delay(500);
         }
 
         await UniTask.Delay(100);
