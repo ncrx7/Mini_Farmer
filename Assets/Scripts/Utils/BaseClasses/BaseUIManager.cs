@@ -7,13 +7,35 @@ namespace UnityUtils.BaseClasses
 {
     public class BaseUIManager : MonoBehaviour
     {
-        protected Dictionary<UIActionType, Action<bool>> _uiActionMap;
+        protected Dictionary<UIActionType, object> _uiActionMap = new();
 
-        protected void ExecuteUIAction(UIActionType actionType, bool active)
+        protected void AddUIAction<T>(UIActionType actionType, Action<T> action)
         {
-            if (_uiActionMap.TryGetValue(actionType, out var action))
+            _uiActionMap[actionType] = action;
+        }
+
+        protected void AddUIAction<T1, T2>(UIActionType actionType, Action<T1, T2> action)
+        {
+            _uiActionMap[actionType] = action;
+        }
+
+        protected void ExecuteUIAction<T>(UIActionType actionType, T value)
+        {
+            if (_uiActionMap.TryGetValue(actionType, out var action) && action is Action<T> typedAction)
             {
-                action.Invoke(active);
+                typedAction(value);
+            }
+            else
+            {
+                Debug.LogWarning("Undefined action Type!!");
+            }
+        }
+
+        protected void ExecuteUIAction<T1, T2>(UIActionType actionType, T1 value1, T2 value2)
+        {
+            if (_uiActionMap.TryGetValue(actionType, out var action) && action is Action<T1, T2> typedAction)
+            {
+                typedAction(value1, value2);
             }
             else
             {
@@ -25,6 +47,7 @@ namespace UnityUtils.BaseClasses
 
 public enum UIActionType
 {
-    SetMainMenuLoadingPanel
+    SetMainMenuLoadingPanel,
+    SetText
 }
 
