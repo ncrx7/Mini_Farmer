@@ -87,7 +87,7 @@ namespace Data.Controllers
             tempData2.YGridPosition = 2;
             tempData2.IsEmpty = true;
 
-            GameData gameData = new GameData(new List<DynamicStatData> { wheatData, flourData, breadData, levelData, xpData, moneyData }, new List<GrassAreaData>{tempData, tempData2});
+            GameData gameData = new GameData(new List<DynamicStatData> { wheatData, flourData, breadData, moneyData, xpData, levelData }, new List<GrassAreaData>{tempData, tempData2});
 
 
             return gameData;

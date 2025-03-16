@@ -16,4 +16,4 @@ MonoBehaviour:
   StatType: 3
   StatName: Bread
   StatDescription: Bread Description
-  StatSprite: {fileID: 21300000, guid: 11d51e1b08e7d4a5d9e8935346113980, type: 3}
+  StatSprite: {fileID: 21300000, guid: 0a632a4272c445241a2c03126f9cf780, type: 3}

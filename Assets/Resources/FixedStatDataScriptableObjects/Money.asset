@@ -16,4 +16,4 @@ MonoBehaviour:
   StatType: 5
   StatName: Money
   StatDescription: Money Description
-  StatSprite: {fileID: 21300000, guid: be5df5669c8834b66a502e016ef957ff, type: 3}
+  StatSprite: {fileID: 21300000, guid: 42a8d36e7a4461342a0e2e2ceb24e8f7, type: 3}
