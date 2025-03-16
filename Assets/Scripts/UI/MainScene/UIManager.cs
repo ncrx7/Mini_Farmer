@@ -17,28 +17,29 @@ namespace UI.MainScene
 
         private void OnEnable()
         {
-            ExecuteUIAction(UIActionType.SetMainMenuLoadingPanel, true);
-            ExecuteUIAction(UIActionType.SetText, "Game Data Loading", _loadingPanelText);
+            GameEventHandler.OnStartDataLoad += () => ExecuteUIAction<bool, GameObject>(UIActionType.SetMainMenuLoadingPanel, true, _loadingPanel);
+            GameEventHandler.OnStartDataLoad += () => ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "Game Data Loading", _loadingPanelText);
 
-            GameEventHandler.OnCompleteDataLoad += () => ExecuteUIAction<bool>(UIActionType.SetMainMenuLoadingPanel, false);
+            GameEventHandler.OnCompleteDataLoad += () => ExecuteUIAction<bool, GameObject>(UIActionType.SetMainMenuLoadingPanel, false, _loadingPanel);
 
-            GameEventHandler.OnClickStartButton += (sceneId) => ExecuteUIAction<bool>(UIActionType.SetMainMenuLoadingPanel, true);
+            GameEventHandler.OnClickStartButton += (sceneId) => ExecuteUIAction<bool, GameObject>(UIActionType.SetMainMenuLoadingPanel, true, _loadingPanel);
             GameEventHandler.OnClickStartButton += (sceneId) => ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "Loading Scene", _loadingPanelText);
         }
 
         private void OnDisable()
         {
-            GameEventHandler.OnCompleteDataLoad -= () => ExecuteUIAction<bool>(UIActionType.SetMainMenuLoadingPanel, false);
+            GameEventHandler.OnStartDataLoad -= () => ExecuteUIAction<bool, GameObject>(UIActionType.SetMainMenuLoadingPanel, true, _loadingPanel);
+            GameEventHandler.OnStartDataLoad -= () => ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "Game Data Loading", _loadingPanelText);
 
-            GameEventHandler.OnClickStartButton -= (sceneId) => ExecuteUIAction<bool>(UIActionType.SetMainMenuLoadingPanel, true);
+            GameEventHandler.OnCompleteDataLoad -= () => ExecuteUIAction<bool, GameObject>(UIActionType.SetMainMenuLoadingPanel, false, _loadingPanel);
+
+            GameEventHandler.OnClickStartButton -= (sceneId) => ExecuteUIAction<bool, GameObject>(UIActionType.SetMainMenuLoadingPanel, true, _loadingPanel);
             GameEventHandler.OnClickStartButton -= (sceneId) => ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "Loading Scene", _loadingPanelText);
         }
 
-        private void Awake()
+        protected override void Awake()
         {
-
-            AddUIAction<bool>(UIActionType.SetMainMenuLoadingPanel, (active) => _loadingPanel.SetActive(active));
-            AddUIAction<string, TextMeshProUGUI>(UIActionType.SetText, (textString, textObject) => textObject.text = textString);
+            base.Awake();
 
             _startButton.onClick.AddListener(() => GameEventHandler.OnClickStartButton?.Invoke(1));
         }

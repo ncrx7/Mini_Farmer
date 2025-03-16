@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace UnityUtils.BaseClasses
@@ -8,6 +9,13 @@ namespace UnityUtils.BaseClasses
     public class BaseUIManager : MonoBehaviour
     {
         protected Dictionary<UIActionType, object> _uiActionMap = new();
+
+        protected virtual void Awake()
+        {
+            AddUIAction<bool, GameObject>(UIActionType.SetMainMenuLoadingPanel, (active, panel) => panel.SetActive(active));
+
+            AddUIAction<string, TextMeshProUGUI>(UIActionType.SetText, (textString, textObject) => textObject.text = textString);
+        }
 
         protected void AddUIAction<T>(UIActionType actionType, Action<T> action)
         {
