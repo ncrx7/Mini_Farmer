@@ -9,6 +9,7 @@ namespace Data.Models.FixedScriptableData
     public class FixedStatData : ScriptableObject
     {
         public int StatId;
+        public StatType StatType;
         public string StatName;
         public string StatDescription;
         public Sprite StatSprite;

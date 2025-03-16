@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,11 @@ namespace Data.Controllers
 {
     public class GameDataManager : SingletonBehavior<GameDataManager>
     {
-        [SerializeField] private List<FixedStatData> _fixedStatDatas; 
+        [SerializeField] private List<FixedStatData> _fixedStatDatas;
         [SerializeField] private GameData _gameData; //**TODO: MAKE HERE READY ONLY NOT SERIALIZEFIELD**
         DataWriterAndReader<GameData> _dataWriterAndReader;
         public bool AreDataLoadFinished = false;
+        private Lazy<Dictionary<StatType, DynamicStatData>> _statDataDictionary;
 
         private void Awake()
         {
@@ -36,12 +38,17 @@ namespace Data.Controllers
             await LoadStatFixedData();
 
             AreDataLoadFinished = true;
+ 
             //GameEventHandler.OnCompleteDataLoad?.Invoke();
         }
 
         private async UniTask LoadGameDataFile()
         {
             _gameData = await _dataWriterAndReader.InitializeDataFile();
+
+            _statDataDictionary = new Lazy<Dictionary<StatType, DynamicStatData>>(
+                () => _gameData.StatDatas.ToDictionary(data => data.FixedStatData.StatType)
+            );
         }
 
         private async UniTask LoadStatFixedData()
@@ -68,12 +75,28 @@ namespace Data.Controllers
             DynamicStatData xpData = new DynamicStatData(4, 0);
             DynamicStatData moneyData = new DynamicStatData(5, 0);
 
-            GameData gameData = new GameData(new List<DynamicStatData>{wheatData, flourData, breadData, levelData, xpData, moneyData});
-    
-            
+            GameData gameData = new GameData(new List<DynamicStatData> { wheatData, flourData, breadData, levelData, xpData, moneyData });
+
+
             return gameData;
+        }
+
+        public DynamicStatData GetDynamicStatData(StatType statType)
+        {
+            //return _gameData.StatDatas.First(data => data.FixedStatData.StatType == statType);
+            return _statDataDictionary.Value.TryGetValue(statType, out var dynamicStatData) ? dynamicStatData : null;
         }
 
         public GameData GetGameDataReference => _gameData;
     }
+}
+
+public enum StatType
+{
+    Wheat,
+    Flour,
+    Bread,
+    Level,
+    Xp,
+    Money
 }
