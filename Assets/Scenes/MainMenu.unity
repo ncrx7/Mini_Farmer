@@ -207,8 +207,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 33.77
-  m_fontSizeBase: 33.77
+  m_fontSize: 19
+  m_fontSizeBase: 19
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -553,8 +553,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 34.077103, y: -546.52}
-  m_SizeDelta: {x: 1131.2231, y: 245.04199}
+  m_AnchoredPosition: {x: 14, y: 25}
+  m_SizeDelta: {x: 723.0667, y: 245.042}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &704483366
 MonoBehaviour:
@@ -604,8 +604,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 152.49
-  m_fontSizeBase: 152.49
+  m_fontSize: 79.62
+  m_fontSizeBase: 79.62
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -688,8 +688,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 34.077087, y: -580.47906}
-  m_SizeDelta: {x: 1131.2231, y: 245.04199}
+  m_AnchoredPosition: {x: 4, y: -73}
+  m_SizeDelta: {x: 707.4471, y: 245.042}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &718345804
 MonoBehaviour:
@@ -739,8 +739,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 152.49
-  m_fontSizeBase: 152.49
+  m_fontSize: 100.2
+  m_fontSizeBase: 100.2
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -908,8 +908,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 33.77
-  m_fontSizeBase: 33.77
+  m_fontSize: 19
+  m_fontSizeBase: 19
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1448,7 +1448,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 34.077, y: 534}
+  m_AnchoredPosition: {x: 11, y: 261}
   m_SizeDelta: {x: 1131.223, y: 245.04199}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1615170331
@@ -1471,7 +1471,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game Data Loading
+  m_text: ........ Loading
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c2f49fe8c22d94f9a9e6cd06ad490155, type: 2}
   m_sharedMaterial: {fileID: 3074828514974314926, guid: c2f49fe8c22d94f9a9e6cd06ad490155,
@@ -1499,8 +1499,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 152.49
-  m_fontSizeBase: 152.49
+  m_fontSize: 87.13
+  m_fontSizeBase: 87.13
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1683,8 +1683,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -2, y: -52.13501}
-  m_SizeDelta: {x: -1664.006, y: 47.306152}
+  m_AnchoredPosition: {x: 5, y: -58}
+  m_SizeDelta: {x: -1756.7507, y: 29.2003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2115769878
 MonoBehaviour:
@@ -1759,7 +1759,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.23
+  m_PixelsPerUnitMultiplier: 0.6
 --- !u!222 &2115769880
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1802,10 +1802,10 @@ RectTransform:
   - {fileID: 298373085}
   m_Father: {fileID: 1096192117}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.3951111}
-  m_AnchorMax: {x: 1, y: 0.3951111}
-  m_AnchoredPosition: {x: -2, y: -80}
-  m_SizeDelta: {x: -1664.006, y: 47.306152}
+  m_AnchorMin: {x: 0, y: 0.25223157}
+  m_AnchorMax: {x: 1, y: 0.25223157}
+  m_AnchoredPosition: {x: 11, y: -26}
+  m_SizeDelta: {x: -1756.7507, y: 29.200302}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2121143837
 MonoBehaviour:
@@ -1880,7 +1880,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.23
+  m_PixelsPerUnitMultiplier: 0.6
 --- !u!222 &2121143839
 CanvasRenderer:
   m_ObjectHideFlags: 0
