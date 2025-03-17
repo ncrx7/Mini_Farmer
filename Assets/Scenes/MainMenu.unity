@@ -1600,8 +1600,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94e172020d33b7f4499c6d49602aa0c3, type: 2}
   - {fileID: 11400000, guid: 68ba051681f2b5042bea401a2b967437, type: 2}
   - {fileID: 11400000, guid: 38dee326e1c56a14196fec03cc4146e2, type: 2}
+  _fixedEntityDatas:
+  - {fileID: 11400000, guid: b24409548bf42e842b3b3b854dbc729e, type: 2}
+  - {fileID: 11400000, guid: 8eadc39968acd85469a4739fbd845483, type: 2}
+  - {fileID: 11400000, guid: 257a332f692674b41bd957becad48ffa, type: 2}
+  - {fileID: 11400000, guid: 1e442f99cb72d4f468320b5cc22b0eaa, type: 2}
+  - {fileID: 11400000, guid: 94c7d55d0657bfc489a8d1030070dd13, type: 2}
   _gameData:
     StatDatas: []
+    GrasAreaDatas: []
   AreDataLoadFinished: 0
 --- !u!1 &1997237628
 GameObject:

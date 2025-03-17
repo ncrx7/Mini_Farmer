@@ -13,6 +13,7 @@ namespace Data.Controllers
     public class GameDataManager : SingletonBehavior<GameDataManager>
     {
         [SerializeField] private List<FixedStatData> _fixedStatDatas;
+        [SerializeField] private List<FixedEntityData> _fixedEntityDatas;
         [SerializeField] private GameData _gameData; //**TODO: MAKE HERE READY ONLY NOT SERIALIZEFIELD**
         DataWriterAndReader<GameData> _dataWriterAndReader;
         public bool AreDataLoadFinished = false;
@@ -77,27 +78,7 @@ namespace Data.Controllers
             DynamicStatData xpData = new DynamicStatData(4, 0);
             DynamicStatData moneyData = new DynamicStatData(5, 0);
 
-            GrassAreaData tempData = new GrassAreaData();
-            tempData.XGridPosition = 0;
-            tempData.YGridPosition = 0;
-            tempData.IsEmpty = true;
-
-            GrassAreaData tempData2 = new GrassAreaData();
-            tempData2.XGridPosition = 1;
-            tempData2.YGridPosition = 0;
-            tempData2.IsEmpty = true;
-
-            GrassAreaData tempData3 = new GrassAreaData();
-            tempData3.XGridPosition = 0;
-            tempData3.YGridPosition = 1;
-            tempData3.IsEmpty = true;
-
-            GrassAreaData tempData4 = new GrassAreaData();
-            tempData4.XGridPosition = 1;
-            tempData4.YGridPosition = 1;
-            tempData4.IsEmpty = true;
-
-            GameData gameData = new GameData(new List<DynamicStatData> { wheatData, flourData, breadData, moneyData, xpData, levelData }, new List<GrassAreaData> { tempData, tempData2, tempData3, tempData4 });
+            GameData gameData = new GameData(new List<DynamicStatData> { wheatData, flourData, breadData, moneyData, xpData, levelData }, new());
 
 
             return gameData;
