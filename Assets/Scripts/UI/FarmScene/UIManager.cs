@@ -14,7 +14,11 @@ namespace UI.FarmerScene
     public class UIManager : BaseUIManager
     {
         [SerializeField] private StatUI _statEmptyPrefab;
+        [SerializeField] private MarketUI _entityMarketPrefab;
+
         [SerializeField] private Transform _statLayout;
+        [SerializeField] private Transform _marketObjLayout;
+
         [SerializeField] private GameObject _loadingPanel;
         [SerializeField] private TextMeshProUGUI _loadingPanelText;
 
@@ -48,6 +52,7 @@ namespace UI.FarmerScene
         private void Start()
         {
             InitializeStatUIs().Forget();
+            InitializeMarketUI().Forget();
         }
 
         private async UniTask InitializeStatUIs()
@@ -67,6 +72,24 @@ namespace UI.FarmerScene
             }
 
             GameEventHandler.OnCompleteStatUILoad?.Invoke();
+        }
+
+        private async UniTask InitializeMarketUI()
+        {
+            await UniTask.WaitUntil(() => GridBoardManager.Instance.GetEntityLoader.AreEntitiesLoadFinished == true);
+
+            //GameEventHandler.OnStartStatUILoad?.Invoke();
+
+            foreach (var entityData in GameDataManager.Instance.GetFixedEntityDatas)
+            {
+                MarketUI marketUI = Instantiate(_entityMarketPrefab, _marketObjLayout);
+
+                marketUI.GetMarketImage.sprite = entityData.MarketSprite;
+                marketUI.GetPriceText.text = entityData.MarketPrice.ToString() + "$";
+                marketUI.GetPurchaseText.text = "Purchase";
+            }
+
+            //GameEventHandler.OnCompleteStatUILoad?.Invoke();
         }
     }
 }

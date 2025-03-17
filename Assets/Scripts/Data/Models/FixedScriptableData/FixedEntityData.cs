@@ -9,6 +9,7 @@ namespace Data.Models.FixedScriptableData
     {
         public int EntityId;
         public string EntityName;
+        public EntityType EntityType;
 
         [Header("Market Properties")]
         public int MarketPrice;

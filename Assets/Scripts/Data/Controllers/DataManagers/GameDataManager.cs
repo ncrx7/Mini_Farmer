@@ -91,6 +91,7 @@ namespace Data.Controllers
         }
 
         public GameData GetGameDataReference => _gameData;
+        public List<FixedEntityData> GetFixedEntityDatas => _fixedEntityDatas;
     }
 }
 
@@ -102,4 +103,13 @@ public enum StatType
     Level,
     Xp,
     Money
+}
+
+public enum EntityType
+{
+    Grass,
+    FarmGranary,
+    FarmMill,
+    FarmStorage,
+    BigHouse
 }
