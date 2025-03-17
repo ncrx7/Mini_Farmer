@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data.Controllers;
+using Entities.PlaneEntities;
+using NodeGridSystem.Models;
 using UnityEngine;
 namespace Data.Models.FixedScriptableData
 {
@@ -18,6 +21,7 @@ namespace Data.Models.FixedScriptableData
 
         [Header("Building Properties")]
         public GameObject EntityPrefab;
-        
+
+        public virtual void CreateEntityOnScene(GridSystem2D<GridObject<GrassAreaManager>> gridSystem2D) { }
     }
 }

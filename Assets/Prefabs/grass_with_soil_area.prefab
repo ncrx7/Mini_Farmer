@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2511488650742620055}
   - component: {fileID: -589803264666513874}
   - component: {fileID: 2671091403827803911}
+  - component: {fileID: 7240265062891258585}
   m_Layer: 0
   m_Name: grass_with_soil_area
   m_TagString: Untagged
@@ -118,3 +119,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d751ae52a3311a44c970ee7088667c0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grassAreaData:
+    XGridPosition: 0
+    YGridPosition: 0
+    IsEmpty: 0
+--- !u!114 &7240265062891258585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4168756482833120834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c08447b267c07a442922a41605773246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _grassAreaManager: {fileID: 2671091403827803911}
+  _scaleFactor: {x: 0.5, y: 2, z: 0.5}
+  _animationDuration: 1.5

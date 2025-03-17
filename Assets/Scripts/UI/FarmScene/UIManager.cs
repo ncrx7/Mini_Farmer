@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Data.Controllers;
 using Data.Models.DynamicData;
+using Interfaces;
 using NodeGridSystem.Controllers;
 using TMPro;
 using UI.FarmerScene.EntityUIController;
@@ -87,6 +88,14 @@ namespace UI.FarmerScene
                 marketUI.GetMarketImage.sprite = entityData.MarketSprite;
                 marketUI.GetPriceText.text = entityData.MarketPrice.ToString() + "$";
                 marketUI.GetPurchaseText.text = "Purchase";
+                
+                marketUI.GetPurchaseButton.onClick.AddListener(() =>
+                {
+                    if (entityData.EntityPrefab.TryGetComponent<IEntitySetup>(out var entitySetup))
+                    {
+                        entitySetup.SetupEntity(GridBoardManager.Instance.GetNodeGridSystem2D, entityData);
+                    }
+                });
             }
 
             //GameEventHandler.OnCompleteStatUILoad?.Invoke();

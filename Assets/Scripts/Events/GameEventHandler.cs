@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Data.Models.FixedScriptableData;
+using Entities.PlaneEntities;
+using NodeGridSystem.Models;
 using UnityEngine;
 
 public class GameEventHandler : MonoBehaviour
@@ -23,5 +26,7 @@ public class GameEventHandler : MonoBehaviour
 
     public static Action OnStartStatUILoad;
     public static Action OnCompleteStatUILoad;
+
+    public static Action<GridSystem2D<GridObject<GrassAreaManager>>, FixedEntityData> CreateEntity;
     #endregion
 }

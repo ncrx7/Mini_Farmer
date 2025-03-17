@@ -54,6 +54,7 @@ MonoBehaviour:
   _marketImage: {fileID: 5604233963742641503}
   _priceText: {fileID: 2846189164289143898}
   _purchaseText: {fileID: 7908401780606530696}
+  _purchaseButton: {fileID: 6291538292020485147}
 --- !u!1 &1367709024919258473
 GameObject:
   m_ObjectHideFlags: 0
@@ -67,7 +68,7 @@ GameObject:
   - component: {fileID: 1191052448274903021}
   - component: {fileID: 6291538292020485147}
   m_Layer: 5
-  m_Name: Button
+  m_Name: PurchaseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -9,7 +9,7 @@ namespace NodeGridSystem.Models
     {
         /// <summary>
         /// EN: We made this class generic so that it would be more dynamic and convenient for us to put another object instead of a node or another type of node.
-        /// TR: Bu sınıfı node'larımın daha dinamik olması için generic yaptım.
+        /// TR: Bu sınıfı gridler daha dinamik ve scalable olması için generic yaptım.
         /// </summary>
         private GridSystem2D<GridObject<T>> _grid;
         private int _x;

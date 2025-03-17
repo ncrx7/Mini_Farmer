@@ -7,7 +7,7 @@ using Entities.PlaneEntities;
 using NodeGridSystem.Models;
 using UnityEngine;
 
-public class EntityLoader : MonoBehaviour
+public class EntityLoaderFromJson : MonoBehaviour
 {
     [SerializeField] private GrassAreaManager _grassAreaPrefab;
     private List<GrassAreaManager> _grassAreaManagers = new();
@@ -17,7 +17,7 @@ public class EntityLoader : MonoBehaviour
     [SerializeField] private Vector3 _scaleFactor;
     [SerializeField] private float _animationDuration;
 
-    public async void LoadEntities(GridSystem2D<GridObject<GrassAreaManager>> gridSystem2D)
+    public async void LoadEntitiesFromJson(GridSystem2D<GridObject<GrassAreaManager>> gridSystem2D)
     {
         GameEventHandler.OnStartEntitesLoad?.Invoke();
 
@@ -37,8 +37,12 @@ public class EntityLoader : MonoBehaviour
 
             GrassAreaManager grassArea = Instantiate(_grassAreaPrefab, grassWorldPosition, Quaternion.identity, transform);
 
+            GridObject<GrassAreaManager> gridObject = new(gridSystem2D, grassAreaData.XGridPosition, grassAreaData.YGridPosition);
+            gridObject.SetValue(grassArea);
+            gridSystem2D.SetValue(grassAreaData.XGridPosition, grassAreaData.YGridPosition, gridObject);
+
             grassArea.gameObject.DoElasticStretch(_scaleFactor, _animationDuration, () => Debug.Log("callback"));
-            
+
             _grassAreaManagers.Add(grassArea);
 
             grassArea.grassAreaData = grassAreaData;

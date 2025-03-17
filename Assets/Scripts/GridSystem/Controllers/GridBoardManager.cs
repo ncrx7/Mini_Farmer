@@ -11,7 +11,7 @@ namespace NodeGridSystem.Controllers
 {
     public class GridBoardManager : SingletonBehavior<GridBoardManager>
     {
-        [SerializeField] private EntityLoader _entityLoader;
+        [SerializeField] private EntityLoaderFromJson _entityLoader;
 
         [Header("Grid Settings")]
         [SerializeField] private int _width = 6;
@@ -44,7 +44,7 @@ namespace NodeGridSystem.Controllers
 
         private async UniTask InitBoard()
         {
-            _entityLoader.LoadEntities(_gridSystem);
+            _entityLoader.LoadEntitiesFromJson(_gridSystem);
 
             await UniTask.DelayFrame(1);
         }
@@ -53,7 +53,7 @@ namespace NodeGridSystem.Controllers
         public int GetWidth => _width;
         public int GetHeight => _height;
         public GridSystem2D<GridObject<GrassAreaManager>> GetNodeGridSystem2D => _gridSystem;
-        public EntityLoader GetEntityLoader => _entityLoader;
+        public EntityLoaderFromJson GetEntityLoader => _entityLoader;
 
     }
 }
