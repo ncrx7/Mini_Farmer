@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Data.Controllers;
+using DG.Tweening;
 using Entities.PlaneEntities;
 using NodeGridSystem.Models;
 using UnityEngine;
@@ -12,6 +13,9 @@ public class EntityLoader : MonoBehaviour
     private List<GrassAreaManager> _grassAreaManagers = new();
     public bool AreEntitiesLoadFinished = false;
 
+    [Header("Entity Load Animation Settings")]
+    [SerializeField] private Vector3 _scaleFactor;
+    [SerializeField] private float _animationDuration;
 
     public async void LoadEntities(GridSystem2D<GridObject<GrassAreaManager>> gridSystem2D)
     {
@@ -33,6 +37,8 @@ public class EntityLoader : MonoBehaviour
 
             GrassAreaManager grassArea = Instantiate(_grassAreaPrefab, grassWorldPosition, Quaternion.identity, transform);
 
+            grassArea.gameObject.DoElasticStretch(_scaleFactor, _animationDuration, () => Debug.Log("callback"));
+            
             _grassAreaManagers.Add(grassArea);
 
             grassArea.grassAreaData = grassAreaData;
@@ -47,7 +53,7 @@ public class EntityLoader : MonoBehaviour
     {
         foreach (var grassAreaManager in _grassAreaManagers)
         {
-            if(grassAreaManager.grassAreaData.IsEmpty)
+            if (grassAreaManager.grassAreaData.IsEmpty)
                 return;
 
             //TODO: INSTANTIATE BUILDING ENTITY

@@ -30,7 +30,7 @@ namespace NodeGridSystem.Controllers
         private async void InitializeBoard()
         {
             _gridSystem = GridSystem2D<GridObject<GrassAreaManager>>.HorizontalGrid(_width, _height, _cellSize, _originPosition, _debug);
-          
+
             //MiniEventSystem.ActivateLoadingUI?.Invoke();
             //GameManager.Instance.IsGamePaused = true;
 
@@ -44,13 +44,7 @@ namespace NodeGridSystem.Controllers
 
         private async UniTask InitBoard()
         {
-            for (int x = 0; x < _width; x++)
-            {
-                for (int y = 0; y < _height; y++)
-                {
-                    _entityLoader.LoadEntities(_gridSystem);
-                }
-            }
+            _entityLoader.LoadEntities(_gridSystem);
 
             await UniTask.DelayFrame(1);
         }

@@ -40,7 +40,7 @@ namespace Data.Controllers
             await LoadStatFixedData();
 
             AreDataLoadFinished = true;
- 
+
             GameEventHandler.OnCompleteDataLoad?.Invoke();
         }
 
@@ -84,10 +84,20 @@ namespace Data.Controllers
 
             GrassAreaData tempData2 = new GrassAreaData();
             tempData2.XGridPosition = 1;
-            tempData2.YGridPosition = 2;
+            tempData2.YGridPosition = 0;
             tempData2.IsEmpty = true;
 
-            GameData gameData = new GameData(new List<DynamicStatData> { wheatData, flourData, breadData, moneyData, xpData, levelData }, new List<GrassAreaData>{tempData, tempData2});
+            GrassAreaData tempData3 = new GrassAreaData();
+            tempData3.XGridPosition = 0;
+            tempData3.YGridPosition = 1;
+            tempData3.IsEmpty = true;
+
+            GrassAreaData tempData4 = new GrassAreaData();
+            tempData4.XGridPosition = 1;
+            tempData4.YGridPosition = 1;
+            tempData4.IsEmpty = true;
+
+            GameData gameData = new GameData(new List<DynamicStatData> { wheatData, flourData, breadData, moneyData, xpData, levelData }, new List<GrassAreaData> { tempData, tempData2, tempData3, tempData4 });
 
 
             return gameData;
