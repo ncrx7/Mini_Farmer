@@ -30,8 +30,12 @@ namespace Entities.PlaneEntities.InterfaceHandlers
                     if (grassAreaData == null)
                         return;
 
-                    if (grassAreaData.IsEmpty)
+                    if (grassAreaData.IsEmpty && CheckMoneyEnough(fixedEntityData))
                     {
+                        PayPrice(fixedEntityData);
+
+                        GameEventHandler.OnCreateEntity?.Invoke(fixedEntityData, GameDataManager.Instance.GetDynamicStatData(StatType.Money).Amount);
+
                         Vector3 targetPosition = gridSystem.GetWorldPositionCenter(x, y);
                         targetPosition.y += fixedEntityData.SpawnYOffset;
                         
@@ -59,6 +63,16 @@ namespace Entities.PlaneEntities.InterfaceHandlers
             grassAreaData.DynamicBuildingEntityData = dynamicBuildingEntityData;
 
             GameDataManager.Instance.UpdatePlayerDataFile();  
+        }
+
+        private void PayPrice(FixedEntityData fixedEntityData)
+        {
+            GameDataManager.Instance.GetDynamicStatData(StatType.Money).Amount -= fixedEntityData.MarketPrice;
+        }
+
+        private bool CheckMoneyEnough(FixedEntityData fixedEntityData)
+        {
+            return GameDataManager.Instance.GetDynamicStatData(StatType.Money).Amount >= fixedEntityData.MarketPrice;
         }
     }
 }

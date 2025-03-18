@@ -15,6 +15,8 @@ namespace UI.FarmerScene
     public class UIManager : BaseUIManager
     {
         [SerializeField] private StatUI _statEmptyPrefab;
+        private Dictionary<StatType, TextMeshProUGUI> _statTexts = new();
+
         [SerializeField] private MarketUI _entityMarketPrefab;
 
         [SerializeField] private Transform _statLayout;
@@ -32,6 +34,8 @@ namespace UI.FarmerScene
             GameEventHandler.OnStartStatUILoad += () => ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "Stat UIs Loading", _loadingPanelText);
 
             GameEventHandler.OnCompleteStatUILoad += () => ExecuteUIAction<bool, GameObject>(UIActionType.SetMainMenuLoadingPanel, false, _loadingPanel);
+
+            GameEventHandler.OnCreateEntity += (fixedEntityData, money) => ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, money.ToString(), _statTexts[StatType.Money]);
         }
 
         private void OnDisable()
@@ -43,6 +47,8 @@ namespace UI.FarmerScene
             GameEventHandler.OnStartStatUILoad -= () => ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "Stat UIs Loading", _loadingPanelText);
 
             GameEventHandler.OnCompleteStatUILoad -= () => ExecuteUIAction<bool, GameObject>(UIActionType.SetMainMenuLoadingPanel, false, _loadingPanel);
+
+            GameEventHandler.OnCreateEntity -= (fixedEntityData, money) => ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, money.ToString(), _statTexts[StatType.Money]);
         }
 
         protected override void Awake()
@@ -69,6 +75,8 @@ namespace UI.FarmerScene
                 statUI.GetStatAmountText.text = statData.Amount.ToString();
                 statUI.GetStatIconImage.sprite = statData.FixedStatData.StatSprite;
 
+                _statTexts.Add(statData.FixedStatData.StatType, statUI.GetStatAmountText);
+
                 await UniTask.Delay(300);
             }
 
@@ -88,7 +96,7 @@ namespace UI.FarmerScene
                 marketUI.GetMarketImage.sprite = entityData.MarketSprite;
                 marketUI.GetPriceText.text = entityData.MarketPrice.ToString() + "$";
                 marketUI.GetPurchaseText.text = "Purchase";
-                
+   
                 marketUI.GetPurchaseButton.onClick.AddListener(() =>
                 {
                     if (entityData.EntityPrefab.TryGetComponent<IEntitySetup>(out var entitySetup))

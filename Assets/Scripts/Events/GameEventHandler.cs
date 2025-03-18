@@ -27,6 +27,6 @@ public class GameEventHandler : MonoBehaviour
     public static Action OnStartStatUILoad;
     public static Action OnCompleteStatUILoad;
 
-    public static Action<GridSystem2D<GridObject<GrassAreaManager>>, FixedEntityData> CreateEntity;
+    public static Action<FixedEntityData, int> OnCreateEntity;
     #endregion
 }

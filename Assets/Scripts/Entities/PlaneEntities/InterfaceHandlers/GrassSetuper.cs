@@ -28,8 +28,12 @@ namespace Entities.PlaneEntities.InterfaceHandlers
 
                 for (int x = 0; x < GridBoardManager.Instance.GetWidth; x++)
                 {
-                    if (gridSystem.GetValue(x, y) == null)
+                    if (gridSystem.GetValue(x, y) == null && CheckMoneyEnough(fixedEntityData))
                     {
+                        PayPrice(fixedEntityData);
+
+                        GameEventHandler.OnCreateEntity?.Invoke(fixedEntityData, GameDataManager.Instance.GetDynamicStatData(StatType.Money).Amount);
+
                         Vector3 targetGrassPos = gridSystem.GetWorldPositionCenter(x, y);
 
                         GameObject grassObject = Instantiate(fixedEntityData.EntityPrefab, targetGrassPos, Quaternion.identity, GridBoardManager.Instance.GetEntityLoader.transform);
@@ -65,6 +69,16 @@ namespace Entities.PlaneEntities.InterfaceHandlers
             GameDataManager.Instance.GetGameDataReference.GrasAreaDatas.Add(grassData);
 
             GameDataManager.Instance.UpdatePlayerDataFile();
+        }
+
+        private void PayPrice(FixedEntityData fixedEntityData)
+        {
+            GameDataManager.Instance.GetDynamicStatData(StatType.Money).Amount -= fixedEntityData.MarketPrice;
+        }
+
+        private bool CheckMoneyEnough(FixedEntityData fixedEntityData)
+        {
+            return GameDataManager.Instance.GetDynamicStatData(StatType.Money).Amount >= fixedEntityData.MarketPrice;
         }
     }
 }
