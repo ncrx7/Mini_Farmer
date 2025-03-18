@@ -33,8 +33,9 @@ namespace Entities.PlaneEntities.InterfaceHandlers
                     if (grassAreaData.IsEmpty)
                     {
                         Vector3 targetPosition = gridSystem.GetWorldPositionCenter(x, y);
-
-                        GameObject buildingEntity = Instantiate(fixedEntityData.EntityPrefab, targetPosition, Quaternion.identity);
+                        targetPosition.y += fixedEntityData.SpawnYOffset;
+                        
+                        GameObject buildingEntity = Instantiate(fixedEntityData.EntityPrefab, targetPosition, Quaternion.Euler(fixedEntityData.SpawnRotation), GridBoardManager.Instance.GetEntityLoader.transform);
 
                         buildingEntity.DoElasticStretch(new Vector3(0.5f, 2f, 0.5f), 1.5f, () => Debug.Log("entity spawned"));
 

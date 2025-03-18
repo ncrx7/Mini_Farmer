@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Data.Controllers;
 using Data.Models.DynamicData;
+using Data.Models.FixedScriptableData;
 using DG.Tweening;
 using Entities.PlaneEntities;
 using NodeGridSystem.Models;
@@ -45,7 +46,7 @@ public class EntityLoaderFromJson : MonoBehaviour
             
             grassArea.gameObject.DoElasticStretch(_scaleFactor, _animationDuration, () => LoadBuildingEntityOnGrass(grassArea));
 
-            await UniTask.Delay(500);
+            await UniTask.Delay(100);
         }
 
         await UniTask.Delay(100);
@@ -55,8 +56,13 @@ public class EntityLoaderFromJson : MonoBehaviour
     {
         if (grassAreaManager.grassAreaData.IsEmpty)
             return;
+        
+        FixedEntityData fixedEntityData = grassAreaManager.grassAreaData.DynamicBuildingEntityData.FixedEntityData;
 
-        GameObject buildingEntity = Instantiate(grassAreaManager.grassAreaData.DynamicBuildingEntityData.FixedEntityData.EntityPrefab, grassAreaManager.transform.position, Quaternion.identity, grassAreaManager.transform);
+        Vector3 targetPos = grassAreaManager.transform.position;
+        targetPos.y += fixedEntityData.SpawnYOffset;
+
+        GameObject buildingEntity = Instantiate(grassAreaManager.grassAreaData.DynamicBuildingEntityData.FixedEntityData.EntityPrefab, targetPos, Quaternion.Euler(fixedEntityData.SpawnRotation), grassAreaManager.transform);
         buildingEntity.DoElasticStretch(_scaleFactor, _animationDuration, () => grassAreaManager.grassAreaData.IsEmpty = false);
     }
 }

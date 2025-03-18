@@ -20,3 +20,5 @@ MonoBehaviour:
   MarketDescription: BigHouse Desc.
   EntityPrefab: {fileID: 3335263314895593546, guid: 2155af26cfc9844b59fbcca7755531d0,
     type: 3}
+  SpawnRotation: {x: 0, y: 90, z: 0}
+  SpawnYOffset: 2.75

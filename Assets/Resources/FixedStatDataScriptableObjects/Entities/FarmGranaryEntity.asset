@@ -20,3 +20,5 @@ MonoBehaviour:
   MarketDescription: Farm Granary Desc
   EntityPrefab: {fileID: 3573015413748600977, guid: 444fdb4fc89b9411aa4138a28e82b64d,
     type: 3}
+  SpawnRotation: {x: 0, y: 135, z: 0}
+  SpawnYOffset: 2.75

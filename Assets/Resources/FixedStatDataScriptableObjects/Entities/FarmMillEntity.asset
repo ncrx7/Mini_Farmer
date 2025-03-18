@@ -20,3 +20,5 @@ MonoBehaviour:
   MarketDescription: FarmMill Desc.
   EntityPrefab: {fileID: 8463424017483000332, guid: 55e3a84d39b224a5db2876ac574da39c,
     type: 3}
+  SpawnRotation: {x: 0, y: 135, z: 0}
+  SpawnYOffset: 2.75

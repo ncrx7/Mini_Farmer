@@ -21,7 +21,9 @@ namespace Data.Models.FixedScriptableData
 
         [Header("Building Properties")]
         public GameObject EntityPrefab;
+        public Vector3 SpawnRotation;
+        public float SpawnYOffset;
 
-        public virtual void CreateEntityOnScene(GridSystem2D<GridObject<GrassAreaManager>> gridSystem2D) { }
+        //public virtual void CreateEntityOnScene(GridSystem2D<GridObject<GrassAreaManager>> gridSystem2D) { }
     }
 }
