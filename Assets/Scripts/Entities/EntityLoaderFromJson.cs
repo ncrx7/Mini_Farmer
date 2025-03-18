@@ -53,7 +53,7 @@ public class EntityLoaderFromJson : MonoBehaviour
 
     private void LoadBuildingEntityOnGrass(GrassAreaManager grassAreaManager)
     {
-        if (!grassAreaManager.grassAreaData.IsEmpty)
+        if (grassAreaManager.grassAreaData.IsEmpty)
             return;
 
         GameObject buildingEntity = Instantiate(grassAreaManager.grassAreaData.DynamicBuildingEntityData.FixedEntityData.EntityPrefab, grassAreaManager.transform.position, Quaternion.identity, grassAreaManager.transform);

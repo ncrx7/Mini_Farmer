@@ -78,18 +78,7 @@ namespace Data.Controllers
             DynamicStatData xpData = new DynamicStatData(4, 0);
             DynamicStatData moneyData = new DynamicStatData(5, 300);
 
-            DynamicBuildingEntityData buildingEntityTemp = new(0, EntityType.FarmGranary, _fixedEntityDatas[1]);
-
-            GrassAreaData tempGrassData = new GrassAreaData();
-            tempGrassData.XGridPosition = 0;
-            tempGrassData.YGridPosition = 0;
-            tempGrassData.IsEmpty = true;
-            tempGrassData.DynamicBuildingEntityData = buildingEntityTemp;
-
-
-
-            GameData gameData = new GameData(new List<DynamicStatData> { wheatData, flourData, breadData, moneyData, xpData, levelData }, new() {tempGrassData}, new() {buildingEntityTemp});
-
+            GameData gameData = new GameData(new List<DynamicStatData> { wheatData, flourData, breadData, moneyData, xpData, levelData }, new() { }, new() { });
 
             return gameData;
         }
