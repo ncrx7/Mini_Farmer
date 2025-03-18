@@ -18,7 +18,7 @@ namespace Entities.PlaneEntities.InterfaceHandlers
         [SerializeField] private Vector3 _scaleFactor;
         [SerializeField] private float _animationDuration;
 
-        public void SetupEntity(GridSystem2D<GridObject<GrassAreaManager>> gridSystem, FixedEntityData fixedEntityData)
+        public void SetupEntity(GridSystem2D<GridObject<GrassAreaManager>> gridSystem, FixedBaseEntityData fixedEntityData)
         {
             bool shouldBreakLoops = false;
 
@@ -71,12 +71,12 @@ namespace Entities.PlaneEntities.InterfaceHandlers
             GameDataManager.Instance.UpdatePlayerDataFile();
         }
 
-        private void PayPrice(FixedEntityData fixedEntityData)
+        private void PayPrice(FixedBaseEntityData fixedEntityData)
         {
             GameDataManager.Instance.GetDynamicStatData(StatType.Money).Amount -= fixedEntityData.MarketPrice;
         }
 
-        private bool CheckMoneyEnough(FixedEntityData fixedEntityData)
+        private bool CheckMoneyEnough(FixedBaseEntityData fixedEntityData)
         {
             return GameDataManager.Instance.GetDynamicStatData(StatType.Money).Amount >= fixedEntityData.MarketPrice;
         }

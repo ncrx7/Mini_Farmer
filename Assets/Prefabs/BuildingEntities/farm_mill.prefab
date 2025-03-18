@@ -225,6 +225,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105487f9d6ca5ef46b63832d13604fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entityData:
+    EntityId: 0
+    EntityType: 0
+    FixedEntityData: {fileID: 0}
+  _entityType: 2
 --- !u!114 &1679108027700387592
 MonoBehaviour:
   m_ObjectHideFlags: 0

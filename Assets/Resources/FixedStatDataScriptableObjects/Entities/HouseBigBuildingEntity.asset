@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a28ff971f33a7cc47ac52d8af519e07a, type: 3}
-  m_Name: BigHouseEntity
+  m_Script: {fileID: 11500000, guid: 50757156b2b876f4392f3e83bf047dfc, type: 3}
+  m_Name: HouseBigBuildingEntity
   m_EditorClassIdentifier: 
   EntityId: 4
   EntityName: BigHouse
@@ -18,7 +18,7 @@ MonoBehaviour:
   MarketPrice: 200
   MarketSprite: {fileID: 21300000, guid: a73df0be07bd8304784acfa65c07f200, type: 3}
   MarketDescription: BigHouse Desc.
-  EntityPrefab: {fileID: 3335263314895593546, guid: 2155af26cfc9844b59fbcca7755531d0,
+  EntityPrefab: {fileID: 5946354812836315679, guid: 2155af26cfc9844b59fbcca7755531d0,
     type: 3}
   SpawnRotation: {x: 0, y: 90, z: 0}
   SpawnYOffset: 2.75

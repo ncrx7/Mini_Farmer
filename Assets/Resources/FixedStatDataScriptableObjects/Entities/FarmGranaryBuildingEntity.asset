@@ -9,16 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a28ff971f33a7cc47ac52d8af519e07a, type: 3}
-  m_Name: FarmGranaryEntity
+  m_Script: {fileID: 11500000, guid: 50757156b2b876f4392f3e83bf047dfc, type: 3}
+  m_Name: FarmGranaryBuildingEntity
   m_EditorClassIdentifier: 
   EntityId: 1
   EntityName: FarmGranary
   EntityType: 1
   MarketPrice: 100
   MarketSprite: {fileID: 21300000, guid: 1475440aeb04c1a4587e554eab217854, type: 3}
-  MarketDescription: Farm Granary Desc
-  EntityPrefab: {fileID: 3573015413748600977, guid: 444fdb4fc89b9411aa4138a28e82b64d,
+  MarketDescription: Farm Granary Desc.
+  EntityPrefab: {fileID: -7576176028427554584, guid: 444fdb4fc89b9411aa4138a28e82b64d,
     type: 3}
   SpawnRotation: {x: 0, y: 135, z: 0}
   SpawnYOffset: 2.75

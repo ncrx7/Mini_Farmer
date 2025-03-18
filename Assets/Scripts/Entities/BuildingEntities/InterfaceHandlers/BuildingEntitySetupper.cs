@@ -13,8 +13,10 @@ namespace Entities.BuildingEntities.InterfaceHandlers
 {
     public class BuildingEntitySetupper : MonoBehaviour, IEntitySetup
     {
-        public void SetupEntity(GridSystem2D<GridObject<GrassAreaManager>> gridSystem, FixedEntityData fixedEntityData)
+        public void SetupEntity(GridSystem2D<GridObject<GrassAreaManager>> gridSystem, FixedBaseEntityData fixedEntityData)
         {
+            FixedBuildingEntityData fixedBuildingEntityData = fixedEntityData as FixedBuildingEntityData;
+
             bool shouldBreakLoops = false;
 
             for (int y = 0; y < GridBoardManager.Instance.GetHeight; y++)
@@ -38,9 +40,9 @@ namespace Entities.BuildingEntities.InterfaceHandlers
                         GameEventHandler.OnCreateEntity?.Invoke(fixedEntityData, GameDataManager.Instance.GetDynamicStatData(StatType.Money).Amount);
 
                         Vector3 targetPosition = gridSystem.GetWorldPositionCenter(x, y);
-                        targetPosition.y += fixedEntityData.SpawnYOffset;
+                        targetPosition.y += fixedBuildingEntityData.SpawnYOffset;
                         
-                        EntityManager buildingEntity = Instantiate(fixedEntityData.EntityPrefab, targetPosition, Quaternion.Euler(fixedEntityData.SpawnRotation), GridBoardManager.Instance.GetEntityLoader.transform);
+                        EntityManager buildingEntity = Instantiate(fixedEntityData.EntityPrefab, targetPosition, Quaternion.Euler(fixedBuildingEntityData.SpawnRotation), GridBoardManager.Instance.GetEntityLoader.transform);
 
                         buildingEntity.gameObject.DoElasticStretch(new Vector3(0.5f, 2f, 0.5f), 1.5f, () => Debug.Log("entity spawned"));
 
@@ -48,7 +50,7 @@ namespace Entities.BuildingEntities.InterfaceHandlers
 
                         grassAreaData.IsEmpty = false;
 
-                        SaveBuildEntityData(fixedEntityData, grassAreaData);
+                        SaveBuildEntityData(fixedBuildingEntityData, grassAreaData);
 
                         shouldBreakLoops = true;
                         break;
@@ -57,9 +59,9 @@ namespace Entities.BuildingEntities.InterfaceHandlers
             }
         }
 
-        private void SaveBuildEntityData(FixedEntityData fixedEntityData, GrassAreaData grassAreaData)
+        private void SaveBuildEntityData(FixedBuildingEntityData fixedBuildingEntityData, GrassAreaData grassAreaData)
         {
-            DynamicBuildingEntityData dynamicBuildingEntityData = new(0, fixedEntityData.EntityType, fixedEntityData); 
+            DynamicBuildingEntityData dynamicBuildingEntityData = new(0, fixedBuildingEntityData.EntityType, fixedBuildingEntityData); 
 
             GameDataManager.Instance.GetGameDataReference.BuildingEntityDatas.Add(dynamicBuildingEntityData);
 
@@ -68,12 +70,12 @@ namespace Entities.BuildingEntities.InterfaceHandlers
             GameDataManager.Instance.UpdatePlayerDataFile();  
         }
 
-        private void PayPrice(FixedEntityData fixedEntityData)
+        private void PayPrice(FixedBaseEntityData fixedEntityData)
         {
             GameDataManager.Instance.GetDynamicStatData(StatType.Money).Amount -= fixedEntityData.MarketPrice;
         }
 
-        private bool CheckMoneyEnough(FixedEntityData fixedEntityData)
+        private bool CheckMoneyEnough(FixedBaseEntityData fixedEntityData)
         {
             return GameDataManager.Instance.GetDynamicStatData(StatType.Money).Amount >= fixedEntityData.MarketPrice;
         }

@@ -61,10 +61,10 @@ public class EntityLoaderFromJson : MonoBehaviour
         DynamicBuildingEntityData dynamicBuildingEntityData = grassAreaManager.entityData.DynamicBuildingEntityData;
 
         Vector3 targetPos = grassAreaManager.transform.position;
-        targetPos.y += dynamicBuildingEntityData.FixedEntityData.SpawnYOffset;
+        targetPos.y += dynamicBuildingEntityData.FixedBuildingEntityData.SpawnYOffset;
 
-        EntityManager<DynamicBuildingEntityData> buildingEntity = Instantiate(dynamicBuildingEntityData.FixedEntityData.EntityPrefab, targetPos,
-                Quaternion.Euler(dynamicBuildingEntityData.FixedEntityData.SpawnRotation), grassAreaManager.transform) as EntityManager<DynamicBuildingEntityData>;
+        EntityManager<DynamicBuildingEntityData> buildingEntity = Instantiate(dynamicBuildingEntityData.FixedBuildingEntityData.EntityPrefab, targetPos,
+                Quaternion.Euler(dynamicBuildingEntityData.FixedBuildingEntityData.SpawnRotation), grassAreaManager.transform) as EntityManager<DynamicBuildingEntityData>;
 
         buildingEntity.entityData = dynamicBuildingEntityData;
 

@@ -13,7 +13,7 @@ namespace Data.Controllers
     public class GameDataManager : SingletonBehavior<GameDataManager>
     {
         [SerializeField] private List<FixedStatData> _fixedStatDatas;
-        [SerializeField] private List<FixedEntityData> _fixedEntityDatas;
+        [SerializeField] private List<FixedBaseEntityData> _fixedEntityDatas;
         [SerializeField] private GameData _gameData; //**TODO: MAKE HERE READY ONLY NOT SERIALIZEFIELD**
         DataWriterAndReader<GameData> _dataWriterAndReader;
         public bool AreDataLoadFinished = false;
@@ -69,7 +69,7 @@ namespace Data.Controllers
         {
             foreach (var buildingEntityData in _gameData.BuildingEntityDatas)
             {
-                buildingEntityData.FixedEntityData = _fixedEntityDatas.First(fixedEntityData => fixedEntityData.EntityType == buildingEntityData.EntityType);
+                buildingEntityData.FixedBuildingEntityData = _fixedEntityDatas.First(fixedEntityData => fixedEntityData.EntityType == buildingEntityData.EntityType) as FixedBuildingEntityData;
             }
 
             await UniTask.Delay(700);
@@ -101,7 +101,7 @@ namespace Data.Controllers
         }
 
         public GameData GetGameDataReference => _gameData;
-        public List<FixedEntityData> GetFixedEntityDatas => _fixedEntityDatas;
+        public List<FixedBaseEntityData> GetFixedEntityDatas => _fixedEntityDatas;
     }
 }
 

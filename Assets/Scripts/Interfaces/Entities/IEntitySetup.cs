@@ -9,6 +9,6 @@ namespace Interfaces
 {
     public interface IEntitySetup
     {
-        public void SetupEntity(GridSystem2D<GridObject<GrassAreaManager>> gridSystem2D, FixedEntityData fixedEntityData);
+        public void SetupEntity(GridSystem2D<GridObject<GrassAreaManager>> gridSystem2D, FixedBaseEntityData fixedEntityData);
     }
 }
