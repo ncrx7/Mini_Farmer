@@ -36,11 +36,11 @@ namespace Entities.PlaneEntities.InterfaceHandlers
 
                         Vector3 targetGrassPos = gridSystem.GetWorldPositionCenter(x, y);
 
-                        GameObject grassObject = Instantiate(fixedEntityData.EntityPrefab, targetGrassPos, Quaternion.identity, GridBoardManager.Instance.GetEntityLoader.transform);
+                        EntityManager grassObject = Instantiate(fixedEntityData.EntityPrefab, targetGrassPos, Quaternion.identity, GridBoardManager.Instance.GetEntityLoader.transform);
 
                         GrassAreaManager grassAreaManager = grassObject.GetComponent<GrassAreaManager>();
 
-                        grassObject.DoElasticStretch(_scaleFactor, _animationDuration, () => Debug.Log("callback"));
+                        grassObject.gameObject.DoElasticStretch(_scaleFactor, _animationDuration, () => Debug.Log("callback"));
 
                         GridObject<GrassAreaManager> gridObject = new(gridSystem, x, y);
                         gridObject.SetValue(grassAreaManager);
@@ -64,7 +64,7 @@ namespace Entities.PlaneEntities.InterfaceHandlers
             grassData.YGridPosition = y;
             grassData.IsEmpty = true;
 
-            grassAreaManager.grassAreaData = grassData;
+            grassAreaManager.entityData = grassData;
 
             GameDataManager.Instance.GetGameDataReference.GrasAreaDatas.Add(grassData);
 

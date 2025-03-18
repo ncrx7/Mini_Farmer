@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Data.Models.DynamicData;
 using UnityEngine;
 
-namespace Entities.PlaneEntities
+namespace Entities.BuildingEntities
 {
-    public class GrassAreaManager : EntityManager<GrassAreaData>
+    public class BuildingEntityManager : EntityManager<DynamicBuildingEntityData>
     {
         [SerializeField] private EntityType _entityType;
     }

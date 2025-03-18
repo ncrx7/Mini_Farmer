@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using Data.Controllers;
 using Data.Models.DynamicData;
 using Data.Models.FixedScriptableData;
+using Entities.PlaneEntities;
 using Interfaces;
 using NodeGridSystem.Controllers;
 using NodeGridSystem.Models;
 using UnityEngine;
 
-namespace Entities.PlaneEntities.InterfaceHandlers
+namespace Entities.BuildingEntities.InterfaceHandlers
 {
     public class BuildingEntitySetupper : MonoBehaviour, IEntitySetup
     {
@@ -25,7 +26,7 @@ namespace Entities.PlaneEntities.InterfaceHandlers
                     if (gridSystem.GetValue(x, y) == null)
                         return;
 
-                    GrassAreaData grassAreaData = gridSystem.GetValue(x, y).GetValue().grassAreaData;
+                    GrassAreaData grassAreaData = gridSystem.GetValue(x, y).GetValue().entityData;
 
                     if (grassAreaData == null)
                         return;
@@ -39,9 +40,11 @@ namespace Entities.PlaneEntities.InterfaceHandlers
                         Vector3 targetPosition = gridSystem.GetWorldPositionCenter(x, y);
                         targetPosition.y += fixedEntityData.SpawnYOffset;
                         
-                        GameObject buildingEntity = Instantiate(fixedEntityData.EntityPrefab, targetPosition, Quaternion.Euler(fixedEntityData.SpawnRotation), GridBoardManager.Instance.GetEntityLoader.transform);
+                        EntityManager buildingEntity = Instantiate(fixedEntityData.EntityPrefab, targetPosition, Quaternion.Euler(fixedEntityData.SpawnRotation), GridBoardManager.Instance.GetEntityLoader.transform);
 
-                        buildingEntity.DoElasticStretch(new Vector3(0.5f, 2f, 0.5f), 1.5f, () => Debug.Log("entity spawned"));
+                        buildingEntity.gameObject.DoElasticStretch(new Vector3(0.5f, 2f, 0.5f), 1.5f, () => Debug.Log("entity spawned"));
+
+                        //buildingEntity.GetComponent<BuildingEntityManager>()
 
                         grassAreaData.IsEmpty = false;
 

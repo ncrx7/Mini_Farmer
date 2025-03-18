@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Data.Controllers;
+using Entities;
 using Entities.PlaneEntities;
 using NodeGridSystem.Models;
 using UnityEngine;
@@ -20,7 +21,7 @@ namespace Data.Models.FixedScriptableData
         public string MarketDescription;
 
         [Header("Building Properties")]
-        public GameObject EntityPrefab;
+        public EntityManager EntityPrefab;
         public Vector3 SpawnRotation;
         public float SpawnYOffset;
 

@@ -5,6 +5,7 @@ using Data.Controllers;
 using Data.Models.DynamicData;
 using Data.Models.FixedScriptableData;
 using DG.Tweening;
+using Entities;
 using Entities.PlaneEntities;
 using NodeGridSystem.Models;
 using UnityEngine;
@@ -36,15 +37,15 @@ public class EntityLoaderFromJson : MonoBehaviour
         {
             Vector3 grassWorldPosition = gridSystem2D.GetWorldPositionCenter(grassAreaData.XGridPosition, grassAreaData.YGridPosition);
 
-            GrassAreaManager grassArea = Instantiate(_grassAreaPrefab, grassWorldPosition, Quaternion.identity, transform);
+            EntityManager<GrassAreaData> grassArea = Instantiate(_grassAreaPrefab, grassWorldPosition, Quaternion.identity, transform);
 
             GridObject<GrassAreaManager> gridObject = new(gridSystem2D, grassAreaData.XGridPosition, grassAreaData.YGridPosition);
-            gridObject.SetValue(grassArea);
+            gridObject.SetValue(grassArea as GrassAreaManager);
             gridSystem2D.SetValue(grassAreaData.XGridPosition, grassAreaData.YGridPosition, gridObject);
 
-            grassArea.grassAreaData = grassAreaData;
+            grassArea.entityData = grassAreaData;
             
-            grassArea.gameObject.DoElasticStretch(_scaleFactor, _animationDuration, () => LoadBuildingEntityOnGrass(grassArea));
+            grassArea.gameObject.DoElasticStretch(_scaleFactor, _animationDuration, () => LoadBuildingEntityOnGrass(grassArea as GrassAreaManager));
 
             await UniTask.Delay(100);
         }
@@ -54,15 +55,19 @@ public class EntityLoaderFromJson : MonoBehaviour
 
     private void LoadBuildingEntityOnGrass(GrassAreaManager grassAreaManager)
     {
-        if (grassAreaManager.grassAreaData.IsEmpty)
+        if (grassAreaManager.entityData.IsEmpty)
             return;
         
-        FixedEntityData fixedEntityData = grassAreaManager.grassAreaData.DynamicBuildingEntityData.FixedEntityData;
+        DynamicBuildingEntityData dynamicBuildingEntityData = grassAreaManager.entityData.DynamicBuildingEntityData;
 
         Vector3 targetPos = grassAreaManager.transform.position;
-        targetPos.y += fixedEntityData.SpawnYOffset;
+        targetPos.y += dynamicBuildingEntityData.FixedEntityData.SpawnYOffset;
 
-        GameObject buildingEntity = Instantiate(grassAreaManager.grassAreaData.DynamicBuildingEntityData.FixedEntityData.EntityPrefab, targetPos, Quaternion.Euler(fixedEntityData.SpawnRotation), grassAreaManager.transform);
-        buildingEntity.DoElasticStretch(_scaleFactor, _animationDuration, () => grassAreaManager.grassAreaData.IsEmpty = false);
+        EntityManager<DynamicBuildingEntityData> buildingEntity = Instantiate(dynamicBuildingEntityData.FixedEntityData.EntityPrefab, targetPos,
+                Quaternion.Euler(dynamicBuildingEntityData.FixedEntityData.SpawnRotation), grassAreaManager.transform) as EntityManager<DynamicBuildingEntityData>;
+
+        buildingEntity.entityData = dynamicBuildingEntityData;
+
+        buildingEntity.gameObject.DoElasticStretch(_scaleFactor, _animationDuration, () => grassAreaManager.entityData.IsEmpty = false);
     }
 }
