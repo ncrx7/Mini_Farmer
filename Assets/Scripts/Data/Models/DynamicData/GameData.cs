@@ -10,11 +10,13 @@ namespace Data.Models.DynamicData
     {
         public List<DynamicStatData> StatDatas;
         public List<GrassAreaData> GrasAreaDatas;
+        public List<DynamicBuildingEntityData> BuildingEntityDatas;
 
-        public GameData(List<DynamicStatData> statDatas, List<GrassAreaData> grassAreaDatas)
+        public GameData(List<DynamicStatData> statDatas, List<GrassAreaData> grassAreaDatas, List<DynamicBuildingEntityData> buildingEntityDatas)
         {
             StatDatas = statDatas;
             GrasAreaDatas = grassAreaDatas;
+            BuildingEntityDatas = buildingEntityDatas;
         }
     }
 }

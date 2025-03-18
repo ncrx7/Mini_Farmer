@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Data.Controllers;
+using Data.Models.DynamicData;
 using DG.Tweening;
 using Entities.PlaneEntities;
 using NodeGridSystem.Models;
@@ -10,8 +11,8 @@ using UnityEngine;
 public class EntityLoaderFromJson : MonoBehaviour
 {
     [SerializeField] private GrassAreaManager _grassAreaPrefab;
-    private List<GrassAreaManager> _grassAreaManagers = new();
     public bool AreEntitiesLoadFinished = false;
+
 
     [Header("Entity Load Animation Settings")]
     [SerializeField] private Vector3 _scaleFactor;
@@ -22,7 +23,6 @@ public class EntityLoaderFromJson : MonoBehaviour
         GameEventHandler.OnStartEntitesLoad?.Invoke();
 
         await LoadGrassAreaEntities(gridSystem2D);
-        await LoadBuildingEntities();
 
         AreEntitiesLoadFinished = true;
 
@@ -41,11 +41,9 @@ public class EntityLoaderFromJson : MonoBehaviour
             gridObject.SetValue(grassArea);
             gridSystem2D.SetValue(grassAreaData.XGridPosition, grassAreaData.YGridPosition, gridObject);
 
-            grassArea.gameObject.DoElasticStretch(_scaleFactor, _animationDuration, () => Debug.Log("callback"));
-
-            _grassAreaManagers.Add(grassArea);
-
             grassArea.grassAreaData = grassAreaData;
+            
+            grassArea.gameObject.DoElasticStretch(_scaleFactor, _animationDuration, () => LoadBuildingEntityOnGrass(grassArea));
 
             await UniTask.Delay(500);
         }
@@ -53,16 +51,12 @@ public class EntityLoaderFromJson : MonoBehaviour
         await UniTask.Delay(100);
     }
 
-    private async UniTask LoadBuildingEntities()
+    private void LoadBuildingEntityOnGrass(GrassAreaManager grassAreaManager)
     {
-        foreach (var grassAreaManager in _grassAreaManagers)
-        {
-            if (grassAreaManager.grassAreaData.IsEmpty)
-                return;
+        if (!grassAreaManager.grassAreaData.IsEmpty)
+            return;
 
-            //TODO: INSTANTIATE BUILDING ENTITY
-        }
-
-        await UniTask.Delay(1000);
+        GameObject buildingEntity = Instantiate(grassAreaManager.grassAreaData.DynamicBuildingEntityData.FixedEntityData.EntityPrefab, grassAreaManager.transform.position, Quaternion.identity, grassAreaManager.transform);
+        buildingEntity.DoElasticStretch(_scaleFactor, _animationDuration, () => grassAreaManager.grassAreaData.IsEmpty = false);
     }
 }

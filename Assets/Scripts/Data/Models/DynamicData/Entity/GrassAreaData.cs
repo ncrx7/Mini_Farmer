@@ -11,6 +11,6 @@ namespace Data.Models.DynamicData
         public int XGridPosition;
         public int YGridPosition;
         public bool IsEmpty;
-        //TODO: USTUNDEKI ENTITY DATA CLASSI
+        public DynamicBuildingEntityData DynamicBuildingEntityData;
     }
 }
