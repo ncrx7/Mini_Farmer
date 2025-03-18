@@ -39,6 +39,7 @@ namespace Data.Controllers
 
             await LoadGameDataFile();
             await LoadStatFixedData();
+            await LoadEntityFixedData();
 
             AreDataLoadFinished = true;
 
@@ -56,12 +57,22 @@ namespace Data.Controllers
 
         private async UniTask LoadStatFixedData()
         {
-            foreach (var stat in _gameData.StatDatas)
+            foreach (var statData in _gameData.StatDatas)
             {
-                stat.FixedStatData = _fixedStatDatas.FirstOrDefault(fixedStatData => fixedStatData.StatId == stat.StatId);
+                statData.FixedStatData = _fixedStatDatas.FirstOrDefault(fixedStatData => fixedStatData.StatId == statData.StatId);
             }
 
-            await UniTask.Delay(1500);
+            await UniTask.Delay(700);
+        }
+
+        private async UniTask LoadEntityFixedData()
+        {
+            foreach (var buildingEntityData in _gameData.BuildingEntityDatas)
+            {
+                buildingEntityData.FixedEntityData = _fixedEntityDatas.First(fixedEntityData => fixedEntityData.EntityType == buildingEntityData.EntityType);
+            }
+
+            await UniTask.Delay(700);
         }
 
         public void UpdatePlayerDataFile()
