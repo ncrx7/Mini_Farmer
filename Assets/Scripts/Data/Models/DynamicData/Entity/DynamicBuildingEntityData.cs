@@ -1,7 +1,11 @@
 
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Data.Models.FixedScriptableData;
+using Entities.BuildingEntities.InterfaceHandlers;
+using Interfaces;
 
 namespace Data.Models.DynamicData
 {
@@ -12,13 +16,16 @@ namespace Data.Models.DynamicData
         public EntityType EntityType;
         public FixedBuildingEntityData FixedBuildingEntityData;
         public int CurrentProductInStorage;
+        public DateTime ProduceLastProcessTime;
+        public List<BuildingProduceProduction> ProduceQueue;
 
-        public DynamicBuildingEntityData(int entityId, EntityType entityType, FixedBuildingEntityData fixedEntityData, int currentProductInStorage)
+        public DynamicBuildingEntityData(int entityId, EntityType entityType, FixedBuildingEntityData fixedEntityData, int currentProductInStorage, List<BuildingProduceProduction> produceQueue)
         {
             EntityId = entityId;
             EntityType = entityType;
             FixedBuildingEntityData = fixedEntityData;
             CurrentProductInStorage = currentProductInStorage;
+            ProduceQueue = produceQueue;
         }
     }
 }

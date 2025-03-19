@@ -42,7 +42,10 @@ namespace Entities.BuildingEntities.InterfaceHandlers
                         Vector3 targetPosition = gridSystem.GetWorldPositionCenter(x, y);
                         targetPosition.y += fixedBuildingEntityData.SpawnYOffset;
                         
-                        EntityManager buildingEntity = Instantiate(fixedEntityData.EntityPrefab, targetPosition, Quaternion.Euler(fixedBuildingEntityData.SpawnRotation), GridBoardManager.Instance.GetEntityLoader.transform);
+                        EntityManager<DynamicBuildingEntityData> buildingEntity = Instantiate(fixedEntityData.EntityPrefab, targetPosition, Quaternion.Euler(fixedBuildingEntityData.SpawnRotation), GridBoardManager.Instance.GetEntityLoader.transform)
+                         as EntityManager<DynamicBuildingEntityData>;
+
+                        buildingEntity.entityData.FixedBuildingEntityData = fixedBuildingEntityData;
 
                         buildingEntity.gameObject.DoElasticStretch(new Vector3(0.5f, 2f, 0.5f), 1.5f, () => Debug.Log("entity spawned"));
 
@@ -61,7 +64,9 @@ namespace Entities.BuildingEntities.InterfaceHandlers
 
         private void SaveBuildEntityData(FixedBuildingEntityData fixedBuildingEntityData, GrassAreaData grassAreaData)
         {
-            DynamicBuildingEntityData dynamicBuildingEntityData = new(0, fixedBuildingEntityData.EntityType, fixedBuildingEntityData, 0); 
+            DynamicBuildingEntityData dynamicBuildingEntityData = new(0, fixedBuildingEntityData.EntityType, fixedBuildingEntityData, 0, new()); 
+            dynamicBuildingEntityData.ProduceQueue.Add(new BuildingProduceProduction(0));
+            dynamicBuildingEntityData.ProduceQueue.Add(new BuildingProduceProduction(1));
 
             GameDataManager.Instance.GetGameDataReference.BuildingEntityDatas.Add(dynamicBuildingEntityData);
 
