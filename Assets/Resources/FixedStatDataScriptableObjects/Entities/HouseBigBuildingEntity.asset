@@ -22,3 +22,9 @@ MonoBehaviour:
     type: 3}
   SpawnRotation: {x: 0, y: 90, z: 0}
   SpawnYOffset: 2.75
+  BuildingStorageMaxCapacity: 10
+  ProductionTime: 90
+  ResourceProduct: {fileID: 11400000, guid: d6f4ef816dc8d6946b1d251393e176a2, type: 2}
+  ProductionProcut: {fileID: 11400000, guid: 705493b58a4fe7f4690bcc4aaff34f61, type: 2}
+  ResourceAmount: 1
+  ProductAmount: 1

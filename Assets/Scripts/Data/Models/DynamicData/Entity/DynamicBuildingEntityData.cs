@@ -11,12 +11,14 @@ namespace Data.Models.DynamicData
         public int EntityId;
         public EntityType EntityType;
         public FixedBuildingEntityData FixedBuildingEntityData;
+        public int CurrentProductInStorage;
 
-        public DynamicBuildingEntityData(int entityId, EntityType entityType, FixedBuildingEntityData fixedEntityData)
+        public DynamicBuildingEntityData(int entityId, EntityType entityType, FixedBuildingEntityData fixedEntityData, int currentProductInStorage)
         {
             EntityId = entityId;
             EntityType = entityType;
             FixedBuildingEntityData = fixedEntityData;
+            CurrentProductInStorage = currentProductInStorage;
         }
     }
 }

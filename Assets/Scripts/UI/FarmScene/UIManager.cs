@@ -36,6 +36,13 @@ namespace UI.FarmerScene
             GameEventHandler.OnCompleteStatUILoad += () => ExecuteUIAction<bool, GameObject>(UIActionType.SetMainMenuLoadingPanel, false, _loadingPanel);
 
             GameEventHandler.OnCreateEntity += (fixedEntityData, money) => ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, money.ToString(), _statTexts[StatType.Money]);
+            
+            GameEventHandler.OnBuildingEntitySpawnOnScene += (productInStorageText, productTimeText, productQueueAmountText, buildingEntityData) =>
+            { 
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, buildingEntityData.CurrentProductInStorage.ToString(), productInStorageText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "40s" , productTimeText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "4/10", productQueueAmountText);
+            };
         }
 
         private void OnDisable()
@@ -49,6 +56,13 @@ namespace UI.FarmerScene
             GameEventHandler.OnCompleteStatUILoad -= () => ExecuteUIAction<bool, GameObject>(UIActionType.SetMainMenuLoadingPanel, false, _loadingPanel);
 
             GameEventHandler.OnCreateEntity -= (fixedEntityData, money) => ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, money.ToString(), _statTexts[StatType.Money]);
+        
+            GameEventHandler.OnBuildingEntitySpawnOnScene -= (productInStorageText, productTimeText, productQueueAmountText, buildingEntityData) =>
+            { 
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, buildingEntityData.CurrentProductInStorage.ToString(), productInStorageText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "40s" , productTimeText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "4/10", productQueueAmountText);
+            };
         }
 
         protected override void Awake()

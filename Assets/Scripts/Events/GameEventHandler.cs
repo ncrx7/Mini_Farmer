@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Data.Models.DynamicData;
 using Data.Models.FixedScriptableData;
 using Entities.PlaneEntities;
 using NodeGridSystem.Models;
+using TMPro;
 using UnityEngine;
 
 public class GameEventHandler : MonoBehaviour
@@ -28,5 +30,7 @@ public class GameEventHandler : MonoBehaviour
     public static Action OnCompleteStatUILoad;
 
     public static Action<FixedBaseEntityData, int> OnCreateEntity;
+
+    public static Action<TextMeshProUGUI, TextMeshProUGUI, TextMeshProUGUI, DynamicBuildingEntityData> OnBuildingEntitySpawnOnScene;
     #endregion
 }
