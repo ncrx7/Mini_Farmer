@@ -32,12 +32,13 @@ public class GameEventHandler : MonoBehaviour
 
     public static Action<FixedBaseEntityData, int> OnCreateEntity;
 
-    public static Action<TextMeshProUGUI, TextMeshProUGUI, TextMeshProUGUI, DynamicBuildingEntityData> OnBuildingEntitySpawnOnScene;
+    public static Action<BuildingEntityManager, string, string> OnBuildingEntitySpawnOnScene;
 
     #region Production Events
     public static Action<BuildingEntityManager, int, StatType, string> OnProductionStart;
     public static Action<BuildingEntityManager, int, float> OnProductionContinue;
     public static Action<BuildingEntityManager, int, int> OnProductionEnd;
+    public static Action<BuildingEntityManager, string, string> OnCompleteCalculateProductByElapsedTime;
     #endregion
     #endregion
 }

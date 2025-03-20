@@ -87,7 +87,7 @@ namespace Data.Controllers
             try
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(savePath));
-                Debug.Log("Updating Save File At: " + savePath);
+                //Debug.Log("Updating Save File At: " + savePath);
 
                 string dataToStore = JsonUtility.ToJson(playerStatData, true);
 

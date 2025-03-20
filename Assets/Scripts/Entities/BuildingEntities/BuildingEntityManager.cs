@@ -22,14 +22,14 @@ namespace Entities.BuildingEntities
         [SerializeField] private Slider _slider;
         [SerializeField] private TextMeshProUGUI _productInStorageText;
         [SerializeField] private TextMeshProUGUI _productTimeText;
-        [SerializeField] private TextMeshProUGUI _productQueueAmountText;
+        [SerializeField] private TextMeshProUGUI _storageCapacityRateText;
         private Queue<IProduction<DynamicBuildingEntityData>> _productionsCommands;
 
         private async void Start()
         {
             await UniTask.WaitUntil(() => IsCreateProcessFinished == true);
 
-            GameEventHandler.OnBuildingEntitySpawnOnScene?.Invoke(_productInStorageText, _productTimeText, _productQueueAmountText, entityData);
+            GameEventHandler.OnBuildingEntitySpawnOnScene?.Invoke(this, entityData.CurrentProductInStorage.ToString(), GetStorageCapacityRate());
 
             InitializeBuilding();
         }
@@ -93,10 +93,7 @@ namespace Entities.BuildingEntities
 
             GameDataManager.Instance.UpdatePlayerDataFile();
 
-            _productInStorageText.text = entityData.CurrentProductInStorage.ToString();
-            _productTimeText.text = "";
-            _productQueueAmountText.text = $"{entityData.ProduceList.Count} / {entityData.FixedBuildingEntityData.BuildingStorageMaxCapacity}";
-            _slider.value = 1;
+            GameEventHandler.OnCompleteCalculateProductByElapsedTime?.Invoke(this, entityData.CurrentProductInStorage.ToString(), GetStorageCapacityRate());
 
             await UniTask.DelayFrame(1);
         }
@@ -107,11 +104,16 @@ namespace Entities.BuildingEntities
             return Mathf.Max((int)timeDifference.TotalSeconds, 0);;
         }
 
+        private string GetStorageCapacityRate()
+        {
+            return $"{entityData.ProduceList.Count + entityData.CurrentProductInStorage} / {entityData.FixedBuildingEntityData.BuildingStorageMaxCapacity}";
+        }
+
         public int GetProductionQueueCount => _productionsCommands.Count;
 
         public Slider GetSlider => _slider;
         public TextMeshProUGUI GetCurrentStorageText => _productInStorageText;
         public TextMeshProUGUI GetProductTimeText => _productTimeText;
-        public TextMeshProUGUI GetProductQueueAmountText => _productQueueAmountText;
+        public TextMeshProUGUI GetStorageCapacityRateText => _storageCapacityRateText;
     }
 }

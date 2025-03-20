@@ -125,14 +125,15 @@ MonoBehaviour:
     EntityType: 0
     FixedBuildingEntityData: {fileID: 0}
     CurrentProductInStorage: 0
-    ProduceQueue: []
+    ProduceLastProcessTime: 
+    ProduceList: []
   IsCreateProcessFinished: 0
   _buildingEntitySetupper: {fileID: 7382539890783126614}
   _entityType: 3
   _slider: {fileID: 8163340748565206300}
   _productInStorageText: {fileID: 8163340749028574485}
   _productTimeText: {fileID: 8163340747782954296}
-  _productQueueAmountText: {fileID: 8450978361176217942}
+  _storageCapacityRateText: {fileID: 8450978361176217942}
 --- !u!114 &7382539890783126614
 MonoBehaviour:
   m_ObjectHideFlags: 0
