@@ -14,7 +14,7 @@ namespace Entities.BuildingEntities.InterfaceHandlers
 
         public async UniTask StartProduction(DynamicBuildingEntityData dynamicBuildingEntityData, EntityManager<DynamicBuildingEntityData> entityManager)
         {
-            CurrentRemainProductionTime = dynamicBuildingEntityData.FixedBuildingEntityData.ProductionTime;
+            if(CurrentRemainProductionTime == 0) CurrentRemainProductionTime = dynamicBuildingEntityData.FixedBuildingEntityData.ProductionTime;
 
             StatType resourceStatType = dynamicBuildingEntityData.FixedBuildingEntityData.ResourceProduct.StatType;
             StatType productStatType = dynamicBuildingEntityData.FixedBuildingEntityData.ProductionProcut.StatType;

@@ -16,7 +16,7 @@ namespace Data.Models.DynamicData
         public EntityType EntityType;
         public FixedBuildingEntityData FixedBuildingEntityData;
         public int CurrentProductInStorage;
-        public DateTime ProduceLastProcessTime;
+        public string ProduceLastProcessTime;
         public List<BuildingProduceProduction> ProduceQueue;
 
         public DynamicBuildingEntityData(int entityId, EntityType entityType, FixedBuildingEntityData fixedEntityData, int currentProductInStorage, List<BuildingProduceProduction> produceQueue)
@@ -26,6 +26,11 @@ namespace Data.Models.DynamicData
             FixedBuildingEntityData = fixedEntityData;
             CurrentProductInStorage = currentProductInStorage;
             ProduceQueue = produceQueue;
+        }
+
+        public DateTime GetProduceLastProcessTime()
+        {
+            return DateTime.TryParse(ProduceLastProcessTime, out DateTime result) ? result : DateTime.MinValue;
         }
     }
 }

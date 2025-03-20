@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,24 +32,59 @@ namespace Entities.BuildingEntities
             GameEventHandler.OnBuildingEntitySpawnOnScene?.Invoke(_productInStorageText, _productTimeText, _productQueueAmountText, entityData);
 
             _productionsCommands = new Queue<IProduction<DynamicBuildingEntityData>>(entityData.ProduceQueue);
+            CheckElapsedTimeProduce();
 
             StartBuildingProduction();
         }
 
         private async void StartBuildingProduction()
         {
-            while ( _productionsCommands.Count > 0)
+            while (_productionsCommands.Count > 0)
             {
+                entityData.ProduceLastProcessTime = DateTime.UtcNow.ToString("O");
+
                 IProduction<DynamicBuildingEntityData> productionCommand = _productionsCommands.Dequeue();
 
                 Debug.Log("product produce start");
                 await productionCommand.StartProduction(entityData, this);
                 Debug.Log("product produce end");
-                
+
                 GameDataManager.Instance.UpdatePlayerDataFile();
                 GameEventHandler.OnProductionEnd?.Invoke(this, entityData.CurrentProductInStorage, 0);
                 //GameEventHandler
             }
+        }
+
+        private void CheckElapsedTimeProduce()
+        {
+            if (entityData.ProduceLastProcessTime == null && entityData.ProduceQueue.Count == 0)
+            {
+                Debug.Log("Last process time is null");
+                return;
+            }
+
+            TimeSpan timeDifference = DateTime.Now - entityData.GetProduceLastProcessTime();
+            int secondElapsed = Mathf.Max((int)timeDifference.TotalSeconds, 0);
+            Debug.Log("Last process time is not null and total elapsed second is : " + secondElapsed);
+
+            if (secondElapsed <= entityData.ProduceQueue[0].CurrentRemainProductionTime)
+                return;
+
+            int productionFinishedAmount = secondElapsed / entityData.FixedBuildingEntityData.ProductionTime;
+
+            int iterationNumber = productionFinishedAmount <= _productionsCommands.Count ? productionFinishedAmount : _productionsCommands.Count;
+
+            for (int i = 0; i < iterationNumber; i++)
+            {
+                _productionsCommands.Dequeue();
+                GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount -= entityData.FixedBuildingEntityData.ResourceAmount;
+                entityData.CurrentProductInStorage += entityData.FixedBuildingEntityData.ProductAmount;
+            }
+
+            _productInStorageText.text = entityData.CurrentProductInStorage.ToString();
+            _productTimeText.text = "";
+            _productQueueAmountText.text = $"{_productionsCommands.Count} / {entityData.FixedBuildingEntityData.BuildingStorageMaxCapacity}";
+            _slider.value = 1;
         }
 
         public int GetProductionQueueCount => _productionsCommands.Count;
