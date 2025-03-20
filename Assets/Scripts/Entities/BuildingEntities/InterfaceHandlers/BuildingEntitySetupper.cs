@@ -45,7 +45,7 @@ namespace Entities.BuildingEntities.InterfaceHandlers
                         EntityManager<DynamicBuildingEntityData> buildingEntity = Instantiate(fixedEntityData.EntityPrefab, targetPosition, Quaternion.Euler(fixedBuildingEntityData.SpawnRotation), GridBoardManager.Instance.GetEntityLoader.transform)
                          as EntityManager<DynamicBuildingEntityData>;
 
-                        buildingEntity.entityData.FixedBuildingEntityData = fixedBuildingEntityData;
+                        //buildingEntity.entityData.FixedBuildingEntityData = fixedBuildingEntityData;
 
                         buildingEntity.gameObject.DoElasticStretch(new Vector3(0.5f, 2f, 0.5f), 1.5f, () => Debug.Log("entity spawned"));
 
@@ -53,7 +53,8 @@ namespace Entities.BuildingEntities.InterfaceHandlers
 
                         grassAreaData.IsEmpty = false;
 
-                        SaveBuildEntityData(fixedBuildingEntityData, grassAreaData);
+                        SaveBuildEntityData(fixedBuildingEntityData, grassAreaData, buildingEntity);
+                        
 
                         shouldBreakLoops = true;
                         break;
@@ -62,17 +63,21 @@ namespace Entities.BuildingEntities.InterfaceHandlers
             }
         }
 
-        private void SaveBuildEntityData(FixedBuildingEntityData fixedBuildingEntityData, GrassAreaData grassAreaData)
+        private void SaveBuildEntityData(FixedBuildingEntityData fixedBuildingEntityData, GrassAreaData grassAreaData, EntityManager<DynamicBuildingEntityData> buildingEntity)
         {
             DynamicBuildingEntityData dynamicBuildingEntityData = new(0, fixedBuildingEntityData.EntityType, fixedBuildingEntityData, 0, new()); 
-            dynamicBuildingEntityData.ProduceQueue.Add(new BuildingProduceProduction(0));
-            dynamicBuildingEntityData.ProduceQueue.Add(new BuildingProduceProduction(1));
+            dynamicBuildingEntityData.ProduceQueue.Add(new BuildingProduceProduction());
+            dynamicBuildingEntityData.ProduceQueue.Add(new BuildingProduceProduction());
+
+            buildingEntity.entityData = dynamicBuildingEntityData;
 
             GameDataManager.Instance.GetGameDataReference.BuildingEntityDatas.Add(dynamicBuildingEntityData);
 
             grassAreaData.DynamicBuildingEntityData = dynamicBuildingEntityData;
 
             GameDataManager.Instance.UpdatePlayerDataFile();  
+
+            buildingEntity.IsCreateProcessFinished = true;
         }
 
         private void PayPrice(FixedBaseEntityData fixedEntityData)

@@ -10,35 +10,40 @@ namespace Entities.BuildingEntities.InterfaceHandlers
     [Serializable]
     public class BuildingProduceProduction : IProduction<DynamicBuildingEntityData>
     {
-        public int CurrentProductionTime { get; set; }
-        public int productionId;
+        public int CurrentRemainProductionTime;
 
-        public async UniTask StartProduction(DynamicBuildingEntityData dynamicBuildingEntityData)
+        public async UniTask StartProduction(DynamicBuildingEntityData dynamicBuildingEntityData, EntityManager<DynamicBuildingEntityData> entityManager)
         {
-            int productionTime = dynamicBuildingEntityData.FixedBuildingEntityData.ProductionTime;
+            CurrentRemainProductionTime = dynamicBuildingEntityData.FixedBuildingEntityData.ProductionTime;
 
             StatType resourceStatType = dynamicBuildingEntityData.FixedBuildingEntityData.ResourceProduct.StatType;
             StatType productStatType = dynamicBuildingEntityData.FixedBuildingEntityData.ProductionProcut.StatType;
 
-            while (productionTime > 0)
-            {
-                productionTime--;
-                CurrentProductionTime++;
-                Debug.Log("producing : " + dynamicBuildingEntityData.FixedBuildingEntityData.ProductionProcut.StatName + productionTime);
+            GameDataManager.Instance.GetDynamicStatData(resourceStatType).Amount -= dynamicBuildingEntityData.FixedBuildingEntityData.ResourceAmount;
 
-                if(productionTime == 0)
+            string remainCommandAmount = $"{((BuildingEntityManager)entityManager).GetProductionQueueCount} / {dynamicBuildingEntityData.FixedBuildingEntityData.BuildingStorageMaxCapacity}";
+            
+            GameEventHandler.OnProductionStart?.Invoke(entityManager as BuildingEntityManager, CurrentRemainProductionTime,
+                                                         resourceStatType, remainCommandAmount);
+
+            while (CurrentRemainProductionTime > 0)
+            {
+                CurrentRemainProductionTime--;
+           
+                Debug.Log("producing : " + dynamicBuildingEntityData.FixedBuildingEntityData.ProductionProcut.StatName + "Remain -> " + CurrentRemainProductionTime);
+                
+                float sliderValue = (float)(dynamicBuildingEntityData.FixedBuildingEntityData.ProductionTime - CurrentRemainProductionTime) / dynamicBuildingEntityData.FixedBuildingEntityData.ProductionTime;
+                GameEventHandler.OnProductionContinue?.Invoke(entityManager as BuildingEntityManager, CurrentRemainProductionTime, sliderValue);
+                
+                GameDataManager.Instance.UpdatePlayerDataFile();
+
+                if(CurrentRemainProductionTime == 0)
                 {
-                    GameDataManager.Instance.GetDynamicStatData(resourceStatType).Amount -= dynamicBuildingEntityData.FixedBuildingEntityData.ResourceAmount;
-                    GameDataManager.Instance.GetDynamicStatData(productStatType).Amount += dynamicBuildingEntityData.FixedBuildingEntityData.ProductAmount;
+                    dynamicBuildingEntityData.CurrentProductInStorage += dynamicBuildingEntityData.FixedBuildingEntityData.ProductAmount;
                 }
 
                 await UniTask.Delay(1000);
             }
-        }
-
-        public BuildingProduceProduction(int id)
-        {
-            productionId = id;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Data.Models.DynamicData;
 using Data.Models.FixedScriptableData;
+using Entities.BuildingEntities;
 using Entities.PlaneEntities;
 using NodeGridSystem.Models;
 using TMPro;
@@ -32,5 +33,11 @@ public class GameEventHandler : MonoBehaviour
     public static Action<FixedBaseEntityData, int> OnCreateEntity;
 
     public static Action<TextMeshProUGUI, TextMeshProUGUI, TextMeshProUGUI, DynamicBuildingEntityData> OnBuildingEntitySpawnOnScene;
+
+    #region Production Events
+    public static Action<BuildingEntityManager, int, StatType, string> OnProductionStart;
+    public static Action<BuildingEntityManager, int, float> OnProductionContinue;
+    public static Action<BuildingEntityManager, int, int> OnProductionEnd;
+    #endregion
     #endregion
 }

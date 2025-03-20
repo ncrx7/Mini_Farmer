@@ -8,6 +8,7 @@ using NodeGridSystem.Controllers;
 using TMPro;
 using UI.FarmerScene.EntityUIController;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityUtils.BaseClasses;
 
 namespace UI.FarmerScene
@@ -36,12 +37,31 @@ namespace UI.FarmerScene
             GameEventHandler.OnCompleteStatUILoad += () => ExecuteUIAction<bool, GameObject>(UIActionType.SetMainMenuLoadingPanel, false, _loadingPanel);
 
             GameEventHandler.OnCreateEntity += (fixedEntityData, money) => ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, money.ToString(), _statTexts[StatType.Money]);
-            
+
             GameEventHandler.OnBuildingEntitySpawnOnScene += (productInStorageText, productTimeText, productQueueAmountText, buildingEntityData) =>
-            { 
+            {
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, buildingEntityData.CurrentProductInStorage.ToString(), productInStorageText);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "40s" , productTimeText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "40s", productTimeText);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "4/10", productQueueAmountText);
+            };
+
+            GameEventHandler.OnProductionStart += (buildEntityManager, currentRemainTime, statType, remainCommandCount) =>
+            {
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentRemainTime.ToString() + "s", buildEntityManager.GetProductTimeText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, remainCommandCount, buildEntityManager.GetProductQueueAmountText);
+            };
+
+            GameEventHandler.OnProductionContinue += (buildEntityManager, currentRemainTime, sliderValue) => 
+            {
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentRemainTime.ToString() + "s", buildEntityManager.GetProductTimeText);
+                ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetSlider, sliderValue);
+            };
+
+            GameEventHandler.OnProductionEnd += (buildEntityManager, currentStorage, currentTime) =>
+            {
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetCurrentStorageText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentTime.ToString(), buildEntityManager.GetProductTimeText);
             };
         }
 
@@ -56,12 +76,31 @@ namespace UI.FarmerScene
             GameEventHandler.OnCompleteStatUILoad -= () => ExecuteUIAction<bool, GameObject>(UIActionType.SetMainMenuLoadingPanel, false, _loadingPanel);
 
             GameEventHandler.OnCreateEntity -= (fixedEntityData, money) => ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, money.ToString(), _statTexts[StatType.Money]);
-        
+
             GameEventHandler.OnBuildingEntitySpawnOnScene -= (productInStorageText, productTimeText, productQueueAmountText, buildingEntityData) =>
-            { 
+            {
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, buildingEntityData.CurrentProductInStorage.ToString(), productInStorageText);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "40s" , productTimeText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "40s", productTimeText);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "4/10", productQueueAmountText);
+            };
+
+            GameEventHandler.OnProductionStart -= (buildEntityManager, currentTime, statType, remainCommandCount) =>
+            {
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentTime.ToString(), buildEntityManager.GetProductTimeText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, remainCommandCount, buildEntityManager.GetProductQueueAmountText);
+            };
+
+            GameEventHandler.OnProductionContinue -= (buildEntityManager, currentTime, sliderValue) => 
+            {
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentTime.ToString(), buildEntityManager.GetProductTimeText);
+                ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetSlider, sliderValue);
+            };
+
+            GameEventHandler.OnProductionEnd -= (buildEntityManager, currentStorage, currentTime) =>
+            {
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetCurrentStorageText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentTime.ToString(), buildEntityManager.GetProductTimeText);
             };
         }
 
@@ -110,7 +149,7 @@ namespace UI.FarmerScene
                 marketUI.GetMarketImage.sprite = entityData.MarketSprite;
                 marketUI.GetPriceText.text = entityData.MarketPrice.ToString() + "$";
                 marketUI.GetPurchaseText.text = "Purchase";
-   
+
                 marketUI.GetPurchaseButton.onClick.AddListener(() =>
                 {
                     if (entityData.EntityPrefab.TryGetComponent<IEntitySetup>(out var entitySetup))

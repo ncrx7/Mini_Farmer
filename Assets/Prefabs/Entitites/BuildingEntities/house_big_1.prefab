@@ -233,7 +233,11 @@ MonoBehaviour:
     EntityType: 0
     FixedBuildingEntityData: {fileID: 0}
     CurrentProductInStorage: 0
+    ProduceQueue: []
+  IsCreateProcessFinished: 0
+  _buildingEntitySetupper: {fileID: -351276413673403706}
   _entityType: 4
+  _slider: {fileID: 8276458829679946448}
   _productInStorageText: {fileID: 8276458828952074969}
   _productTimeText: {fileID: 8276458827773616884}
   _productQueueAmountText: {fileID: 8563040915305752218}
@@ -716,6 +720,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8276458829679946448 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5982216326703870915, guid: b2a1327e235b145febb0422b58a917ff,
+    type: 3}
+  m_PrefabInstance: {fileID: 2440662349113071891}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &8276458829679946450 stripped

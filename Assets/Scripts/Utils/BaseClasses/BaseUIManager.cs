@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UnityUtils.BaseClasses
 {
@@ -15,6 +16,8 @@ namespace UnityUtils.BaseClasses
             AddUIAction<bool, GameObject>(UIActionType.SetMainMenuLoadingPanel, (active, panel) => panel.SetActive(active));
 
             AddUIAction<string, TextMeshProUGUI>(UIActionType.SetText, (textString, textObject) => textObject.text = textString);
+
+            AddUIAction<Slider, float>(UIActionType.SetSlider, (slider, value) => slider.value = value);
         }
 
         protected void AddUIAction<T>(UIActionType actionType, Action<T> action)
@@ -56,6 +59,7 @@ namespace UnityUtils.BaseClasses
 public enum UIActionType
 {
     SetMainMenuLoadingPanel,
-    SetText
+    SetText,
+    SetSlider
 }
 

@@ -68,6 +68,8 @@ public class EntityLoaderFromJson : MonoBehaviour
 
         buildingEntity.entityData = dynamicBuildingEntityData;
 
+        buildingEntity.IsCreateProcessFinished = true;
+
         buildingEntity.gameObject.DoElasticStretch(_scaleFactor, _animationDuration, () => grassAreaManager.entityData.IsEmpty = false);
     }
 }

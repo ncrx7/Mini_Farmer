@@ -12,5 +12,6 @@ namespace Entities
     public class EntityManager<T> : EntityManager
     {
         public T entityData;
+        public bool IsCreateProcessFinished = false;
     }
 }
