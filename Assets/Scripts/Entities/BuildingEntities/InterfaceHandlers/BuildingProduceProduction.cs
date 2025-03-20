@@ -12,10 +12,13 @@ namespace Entities.BuildingEntities.InterfaceHandlers
     {
         public int CurrentRemainProductionTime;
 
+        public BuildingProduceProduction(int remainTime)
+        {
+            CurrentRemainProductionTime = remainTime;
+        }
+
         public async UniTask StartProduction(DynamicBuildingEntityData dynamicBuildingEntityData, EntityManager<DynamicBuildingEntityData> entityManager)
         {
-            if(CurrentRemainProductionTime == 0) CurrentRemainProductionTime = dynamicBuildingEntityData.FixedBuildingEntityData.ProductionTime;
-
             StatType resourceStatType = dynamicBuildingEntityData.FixedBuildingEntityData.ResourceProduct.StatType;
             StatType productStatType = dynamicBuildingEntityData.FixedBuildingEntityData.ProductionProcut.StatType;
 
@@ -29,11 +32,11 @@ namespace Entities.BuildingEntities.InterfaceHandlers
             while (CurrentRemainProductionTime > 0)
             {
                 CurrentRemainProductionTime--;
-           
-                Debug.Log("producing : " + dynamicBuildingEntityData.FixedBuildingEntityData.ProductionProcut.StatName + "Remain -> " + CurrentRemainProductionTime);
                 
                 float sliderValue = (float)(dynamicBuildingEntityData.FixedBuildingEntityData.ProductionTime - CurrentRemainProductionTime) / dynamicBuildingEntityData.FixedBuildingEntityData.ProductionTime;
                 GameEventHandler.OnProductionContinue?.Invoke(entityManager as BuildingEntityManager, CurrentRemainProductionTime, sliderValue);
+
+                dynamicBuildingEntityData.ProduceLastProcessTime = DateTime.UtcNow.ToString("O");
                 
                 GameDataManager.Instance.UpdatePlayerDataFile();
 
