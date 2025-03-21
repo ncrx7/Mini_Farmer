@@ -87,7 +87,7 @@ namespace Data.Controllers
             DynamicStatData breadData = new DynamicStatData(2, 0);
             DynamicStatData levelData = new DynamicStatData(3, 1);
             DynamicStatData xpData = new DynamicStatData(4, 0);
-            DynamicStatData moneyData = new DynamicStatData(5, 600);
+            DynamicStatData moneyData = new DynamicStatData(5, 4600);
 
             GameData gameData = new GameData(new List<DynamicStatData> { wheatData, flourData, breadData, moneyData, xpData, levelData }, new() { }, new() { });
 

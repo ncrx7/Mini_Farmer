@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Data.Models.DynamicData;
 using Data.Models.FixedScriptableData;
+using Entities;
 using Entities.BuildingEntities;
 using Entities.PlaneEntities;
 using NodeGridSystem.Models;
@@ -40,5 +41,8 @@ public class GameEventHandler : MonoBehaviour
     public static Action<BuildingEntityManager, int, int> OnProductionEnd;
     public static Action<BuildingEntityManager, string, string> OnCompleteCalculateProductByElapsedTime;
     #endregion
+
+    public static Action<BuildingEntityManager> OnClickEntity;
+    public static Action OnClickReset;
     #endregion
 }

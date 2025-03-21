@@ -25,6 +25,7 @@ namespace Entities.BuildingEntities
         [SerializeField] private TextMeshProUGUI _productTimeText;
         [SerializeField] private TextMeshProUGUI _storageCapacityRateText;
         [SerializeField] private Image _productionProduceImage;
+        [SerializeField] private GameObject _productionButtonsPanel;
 
 
         private async void Start()
@@ -118,5 +119,6 @@ namespace Entities.BuildingEntities
         public TextMeshProUGUI GetProductTimeText => _productTimeText;
         public TextMeshProUGUI GetStorageCapacityRateText => _storageCapacityRateText;
         public Image GetProductionProduceImage => _productionProduceImage;
+        public GameObject GetProductionButtonsPanel => _productionButtonsPanel;
     }
 }

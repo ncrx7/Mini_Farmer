@@ -26,6 +26,8 @@ namespace UI.FarmerScene
         [SerializeField] private GameObject _loadingPanel;
         [SerializeField] private TextMeshProUGUI _loadingPanelText;
 
+        private GameObject _activeProductionButtonPanel;
+
         private void OnEnable()
         {
             GameEventHandler.OnStartEntitesLoad += () => ExecuteUIAction<bool, GameObject>(UIActionType.SetMainMenuLoadingPanel, true, _loadingPanel);
@@ -76,6 +78,21 @@ namespace UI.FarmerScene
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "", buildEntityManager.GetProductTimeText);
                 ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetSlider, 1);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
+            };
+
+            GameEventHandler.OnClickEntity += (buildEntityManager) =>
+            {
+                if(_activeProductionButtonPanel != null)
+                    _activeProductionButtonPanel.SetActive(false);
+
+                _activeProductionButtonPanel = buildEntityManager.GetProductionButtonsPanel;
+                _activeProductionButtonPanel.SetActive(true);
+            };
+
+            GameEventHandler.OnClickReset += () =>
+            {
+                if(_activeProductionButtonPanel != null)
+                    _activeProductionButtonPanel.SetActive(false);
             };
         }
 
@@ -129,6 +146,21 @@ namespace UI.FarmerScene
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "", buildEntityManager.GetProductTimeText);
                 ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetSlider, 1);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
+            };
+
+            GameEventHandler.OnClickEntity -= (buildEntityManager) =>
+            {
+                if(_activeProductionButtonPanel != null)
+                    _activeProductionButtonPanel.SetActive(false);
+                    
+                _activeProductionButtonPanel = buildEntityManager.GetProductionButtonsPanel;
+                _activeProductionButtonPanel.SetActive(true);
+            };
+
+            GameEventHandler.OnClickReset -= () =>
+            {
+                if(_activeProductionButtonPanel != null)
+                    _activeProductionButtonPanel.SetActive(false);
             };
         }
 

@@ -66,8 +66,8 @@ namespace Entities.BuildingEntities.InterfaceHandlers
         private void SaveBuildEntityData(FixedBuildingEntityData fixedBuildingEntityData, GrassAreaData grassAreaData, EntityManager<DynamicBuildingEntityData> buildingEntity)
         {
             DynamicBuildingEntityData dynamicBuildingEntityData = new(0, fixedBuildingEntityData.EntityType, fixedBuildingEntityData, 0, new()); 
-            dynamicBuildingEntityData.ProductionList.Add(new BuildingProduceProduction(fixedBuildingEntityData.ProductionTime));
-            dynamicBuildingEntityData.ProductionList.Add(new BuildingProduceProduction(fixedBuildingEntityData.ProductionTime));
+            /* dynamicBuildingEntityData.ProductionList.Add(new BuildingProduceProduction(fixedBuildingEntityData.ProductionTime));
+            dynamicBuildingEntityData.ProductionList.Add(new BuildingProduceProduction(fixedBuildingEntityData.ProductionTime)); */
 
             buildingEntity.entityData = dynamicBuildingEntityData;
 
