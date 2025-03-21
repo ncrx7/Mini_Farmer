@@ -40,13 +40,18 @@ namespace UI.FarmerScene
 
             GameEventHandler.OnCreateEntity += (fixedEntityData, money) => ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, money.ToString(), _statTexts[StatType.Money]);
 
-            GameEventHandler.OnBuildingEntitySpawnOnScene += (buildEntityManager, currentStorage, storageCapacityRate, productIcon) =>
+            GameEventHandler.OnBuildingEntitySpawnOnScene += (buildEntityManager, currentStorage, storageCapacityRate, productIcon, buttonEvent) =>
             {
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage, buildEntityManager.GetCurrentStorageText);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "", buildEntityManager.GetProductTimeText);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
                 ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetSlider, 1);
                 ExecuteUIAction<Image, Sprite>(UIActionType.SetImage, buildEntityManager.GetProductionProduceImage, productIcon);
+
+                if(buildEntityManager.GetProductionButtonsPanel == null)
+                    return;
+                    
+                buildEntityManager.GetProductionButtonsPanel.GetIncreaseButton.onClick.AddListener(() => buttonEvent?.Invoke());
             };
 
             GameEventHandler.OnProductionStart += (buildEntityManager, currentRemainTime, statType, storageCapacityRate) =>
@@ -88,7 +93,7 @@ namespace UI.FarmerScene
                 if(_activeProductionButtonPanel != null)
                     _activeProductionButtonPanel.SetActive(false);
 
-                _activeProductionButtonPanel = buildEntityManager.GetProductionButtonsPanel;
+                _activeProductionButtonPanel = buildEntityManager.GetProductionButtonsPanel.gameObject;
                 _activeProductionButtonPanel.SetActive(true);
             };
 
@@ -111,13 +116,15 @@ namespace UI.FarmerScene
 
             GameEventHandler.OnCreateEntity -= (fixedEntityData, money) => ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, money.ToString(), _statTexts[StatType.Money]);
 
-            GameEventHandler.OnBuildingEntitySpawnOnScene -= (buildEntityManager, currentStorage, storageCapacityRate, productIcon) =>
+            GameEventHandler.OnBuildingEntitySpawnOnScene -= (buildEntityManager, currentStorage, storageCapacityRate, productIcon, buttonEvent) =>
             {
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage, buildEntityManager.GetCurrentStorageText);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "", buildEntityManager.GetProductTimeText);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
                 ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetSlider, 1);
                 ExecuteUIAction<Image, Sprite>(UIActionType.SetImage, buildEntityManager.GetProductionProduceImage, productIcon);
+                
+                buildEntityManager.GetProductionButtonsPanel.GetIncreaseButton.onClick.AddListener(() => buttonEvent?.Invoke());
             };
 
             GameEventHandler.OnProductionStart -= (buildEntityManager, currentRemainTime, statType, storageCapacityRate) =>
@@ -159,7 +166,7 @@ namespace UI.FarmerScene
                 if(_activeProductionButtonPanel != null)
                     _activeProductionButtonPanel.SetActive(false);
 
-                _activeProductionButtonPanel = buildEntityManager.GetProductionButtonsPanel;
+                _activeProductionButtonPanel = buildEntityManager.GetProductionButtonsPanel.gameObject;
                 _activeProductionButtonPanel.SetActive(true);
             };
 

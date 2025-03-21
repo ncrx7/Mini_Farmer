@@ -11,5 +11,9 @@ namespace UI.PrefabUIs
         [SerializeField] private Button _increaseProductionButton;
         [SerializeField] private Button _reduceProductionButton;
         [SerializeField] private TextMeshProUGUI _resourceAmountText;
+
+        public Button GetIncreaseButton => _increaseProductionButton;
+        public Button GetReduceButton => _reduceProductionButton;
+        public TextMeshProUGUI GetResourceAmountText => _resourceAmountText;
     }
 }

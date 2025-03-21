@@ -8,6 +8,7 @@ using Data.Models.DynamicData;
 using Entities.BuildingEntities.InterfaceHandlers;
 using Interfaces;
 using TMPro;
+using UI.PrefabUIs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,7 @@ namespace Entities.BuildingEntities
         [SerializeField] private BuildingEntitySetupper _buildingEntitySetupper;
         [SerializeField] private EntityType _entityType;
         private Queue<IProduction<DynamicBuildingEntityData>> _productionsCommands;
+        public bool BuildingIsProducting = false;
 
         [Header("World Space Building Entity UI References")]
         [SerializeField] private Slider _slider;
@@ -25,14 +27,36 @@ namespace Entities.BuildingEntities
         [SerializeField] private TextMeshProUGUI _productTimeText;
         [SerializeField] private TextMeshProUGUI _storageCapacityRateText;
         [SerializeField] private Image _productionProduceImage;
-        [SerializeField] private GameObject _productionButtonsPanel;
+        [SerializeField] private ProductButtonPanelController _productionButtonsPanel;
 
 
         private async void Start()
         {
             await UniTask.WaitUntil(() => IsCreateProcessFinished == true);
 
-            GameEventHandler.OnBuildingEntitySpawnOnScene?.Invoke(this, entityData.CurrentProductInStorage.ToString(), GetStorageCapacityRate(), entityData.FixedBuildingEntityData.ProductionProcut.StatSprite);
+            Action increaseButtonEvent = () =>
+            {
+                if (BuildingIsProducting)
+                {
+                    _productionsCommands.Enqueue(new BuildingProduceProduction(entityData.FixedBuildingEntityData.ProductionTime));
+
+                    entityData.ProductionList = _productionsCommands.Cast<BuildingProduceProduction>().ToList();
+
+                    GameDataManager.Instance.UpdatePlayerDataFile();
+
+                    _storageCapacityRateText.text = GetStorageCapacityRate();
+                }
+                else
+                {
+                    entityData.ProductionList.Add(new BuildingProduceProduction(entityData.FixedBuildingEntityData.ProductionTime));
+                    StartBuildingProduction().Forget();
+                }
+            };
+
+            GameEventHandler.OnBuildingEntitySpawnOnScene?.Invoke(this, entityData.CurrentProductInStorage.ToString(),
+                                                                GetStorageCapacityRate(),
+                                                                entityData.FixedBuildingEntityData.ProductionProcut.StatSprite,
+                                                                increaseButtonEvent);
 
             InitializeBuilding();
         }
@@ -47,6 +71,8 @@ namespace Entities.BuildingEntities
         {
             if (entityData.ProductionList.Count == 0)
                 return;
+
+            BuildingIsProducting = true;
 
             _productionsCommands = new Queue<IProduction<DynamicBuildingEntityData>>(entityData.ProductionList);
 
@@ -64,6 +90,8 @@ namespace Entities.BuildingEntities
 
                 GameEventHandler.OnProductionEnd?.Invoke(this, entityData.CurrentProductInStorage, 0);
             }
+
+            BuildingIsProducting = false;
         }
 
         private async UniTask CalculateProductsByElapseTime()
@@ -104,7 +132,7 @@ namespace Entities.BuildingEntities
         private int GetElapsedTime()
         {
             TimeSpan timeDifference = DateTime.Now - entityData.GetProduceLastProcessTime();
-            return Mathf.Max((int)timeDifference.TotalSeconds, 0);;
+            return Mathf.Max((int)timeDifference.TotalSeconds, 0); ;
         }
 
         private string GetStorageCapacityRate()
@@ -119,6 +147,6 @@ namespace Entities.BuildingEntities
         public TextMeshProUGUI GetProductTimeText => _productTimeText;
         public TextMeshProUGUI GetStorageCapacityRateText => _storageCapacityRateText;
         public Image GetProductionProduceImage => _productionProduceImage;
-        public GameObject GetProductionButtonsPanel => _productionButtonsPanel;
+        public ProductButtonPanelController GetProductionButtonsPanel => _productionButtonsPanel;
     }
 }
