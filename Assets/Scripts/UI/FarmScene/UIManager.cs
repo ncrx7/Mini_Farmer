@@ -82,6 +82,9 @@ namespace UI.FarmerScene
 
             GameEventHandler.OnClickEntity += (buildEntityManager) =>
             {
+                if(buildEntityManager.GetProductionButtonsPanel == null)
+                    return;
+
                 if(_activeProductionButtonPanel != null)
                     _activeProductionButtonPanel.SetActive(false);
 
@@ -150,9 +153,12 @@ namespace UI.FarmerScene
 
             GameEventHandler.OnClickEntity -= (buildEntityManager) =>
             {
+                if(buildEntityManager.GetProductionButtonsPanel == null)
+                    return;
+                    
                 if(_activeProductionButtonPanel != null)
                     _activeProductionButtonPanel.SetActive(false);
-                    
+
                 _activeProductionButtonPanel = buildEntityManager.GetProductionButtonsPanel;
                 _activeProductionButtonPanel.SetActive(true);
             };
