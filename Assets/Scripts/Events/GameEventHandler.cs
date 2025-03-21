@@ -32,7 +32,7 @@ public class GameEventHandler : MonoBehaviour
 
     public static Action<FixedBaseEntityData, int> OnCreateEntity;
 
-    public static Action<BuildingEntityManager, string, string> OnBuildingEntitySpawnOnScene;
+    public static Action<BuildingEntityManager, string, string, Sprite> OnBuildingEntitySpawnOnScene;
 
     #region Production Events
     public static Action<BuildingEntityManager, int, StatType, string> OnProductionStart;

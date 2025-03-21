@@ -18,6 +18,8 @@ namespace UnityUtils.BaseClasses
             AddUIAction<string, TextMeshProUGUI>(UIActionType.SetText, (textString, textObject) => textObject.text = textString);
 
             AddUIAction<Slider, float>(UIActionType.SetSlider, (slider, value) => slider.value = value);
+            
+            AddUIAction<Image, Sprite>(UIActionType.SetImage, (image, sprite) => image.sprite = sprite);
         }
 
         protected void AddUIAction<T>(UIActionType actionType, Action<T> action)
@@ -60,6 +62,7 @@ public enum UIActionType
 {
     SetMainMenuLoadingPanel,
     SetText,
-    SetSlider
+    SetSlider,
+    SetImage
 }
 

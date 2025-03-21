@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Wheat
   m_EditorClassIdentifier: 
   StatId: 0
+  StatType: 0
   StatName: Wheat
   StatDescription: Wheat Description
-  StatSprite: {fileID: 21300000, guid: be5df5669c8834b66a502e016ef957ff, type: 3}
+  StatSprite: {fileID: 21300000, guid: 92a0c6fb185fc7040a7c8d837fbef55e, type: 3}

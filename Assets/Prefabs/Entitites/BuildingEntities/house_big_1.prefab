@@ -234,7 +234,7 @@ MonoBehaviour:
     FixedBuildingEntityData: {fileID: 0}
     CurrentProductInStorage: 0
     ProduceLastProcessTime: 
-    ProduceList: []
+    ProductionList: []
   IsCreateProcessFinished: 0
   _buildingEntitySetupper: {fileID: -351276413673403706}
   _entityType: 4
@@ -242,6 +242,7 @@ MonoBehaviour:
   _productInStorageText: {fileID: 8276458828952074969}
   _productTimeText: {fileID: 8276458827773616884}
   _storageCapacityRateText: {fileID: 8563040915305752218}
+  _productionProduceImage: {fileID: 8186607081923989763}
 --- !u!114 &-351276413673403706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -699,6 +700,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2a1327e235b145febb0422b58a917ff, type: 3}
+--- !u!114 &8186607081923989763 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5783275845720786960, guid: b2a1327e235b145febb0422b58a917ff,
+    type: 3}
+  m_PrefabInstance: {fileID: 2440662349113071891}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8276458827773616884 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5982216325921618919, guid: b2a1327e235b145febb0422b58a917ff,

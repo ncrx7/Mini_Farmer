@@ -17,19 +17,21 @@ namespace Entities.BuildingEntities
     {
         [SerializeField] private BuildingEntitySetupper _buildingEntitySetupper;
         [SerializeField] private EntityType _entityType;
+        private Queue<IProduction<DynamicBuildingEntityData>> _productionsCommands;
 
         [Header("World Space Building Entity UI References")]
         [SerializeField] private Slider _slider;
         [SerializeField] private TextMeshProUGUI _productInStorageText;
         [SerializeField] private TextMeshProUGUI _productTimeText;
         [SerializeField] private TextMeshProUGUI _storageCapacityRateText;
-        private Queue<IProduction<DynamicBuildingEntityData>> _productionsCommands;
+        [SerializeField] private Image _productionProduceImage;
+
 
         private async void Start()
         {
             await UniTask.WaitUntil(() => IsCreateProcessFinished == true);
 
-            GameEventHandler.OnBuildingEntitySpawnOnScene?.Invoke(this, entityData.CurrentProductInStorage.ToString(), GetStorageCapacityRate());
+            GameEventHandler.OnBuildingEntitySpawnOnScene?.Invoke(this, entityData.CurrentProductInStorage.ToString(), GetStorageCapacityRate(), entityData.FixedBuildingEntityData.ProductionProcut.StatSprite);
 
             InitializeBuilding();
         }
@@ -42,10 +44,10 @@ namespace Entities.BuildingEntities
 
         private async UniTask StartBuildingProduction()
         {
-            if (entityData.ProduceList.Count == 0)
+            if (entityData.ProductionList.Count == 0)
                 return;
 
-            _productionsCommands = new Queue<IProduction<DynamicBuildingEntityData>>(entityData.ProduceList);
+            _productionsCommands = new Queue<IProduction<DynamicBuildingEntityData>>(entityData.ProductionList);
 
             while (_productionsCommands.Count > 0)
             {
@@ -55,7 +57,7 @@ namespace Entities.BuildingEntities
 
                 await productionCommand.StartProduction(entityData, this);
 
-                entityData.ProduceList = _productionsCommands.Cast<BuildingProduceProduction>().ToList();
+                entityData.ProductionList = _productionsCommands.Cast<BuildingProduceProduction>().ToList();
 
                 GameDataManager.Instance.UpdatePlayerDataFile();
 
@@ -65,20 +67,20 @@ namespace Entities.BuildingEntities
 
         private async UniTask CalculateProductsByElapseTime()
         {
-            if (entityData.ProduceLastProcessTime == null || entityData.ProduceList.Count == 0)
+            if (entityData.ProduceLastProcessTime == null || entityData.ProductionList.Count == 0)
                 return;
 
             int secondElapsed = GetElapsedTime();
 
-            for (int i = 0; i <= entityData.ProduceList.Count - 1; i++)
+            for (int i = 0; i <= entityData.ProductionList.Count - 1; i++)
             {
-                BuildingProduceProduction production = entityData.ProduceList[i];
+                BuildingProduceProduction production = entityData.ProductionList[i];
 
                 if (secondElapsed - production.CurrentRemainProductionTime > 0)
                 {
                     secondElapsed -= production.CurrentRemainProductionTime;
 
-                    entityData.ProduceList.RemoveAt(i);
+                    entityData.ProductionList.RemoveAt(i);
                     i--;
 
                     GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount -= entityData.FixedBuildingEntityData.ResourceAmount;
@@ -106,7 +108,7 @@ namespace Entities.BuildingEntities
 
         private string GetStorageCapacityRate()
         {
-            return $"{entityData.ProduceList.Count + entityData.CurrentProductInStorage} / {entityData.FixedBuildingEntityData.BuildingStorageMaxCapacity}";
+            return $"{entityData.ProductionList.Count + entityData.CurrentProductInStorage} / {entityData.FixedBuildingEntityData.BuildingStorageMaxCapacity}";
         }
 
         public int GetProductionQueueCount => _productionsCommands.Count;
@@ -115,5 +117,6 @@ namespace Entities.BuildingEntities
         public TextMeshProUGUI GetCurrentStorageText => _productInStorageText;
         public TextMeshProUGUI GetProductTimeText => _productTimeText;
         public TextMeshProUGUI GetStorageCapacityRateText => _storageCapacityRateText;
+        public Image GetProductionProduceImage => _productionProduceImage;
     }
 }

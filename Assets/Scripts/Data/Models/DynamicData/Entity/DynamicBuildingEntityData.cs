@@ -17,15 +17,15 @@ namespace Data.Models.DynamicData
         public FixedBuildingEntityData FixedBuildingEntityData;
         public int CurrentProductInStorage;
         public string ProduceLastProcessTime;
-        public List<BuildingProduceProduction> ProduceList;
+        public List<BuildingProduceProduction> ProductionList;
 
-        public DynamicBuildingEntityData(int entityId, EntityType entityType, FixedBuildingEntityData fixedEntityData, int currentProductInStorage, List<BuildingProduceProduction> produceQueue)
+        public DynamicBuildingEntityData(int entityId, EntityType entityType, FixedBuildingEntityData fixedEntityData, int currentProductInStorage, List<BuildingProduceProduction> productionQueue)
         {
             EntityId = entityId;
             EntityType = entityType;
             FixedBuildingEntityData = fixedEntityData;
             CurrentProductInStorage = currentProductInStorage;
-            ProduceList = produceQueue;
+            ProductionList = productionQueue;
         }
 
         public DateTime GetProduceLastProcessTime()

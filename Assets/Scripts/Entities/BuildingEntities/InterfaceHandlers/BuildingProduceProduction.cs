@@ -31,7 +31,7 @@ namespace Entities.BuildingEntities.InterfaceHandlers
 
             
 
-            string remainCommandAmount = $"{dynamicBuildingEntityData.ProduceList.Count + dynamicBuildingEntityData.CurrentProductInStorage} / {dynamicBuildingEntityData.FixedBuildingEntityData.BuildingStorageMaxCapacity}";
+            string remainCommandAmount = $"{dynamicBuildingEntityData.ProductionList.Count + dynamicBuildingEntityData.CurrentProductInStorage} / {dynamicBuildingEntityData.FixedBuildingEntityData.BuildingStorageMaxCapacity}";
 
             GameEventHandler.OnProductionStart?.Invoke(entityManager as BuildingEntityManager, CurrentRemainProductionTime,
                                                          resourceStatType, remainCommandAmount);
