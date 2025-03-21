@@ -112,7 +112,8 @@ public enum StatType
     Bread,
     Level,
     Xp,
-    Money
+    Money,
+    None,
 }
 
 public enum EntityType
