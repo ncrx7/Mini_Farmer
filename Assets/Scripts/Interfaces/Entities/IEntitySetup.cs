@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Data.Models.FixedScriptableData;
 using Entities.PlaneEntities;
-using NodeGridSystem.Models;
+using GridSystem.Models;
 using UnityEngine;
 
 namespace Interfaces

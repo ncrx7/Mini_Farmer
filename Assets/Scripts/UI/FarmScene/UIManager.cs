@@ -5,7 +5,7 @@ using Data.Controllers;
 using Data.Models.DynamicData;
 using Enums;
 using Interfaces;
-using NodeGridSystem.Controllers;
+using GridSystem.Controllers;
 using TMPro;
 using UI.FarmerScene.EntityUIController;
 using UnityEngine;

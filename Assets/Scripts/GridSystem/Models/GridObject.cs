@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using NodeGridSystem.Controllers;
+using GridSystem.Controllers;
 using UnityEngine;
 
-namespace NodeGridSystem.Models
+namespace GridSystem.Models
 {
     public class GridObject<T>
     {
         /// <summary>
-        /// EN: We made this class generic so that it would be more dynamic and convenient for us to put another object instead of a node or another type of node.
+        /// EN: We made this class generic so that it would be more dynamic and scalable for us to put another object instead of a grass manager or building manager
         /// TR: Bu sınıfı gridler daha dinamik ve scalable olması için generic yaptım.
         /// </summary>
         private GridSystem2D<GridObject<T>> _grid;

@@ -2,10 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NodeGridSystem.Models.Converters;
-using NodeGridSystem.View;
+using GridSystem.Models.Converters;
+using GridSystem.View;
 
-namespace NodeGridSystem.Models
+namespace GridSystem.Models
 {
     public class GridSystem2D<T>
     {
@@ -13,7 +13,7 @@ namespace NodeGridSystem.Models
         readonly int _height;
         readonly float _cellSize;
         readonly Vector3 _origin;
-        readonly T[,] _nodeGridArray;
+        readonly T[,] _gridArray;
 
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace NodeGridSystem.Models
             this._origin = origin;
             this._coordinateConverter = coordinateConverter ?? new VerticalConverter();
 
-            _nodeGridArray = new T[width, height];
+            _gridArray = new T[width, height];
 
             if (debug)
             {
@@ -68,7 +68,7 @@ namespace NodeGridSystem.Models
         {
             if (IsValid(x, y))
             {
-                _nodeGridArray[x, y] = value;
+                _gridArray[x, y] = value;
                 OnValueChangeEvent?.Invoke(x, y, value);
             }
         }
@@ -85,7 +85,7 @@ namespace NodeGridSystem.Models
 
         public T GetValue(int x, int y)
         {
-            return IsValid(x, y) ? _nodeGridArray[x, y] : default(T);
+            return IsValid(x, y) ? _gridArray[x, y] : default(T);
         }
 
         /// <summary>

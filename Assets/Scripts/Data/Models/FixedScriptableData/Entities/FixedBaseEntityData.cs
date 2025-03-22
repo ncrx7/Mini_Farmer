@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Data.Controllers;
 using Entities;
 using Entities.PlaneEntities;
-using NodeGridSystem.Models;
+using Enums;
+using GridSystem.Models;
 using UnityEngine;
 
 namespace Data.Models.FixedScriptableData

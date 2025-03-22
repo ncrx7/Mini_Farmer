@@ -6,8 +6,8 @@ using Data.Models.FixedScriptableData;
 using Entities.PlaneEntities;
 using Enums;
 using Interfaces;
-using NodeGridSystem.Controllers;
-using NodeGridSystem.Models;
+using GridSystem.Controllers;
+using GridSystem.Models;
 using UnityEngine;
 
 namespace Entities.BuildingEntities.InterfaceHandlers

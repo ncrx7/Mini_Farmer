@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using Data.Controllers;
 using Data.Models.DynamicData;
 using Entities.BuildingEntities.InterfaceHandlers;
+using Enums;
 using Interfaces;
 using TMPro;
 using UI.PrefabUIs;

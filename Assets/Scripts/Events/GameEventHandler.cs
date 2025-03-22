@@ -7,7 +7,7 @@ using Entities;
 using Entities.BuildingEntities;
 using Entities.PlaneEntities;
 using Enums;
-using NodeGridSystem.Models;
+using GridSystem.Models;
 using TMPro;
 using UnityEngine;
 

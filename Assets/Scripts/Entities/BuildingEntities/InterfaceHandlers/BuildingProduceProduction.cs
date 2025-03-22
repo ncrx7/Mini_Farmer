@@ -4,6 +4,7 @@ using Data.Models.DynamicData;
 using Data.Controllers;
 using System;
 using UnityEngine;
+using Enums;
 
 namespace Entities.BuildingEntities.InterfaceHandlers
 {

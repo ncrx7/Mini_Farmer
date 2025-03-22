@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -56,13 +57,5 @@ namespace UnityUtils.BaseClasses
             }
         }
     }
-}
-
-public enum UIActionType
-{
-    SetMainMenuLoadingPanel,
-    SetText,
-    SetSlider,
-    SetImage
 }
 

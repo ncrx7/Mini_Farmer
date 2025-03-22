@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using NodeGridSystem.Models;
+using GridSystem.Models;
 using UnityEngine;
 
-namespace NodeGridSystem.Models.Converters
+namespace GridSystem.Models.Converters
 {
     public class HorizontalConverter : ACoordinateConverter
     {

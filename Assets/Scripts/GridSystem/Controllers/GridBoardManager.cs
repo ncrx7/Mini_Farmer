@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityUtils.BaseClasses;
-using NodeGridSystem.Models;
+using GridSystem.Models;
 using UnityEngine;
 using Cysharp;
 using Cysharp.Threading.Tasks;
 using Entities.PlaneEntities;
 
-namespace NodeGridSystem.Controllers
+namespace GridSystem.Controllers
 {
     public class GridBoardManager : SingletonBehavior<GridBoardManager>
     {

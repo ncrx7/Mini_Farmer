@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NodeGridSystem.Models.Converters
+namespace GridSystem.Models.Converters
 {
     public abstract class ACoordinateConverter : MonoBehaviour
     {

@@ -8,7 +8,7 @@ using DG.Tweening;
 using Entities;
 using Entities.PlaneEntities;
 using Enums;
-using NodeGridSystem.Models;
+using GridSystem.Models;
 using UnityEngine;
 
 public class EntityLoaderFromJson : MonoBehaviour

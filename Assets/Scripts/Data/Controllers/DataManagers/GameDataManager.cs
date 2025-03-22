@@ -5,6 +5,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using Data.Models.DynamicData;
 using Data.Models.FixedScriptableData;
+using Enums;
 using UnityEngine;
 using UnityUtils.BaseClasses;
 
@@ -107,24 +108,4 @@ namespace Data.Controllers
         public GameData GetGameDataReference => _gameData;
         public List<FixedBaseEntityData> GetFixedEntityDatas => _fixedEntityDatas;
     }
-}
-
-public enum StatType
-{
-    Wheat,
-    Flour,
-    Bread,
-    Level,
-    Xp,
-    Money,
-    None,
-}
-
-public enum EntityType
-{
-    Grass,
-    FarmGranary,
-    FarmMill,
-    FarmStorage,
-    BigHouse
 }

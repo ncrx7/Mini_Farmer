@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace NodeGridSystem.View
+namespace GridSystem.View
 {
     public class GridTextManager
     {
