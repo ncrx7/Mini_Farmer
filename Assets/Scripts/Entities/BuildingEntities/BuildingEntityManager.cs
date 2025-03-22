@@ -44,24 +44,25 @@ namespace Entities.BuildingEntities
 
                     GameDataManager.Instance.UpdatePlayerDataFile();
 
-                    _storageCapacityRateText.text = GetStorageCapacityRate();
+                    _storageCapacityRateText.text = GetStorageCapacityRate(1);
                 }
                 else
                 {
                     entityData.ProductionList.Add(new BuildingProduceProduction(entityData.FixedBuildingEntityData.ProductionTime));
+                    
                     StartBuildingProduction().Forget();
                 }
             };
 
             GameEventHandler.OnBuildingEntitySpawnOnScene?.Invoke(this, entityData.CurrentProductInStorage.ToString(),
-                                                                GetStorageCapacityRate(),
+                                                                GetStorageCapacityRate(0),
                                                                 entityData.FixedBuildingEntityData.ProductionProcut.StatSprite,
                                                                 increaseButtonEvent);
 
-            InitializeBuilding();
+            InitializeBuildingProduction();
         }
 
-        private async void InitializeBuilding()
+        private async void InitializeBuildingProduction()
         {
             await CalculateProductsByElapseTime();
             await StartBuildingProduction();
@@ -124,7 +125,7 @@ namespace Entities.BuildingEntities
 
             GameDataManager.Instance.UpdatePlayerDataFile();
 
-            GameEventHandler.OnCompleteCalculateProductByElapsedTime?.Invoke(this, entityData.CurrentProductInStorage.ToString(), GetStorageCapacityRate());
+            GameEventHandler.OnCompleteCalculateProductByElapsedTime?.Invoke(this, entityData.CurrentProductInStorage.ToString(), GetStorageCapacityRate(0));
 
             await UniTask.DelayFrame(1);
         }
@@ -135,9 +136,9 @@ namespace Entities.BuildingEntities
             return Mathf.Max((int)timeDifference.TotalSeconds, 0); ;
         }
 
-        private string GetStorageCapacityRate()
+        public string GetStorageCapacityRate(int inProductionCount)
         {
-            return $"{entityData.ProductionList.Count + entityData.CurrentProductInStorage} / {entityData.FixedBuildingEntityData.BuildingStorageMaxCapacity}";
+            return $"{entityData.ProductionList.Count + entityData.CurrentProductInStorage + inProductionCount} / {entityData.FixedBuildingEntityData.BuildingStorageMaxCapacity}";
         }
 
         public int GetProductionQueueCount => _productionsCommands.Count;
