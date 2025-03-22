@@ -41,7 +41,7 @@ namespace Entities.BuildingEntities.InterfaceHandlers
 
                         Vector3 targetPosition = gridSystem.GetWorldPositionCenter(x, y);
                         targetPosition.y += fixedBuildingEntityData.SpawnYOffset;
-                        
+
                         EntityManager<DynamicBuildingEntityData> buildingEntity = Instantiate(fixedEntityData.EntityPrefab, targetPosition, Quaternion.Euler(fixedBuildingEntityData.SpawnRotation), GridBoardManager.Instance.GetEntityLoader.transform)
                          as EntityManager<DynamicBuildingEntityData>;
 
@@ -54,7 +54,7 @@ namespace Entities.BuildingEntities.InterfaceHandlers
                         grassAreaData.IsEmpty = false;
 
                         SaveBuildEntityData(fixedBuildingEntityData, grassAreaData, buildingEntity);
-                        
+
 
                         shouldBreakLoops = true;
                         break;
@@ -65,9 +65,11 @@ namespace Entities.BuildingEntities.InterfaceHandlers
 
         private void SaveBuildEntityData(FixedBuildingEntityData fixedBuildingEntityData, GrassAreaData grassAreaData, EntityManager<DynamicBuildingEntityData> buildingEntity)
         {
-            DynamicBuildingEntityData dynamicBuildingEntityData = new(0, fixedBuildingEntityData.EntityType, fixedBuildingEntityData, 0, new()); 
+            DynamicBuildingEntityData dynamicBuildingEntityData = new(0, fixedBuildingEntityData.EntityType, fixedBuildingEntityData, 0, new());
             /* dynamicBuildingEntityData.ProductionList.Add(new BuildingProduceProduction(fixedBuildingEntityData.ProductionTime));
             dynamicBuildingEntityData.ProductionList.Add(new BuildingProduceProduction(fixedBuildingEntityData.ProductionTime)); */
+
+            GiveInitialProductionsByCapacity(dynamicBuildingEntityData, fixedBuildingEntityData);
 
             buildingEntity.entityData = dynamicBuildingEntityData;
 
@@ -75,7 +77,7 @@ namespace Entities.BuildingEntities.InterfaceHandlers
 
             grassAreaData.DynamicBuildingEntityData = dynamicBuildingEntityData;
 
-            GameDataManager.Instance.UpdatePlayerDataFile();  
+            GameDataManager.Instance.UpdatePlayerDataFile();
 
             buildingEntity.IsCreateProcessFinished = true;
         }
@@ -88,6 +90,17 @@ namespace Entities.BuildingEntities.InterfaceHandlers
         private bool CheckMoneyEnough(FixedBaseEntityData fixedEntityData)
         {
             return GameDataManager.Instance.GetDynamicStatData(StatType.Money).Amount >= fixedEntityData.MarketPrice;
+        }
+
+        private void GiveInitialProductionsByCapacity(DynamicBuildingEntityData dynamicBuildingEntityData, FixedBuildingEntityData fixedBuildingEntityData)
+        {
+            if (dynamicBuildingEntityData.FixedBuildingEntityData.EntityType == EntityType.FarmGranary)
+            {
+                for (int i = 0; i < dynamicBuildingEntityData.FixedBuildingEntityData.BuildingStorageMaxCapacity; i++)
+                {
+                    dynamicBuildingEntityData.ProductionList.Add(new BuildingProduceProduction(fixedBuildingEntityData.ProductionTime));
+                }
+            }
         }
     }
 }

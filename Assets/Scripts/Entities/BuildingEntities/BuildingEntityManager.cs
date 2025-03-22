@@ -49,7 +49,7 @@ namespace Entities.BuildingEntities
                 else
                 {
                     entityData.ProductionList.Add(new BuildingProduceProduction(entityData.FixedBuildingEntityData.ProductionTime));
-                    
+
                     StartBuildingProduction().Forget();
                 }
             };
@@ -83,7 +83,7 @@ namespace Entities.BuildingEntities
             await StartBuildingProduction();
         }
 
-        private async UniTask StartBuildingProduction()
+        public async UniTask StartBuildingProduction()
         {
             if (entityData.ProductionList.Count == 0)
                 return;
@@ -154,6 +154,18 @@ namespace Entities.BuildingEntities
         public string GetStorageCapacityRate(int inProductionCount)
         {
             return $"{entityData.ProductionList.Count + entityData.CurrentProductInStorage + inProductionCount} / {entityData.FixedBuildingEntityData.BuildingStorageMaxCapacity}";
+        }
+
+        public void AddProductionToQueue()
+        {
+            _productionsCommands.Enqueue(new BuildingProduceProduction(entityData.FixedBuildingEntityData.ProductionTime));
+        }
+
+        public void SaveProductionQueue()
+        {
+            entityData.ProductionList = _productionsCommands.Cast<BuildingProduceProduction>().ToList();
+
+            GameDataManager.Instance.UpdatePlayerDataFile();
         }
 
         public int GetProductionQueueCount => _productionsCommands.Count;
