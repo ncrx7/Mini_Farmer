@@ -19,5 +19,7 @@ namespace Data.Models.FixedScriptableData
         public FixedStatData ProductionProcut;
         public int ResourceAmount;
         public int ProductAmount;
+        public int EarnXpAmount;
+        public int EarnMoneyAmount;
     }
 }

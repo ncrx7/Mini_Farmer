@@ -28,3 +28,5 @@ MonoBehaviour:
   ProductionProcut: {fileID: 11400000, guid: 68ba051681f2b5042bea401a2b967437, type: 2}
   ResourceAmount: 0
   ProductAmount: 1
+  EarnXpAmount: 35
+  EarnMoneyAmount: 70

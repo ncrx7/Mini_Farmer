@@ -98,6 +98,9 @@ namespace UI.FarmerScene
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText);
 
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(StatType.Money).Amount.ToString(), _statTexts[StatType.Money]);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(StatType.Xp).Amount.ToString(), _statTexts[StatType.Xp]);
+
                 if (buildEntityManager.GetProductionButtonsPanel == null)
                     return;
 
@@ -189,6 +192,9 @@ namespace UI.FarmerScene
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetProductSliderPanel.GetCurrentStorageText);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText);
+                
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(StatType.Money).Amount.ToString(), _statTexts[StatType.Money]);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(StatType.Xp).Amount.ToString(), _statTexts[StatType.Xp]);
 
                 if (buildEntityManager.GetProductionButtonsPanel == null)
                     return;

@@ -15,14 +15,17 @@ namespace Entities.BuildingEntities.InterfaceHandlers
         {
             BuildingEntityManager buildingEntityManager = entityManager as BuildingEntityManager;
 
-            if(buildingEntityManager.entityData.CurrentProductInStorage <= 0)
+            if (buildingEntityManager.entityData.CurrentProductInStorage <= 0)
                 return;
-                            
+
             GameDataManager.Instance.GetDynamicStatData(buildingEntityManager.entityData.FixedBuildingEntityData.ProductionProcut.StatType).Amount += buildingEntityManager.entityData.CurrentProductInStorage;
 
             MakeProductionQueueFull(buildingEntityManager);
 
             buildingEntityManager.entityData.CurrentProductInStorage = 0;
+
+            GameDataManager.Instance.GetDynamicStatData(StatType.Money).Amount += buildingEntityManager.entityData.FixedBuildingEntityData.EarnMoneyAmount;
+            GameDataManager.Instance.GetDynamicStatData(StatType.Xp).Amount += buildingEntityManager.entityData.FixedBuildingEntityData.EarnXpAmount;
 
             GameDataManager.Instance.UpdatePlayerDataFile();
 
@@ -35,7 +38,7 @@ namespace Entities.BuildingEntities.InterfaceHandlers
             if (!buildingEntityManager.BuildingIsProducting)
             {
                 AddCertainProduction(0, buildingEntityManager, buildingEntityManager.entityData.FixedBuildingEntityData.BuildingStorageMaxCapacity);
-              
+
                 buildingEntityManager.StartBuildingProduction().Forget();
             }
             else
@@ -48,13 +51,13 @@ namespace Entities.BuildingEntities.InterfaceHandlers
         {
             for (int i = 0; i < iterationNumber; i++)
             {
-                if(processId == 0)
+                if (processId == 0)
                     buildingEntityManager.entityData.ProductionList.Add(new BuildingProduceProduction(buildingEntityManager.entityData.FixedBuildingEntityData.ProductionTime));
                 else
                     buildingEntityManager.AddProductionToQueue();
             }
 
-            if(processId == 0)
+            if (processId == 0)
                 return;
 
             buildingEntityManager.SaveProductionQueue();

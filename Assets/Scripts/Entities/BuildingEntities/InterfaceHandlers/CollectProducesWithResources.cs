@@ -18,9 +18,14 @@ namespace Entities.BuildingEntities.InterfaceHandlers
             {
                 if(buildingEntityManager.entityData.CurrentProductInStorage <= 0)
                     return;
-                     
+
                 GameDataManager.Instance.GetDynamicStatData(buildingEntityManager.entityData.FixedBuildingEntityData.ProductionProcut.StatType).Amount += buildingEntityManager.entityData.CurrentProductInStorage;
+                
                 buildingEntityManager.entityData.CurrentProductInStorage = 0;
+
+                GameDataManager.Instance.GetDynamicStatData(StatType.Money).Amount += buildingEntityManager.entityData.FixedBuildingEntityData.EarnMoneyAmount;
+                GameDataManager.Instance.GetDynamicStatData(StatType.Xp).Amount += buildingEntityManager.entityData.FixedBuildingEntityData.EarnXpAmount;
+                
                 GameDataManager.Instance.UpdatePlayerDataFile();
 
                 GameEventHandler.PlayVfx?.Invoke(entityManager.transform.position, VfxType.CollectProduces);
