@@ -42,7 +42,7 @@ public class GameEventHandler : MonoBehaviour
     public static Action<BuildingEntityManager, string, string> OnCompleteCalculateProductByElapsedTime;
     #endregion
 
-    public static Action<BuildingEntityManager> OnClickEntity;
+    public static Action<BuildingEntityManager, string, StatType, string> OnClickEntity;
     public static Action OnClickReset;
     #endregion
 }

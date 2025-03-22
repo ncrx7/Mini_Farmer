@@ -50,7 +50,7 @@ namespace UI.FarmerScene
 
                 if(buildEntityManager.GetProductionButtonsPanel == null)
                     return;
-                    
+
                 buildEntityManager.GetProductionButtonsPanel.GetIncreaseButton.onClick.AddListener(() => buttonEvent?.Invoke());
             };
 
@@ -85,8 +85,12 @@ namespace UI.FarmerScene
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
             };
 
-            GameEventHandler.OnClickEntity += (buildEntityManager) =>
+            GameEventHandler.OnClickEntity += (buildEntityManager, currentStorage, statType, storageCapacityRate) =>
             {
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetCurrentStorageText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
+
                 if(buildEntityManager.GetProductionButtonsPanel == null)
                     return;
 
@@ -158,11 +162,15 @@ namespace UI.FarmerScene
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
             };
 
-            GameEventHandler.OnClickEntity -= (buildEntityManager) =>
+            GameEventHandler.OnClickEntity -= (buildEntityManager, currentStorage, statType, storageCapacityRate) =>
             {
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetCurrentStorageText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
+
                 if(buildEntityManager.GetProductionButtonsPanel == null)
                     return;
-                    
+
                 if(_activeProductionButtonPanel != null)
                     _activeProductionButtonPanel.SetActive(false);
 

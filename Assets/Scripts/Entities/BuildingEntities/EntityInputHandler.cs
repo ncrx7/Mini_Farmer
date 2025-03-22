@@ -33,7 +33,10 @@ namespace Entities.Input
         {
             _produceCollector.TryCollectProduces(_entityManager, _collectProduceCallback);
 
-            GameEventHandler.OnClickEntity?.Invoke(_entityManager);
+            GameEventHandler.OnClickEntity?.Invoke(_entityManager,
+                                                 _entityManager.entityData.CurrentProductInStorage.ToString(),
+                                                 _entityManager.entityData.FixedBuildingEntityData.ProductionProcut.StatType,
+                                                 _entityManager.GetStorageCapacityRate(0));
         }
     }
 }
