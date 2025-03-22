@@ -36,6 +36,10 @@ namespace Entities.BuildingEntities
 
             Action increaseButtonEvent = () =>
             {
+                if(GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount - 
+                                                                entityData.FixedBuildingEntityData.ResourceAmount - entityData.ProductionList.Count < 0)
+                    return;
+
                 if (BuildingIsProducting)
                 {
                     _productionsCommands.Enqueue(new BuildingProduceProduction(entityData.FixedBuildingEntityData.ProductionTime));
@@ -170,7 +174,7 @@ namespace Entities.BuildingEntities
         {
             if(_productionsCommands == null)
                 return;
-                
+
             entityData.ProductionList = _productionsCommands.Cast<BuildingProduceProduction>().ToList();
 
             GameDataManager.Instance.UpdatePlayerDataFile();
