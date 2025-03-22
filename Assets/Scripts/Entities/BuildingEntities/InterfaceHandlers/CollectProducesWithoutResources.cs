@@ -27,25 +27,29 @@ namespace Entities.BuildingEntities.InterfaceHandlers
         {
             if (!buildingEntityManager.BuildingIsProducting)
             {
-                AddCertainProduction(buildingEntityManager, buildingEntityManager.entityData.FixedBuildingEntityData.BuildingStorageMaxCapacity);
-
+                AddCertainProduction(0, buildingEntityManager, buildingEntityManager.entityData.FixedBuildingEntityData.BuildingStorageMaxCapacity);
+              
                 buildingEntityManager.StartBuildingProduction().Forget();
             }
             else
             {
-                AddCertainProduction(buildingEntityManager, buildingEntityManager.entityData.CurrentProductInStorage);
-
-                buildingEntityManager.SaveProductionQueue();
+                AddCertainProduction(1, buildingEntityManager, buildingEntityManager.entityData.CurrentProductInStorage);
             }
         }
 
-        private void AddCertainProduction(BuildingEntityManager buildingEntityManager, int iterationNumber)
+        private void AddCertainProduction(int processId, BuildingEntityManager buildingEntityManager, int iterationNumber) //0: TO production List, 1: TO production Queue
         {
             for (int i = 0; i < iterationNumber; i++)
             {
-                buildingEntityManager.AddProductionToQueue();
+                if(processId == 0)
+                    buildingEntityManager.entityData.ProductionList.Add(new BuildingProduceProduction(buildingEntityManager.entityData.FixedBuildingEntityData.ProductionTime));
+                else
+                    buildingEntityManager.AddProductionToQueue();
             }
 
+            if(processId == 0)
+                return;
+                
             buildingEntityManager.SaveProductionQueue();
         }
     }

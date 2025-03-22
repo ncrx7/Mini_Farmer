@@ -128,7 +128,9 @@ namespace Entities.BuildingEntities
                     entityData.ProductionList.RemoveAt(i);
                     i--;
 
-                    GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount -= entityData.FixedBuildingEntityData.ResourceAmount;
+                    if(entityData.FixedBuildingEntityData.ResourceProduct != null)
+                        GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount -= entityData.FixedBuildingEntityData.ResourceAmount;
+                    
                     entityData.CurrentProductInStorage += entityData.FixedBuildingEntityData.ProductAmount;
                 }
                 else
@@ -158,11 +160,17 @@ namespace Entities.BuildingEntities
 
         public void AddProductionToQueue()
         {
+            if(_productionsCommands == null)
+                return;
+
             _productionsCommands.Enqueue(new BuildingProduceProduction(entityData.FixedBuildingEntityData.ProductionTime));
         }
 
         public void SaveProductionQueue()
         {
+            if(_productionsCommands == null)
+                return;
+                
             entityData.ProductionList = _productionsCommands.Cast<BuildingProduceProduction>().ToList();
 
             GameDataManager.Instance.UpdatePlayerDataFile();
