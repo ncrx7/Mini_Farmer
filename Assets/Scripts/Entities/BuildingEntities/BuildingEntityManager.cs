@@ -121,12 +121,12 @@ namespace Entities.BuildingEntities
 
         private void HandleIncreaseProduction()
         {
-            if (BuildingIsProducting)
-            {
-                if (GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount -
-                                                            entityData.FixedBuildingEntityData.ResourceAmount - _productionsCommands.Count < 0)
+            if (GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount -
+                                                            entityData.FixedBuildingEntityData.ResourceAmount < 0)
                     return;
 
+            if (BuildingIsProducting)
+            {
                 _productionsCommands.Enqueue(new BuildingProduceProduction(entityData.FixedBuildingEntityData.ProductionTime));
 
                 entityData.ProductionList = _productionsCommands.Cast<BuildingProduceProduction>().ToList();
@@ -137,10 +137,6 @@ namespace Entities.BuildingEntities
             }
             else
             {
-                if (GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount -
-                                                            entityData.FixedBuildingEntityData.ResourceAmount - entityData.ProductionList.Count < 0)
-                    return;
-
                 entityData.ProductionList.Add(new BuildingProduceProduction(entityData.FixedBuildingEntityData.ProductionTime));
 
                 StartBuildingProduction().Forget();
@@ -156,13 +152,21 @@ namespace Entities.BuildingEntities
         {
             if (BuildingIsProducting)
             {
+                if(_productionsCommands.Count == 0)
+                    return;
+
                 _productionsCommands.Dequeue();
 
                 entityData.ProductionList = _productionsCommands.Cast<BuildingProduceProduction>().ToList();
 
+                GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount += entityData.FixedBuildingEntityData.ResourceAmount;
+
                 GameDataManager.Instance.UpdatePlayerDataFile();
 
                 _productSliderPanel.GetStorageCapacityRateText.text = GetStorageCapacityRate(1);
+
+                GameEventHandler.OnClickReduceButton?.Invoke(GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount.ToString(),
+                                                            entityData.FixedBuildingEntityData.ResourceProduct.StatType);
             }
         }
 

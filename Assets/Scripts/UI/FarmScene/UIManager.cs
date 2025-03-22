@@ -110,6 +110,11 @@ namespace UI.FarmerScene
             {
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, statAmount, _statTexts[statType]);
             };
+
+            GameEventHandler.OnClickReduceButton += (statAmount, statType) =>
+            {
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, statAmount, _statTexts[statType]);
+            };
         }
 
         private void OnDisable()
@@ -191,6 +196,11 @@ namespace UI.FarmerScene
             };
 
             GameEventHandler.OnClickIncreaseButton -= (statAmount, statType) =>
+            {
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, statAmount, _statTexts[statType]);
+            };
+
+            GameEventHandler.OnClickReduceButton -= (statAmount, statType) =>
             {
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, statAmount, _statTexts[statType]);
             };
