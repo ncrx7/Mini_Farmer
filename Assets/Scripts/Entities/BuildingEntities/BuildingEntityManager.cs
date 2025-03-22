@@ -22,11 +22,7 @@ namespace Entities.BuildingEntities
         public bool BuildingIsProducting = false;
 
         [Header("World Space Building Entity UI References")]
-        [SerializeField] private Slider _slider;
-        [SerializeField] private TextMeshProUGUI _productInStorageText;
-        [SerializeField] private TextMeshProUGUI _productTimeText;
-        [SerializeField] private TextMeshProUGUI _storageCapacityRateText;
-        [SerializeField] private Image _productionProduceImage;
+        [SerializeField] private ProductSliderController _productSliderPanel;
         [SerializeField] private ProductButtonPanelController _productionButtonsPanel;
 
 
@@ -137,7 +133,7 @@ namespace Entities.BuildingEntities
 
                 GameDataManager.Instance.UpdatePlayerDataFile();
 
-                _storageCapacityRateText.text = GetStorageCapacityRate(1);
+                _productSliderPanel.GetStorageCapacityRateText.text = GetStorageCapacityRate(1);
             }
             else
             {
@@ -166,7 +162,7 @@ namespace Entities.BuildingEntities
 
                 GameDataManager.Instance.UpdatePlayerDataFile();
 
-                _storageCapacityRateText.text = GetStorageCapacityRate(1);
+                _productSliderPanel.GetStorageCapacityRateText.text = GetStorageCapacityRate(1);
             }
         }
 
@@ -195,11 +191,7 @@ namespace Entities.BuildingEntities
 
         public int GetProductionQueueCount => _productionsCommands.Count;
 
-        public Slider GetSlider => _slider;
-        public TextMeshProUGUI GetCurrentStorageText => _productInStorageText;
-        public TextMeshProUGUI GetProductTimeText => _productTimeText;
-        public TextMeshProUGUI GetStorageCapacityRateText => _storageCapacityRateText;
-        public Image GetProductionProduceImage => _productionProduceImage;
+        public ProductSliderController GetProductSliderPanel => _productSliderPanel;
         public ProductButtonPanelController GetProductionButtonsPanel => _productionButtonsPanel;
     }
 }

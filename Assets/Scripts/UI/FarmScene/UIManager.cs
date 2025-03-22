@@ -42,15 +42,15 @@ namespace UI.FarmerScene
 
             GameEventHandler.OnBuildingEntitySpawnOnScene += (buildEntityManager, currentStorage, storageCapacityRate, productIcon, buttonIncreaseProductionEvent, buttonReduceProductionEvent) =>
             {
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage, buildEntityManager.GetCurrentStorageText);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "", buildEntityManager.GetProductTimeText);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
-                ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetSlider, 1);
-                ExecuteUIAction<Image, Sprite>(UIActionType.SetImage, buildEntityManager.GetProductionProduceImage, productIcon);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage, buildEntityManager.GetProductSliderPanel.GetCurrentStorageText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "", buildEntityManager.GetProductSliderPanel.GetProductTimeText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText);
+                ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetProductSliderPanel.GetSlider, 1);
+                ExecuteUIAction<Image, Sprite>(UIActionType.SetImage, buildEntityManager.GetProductSliderPanel.GetProductionProduceImage, productIcon);
 
                 if(buildEntityManager.GetProductionButtonsPanel == null)
                 {
-                    buildEntityManager.GetStorageCapacityRateText.gameObject.SetActive(false);
+                    buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText.gameObject.SetActive(false);
                     return;
                 }
 
@@ -60,35 +60,35 @@ namespace UI.FarmerScene
 
             GameEventHandler.OnProductionStart += (buildEntityManager, currentRemainTime, storageCapacityRate) =>
             {
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentRemainTime.ToString() + "s", buildEntityManager.GetProductTimeText);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText); //ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentRemainTime.ToString() + "s", buildEntityManager.GetProductSliderPanel.GetProductTimeText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText); //ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
             };
 
             GameEventHandler.OnProductionContinue += (buildEntityManager, currentRemainTime, sliderValue) => 
             {
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentRemainTime.ToString() + "s", buildEntityManager.GetProductTimeText);
-                ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetSlider, sliderValue);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentRemainTime.ToString() + "s", buildEntityManager.GetProductSliderPanel.GetProductTimeText);
+                ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetProductSliderPanel.GetSlider, sliderValue);
             };
 
             GameEventHandler.OnProductionEnd += (buildEntityManager, currentStorage, currentTime) =>
             {
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetCurrentStorageText);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentTime.ToString(), buildEntityManager.GetProductTimeText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetProductSliderPanel.GetCurrentStorageText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentTime.ToString(), buildEntityManager.GetProductSliderPanel.GetProductTimeText);
             };
 
             GameEventHandler.OnCompleteCalculateProductByElapsedTime += (buildEntityManager, currentStorage, storageCapacityRate) =>
             {
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetCurrentStorageText);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "", buildEntityManager.GetProductTimeText);
-                ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetSlider, 1);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetProductSliderPanel.GetCurrentStorageText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "", buildEntityManager.GetProductSliderPanel.GetProductTimeText);
+                ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetProductSliderPanel.GetSlider, 1);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText);
             };
 
             GameEventHandler.OnClickEntity += (buildEntityManager, currentStorage, statType, storageCapacityRate) =>
             {
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetCurrentStorageText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetProductSliderPanel.GetCurrentStorageText);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText);
 
                 if(buildEntityManager.GetProductionButtonsPanel == null)
                     return;
@@ -126,15 +126,15 @@ namespace UI.FarmerScene
 
             GameEventHandler.OnBuildingEntitySpawnOnScene -= (buildEntityManager, currentStorage, storageCapacityRate, productIcon, buttonIncreaseProductionEvent, buttonReduceProductionEvent) =>
             {
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage, buildEntityManager.GetCurrentStorageText);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "", buildEntityManager.GetProductTimeText);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
-                ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetSlider, 1);
-                ExecuteUIAction<Image, Sprite>(UIActionType.SetImage, buildEntityManager.GetProductionProduceImage, productIcon);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage, buildEntityManager.GetProductSliderPanel.GetCurrentStorageText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "", buildEntityManager.GetProductSliderPanel.GetProductTimeText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText);
+                ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetProductSliderPanel.GetSlider, 1);
+                ExecuteUIAction<Image, Sprite>(UIActionType.SetImage, buildEntityManager.GetProductSliderPanel.GetProductionProduceImage, productIcon);
 
                 if(buildEntityManager.GetProductionButtonsPanel == null)
                 {
-                    buildEntityManager.GetStorageCapacityRateText.gameObject.SetActive(false);
+                    buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText.gameObject.SetActive(false);
                     return;
                 }
 
@@ -144,35 +144,35 @@ namespace UI.FarmerScene
 
             GameEventHandler.OnProductionStart -= (buildEntityManager, currentRemainTime, storageCapacityRate) =>
             {
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentRemainTime.ToString() + "s", buildEntityManager.GetProductTimeText);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText); //ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentRemainTime.ToString() + "s", buildEntityManager.GetProductSliderPanel.GetProductTimeText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText); //ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
             };
 
             GameEventHandler.OnProductionContinue -= (buildEntityManager, currentTime, sliderValue) => 
             {
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentTime.ToString(), buildEntityManager.GetProductTimeText);
-                ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetSlider, sliderValue);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentTime.ToString(), buildEntityManager.GetProductSliderPanel.GetProductTimeText);
+                ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetProductSliderPanel.GetSlider, sliderValue);
             };
 
             GameEventHandler.OnProductionEnd -= (buildEntityManager, currentStorage, currentTime) =>
             {
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetCurrentStorageText);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentTime.ToString(), buildEntityManager.GetProductTimeText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetProductSliderPanel.GetCurrentStorageText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentTime.ToString(), buildEntityManager.GetProductSliderPanel.GetProductTimeText);
             };
 
             GameEventHandler.OnCompleteCalculateProductByElapsedTime -= (buildEntityManager, currentStorage, storageCapacityRate) =>
             {
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetCurrentStorageText);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "", buildEntityManager.GetProductTimeText);
-                ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetSlider, 1);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetProductSliderPanel.GetCurrentStorageText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "", buildEntityManager.GetProductSliderPanel.GetProductTimeText);
+                ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetProductSliderPanel.GetSlider, 1);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText);
             };
 
             GameEventHandler.OnClickEntity -= (buildEntityManager, currentStorage, statType, storageCapacityRate) =>
             {
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetCurrentStorageText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage.ToString(), buildEntityManager.GetProductSliderPanel.GetCurrentStorageText);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText);
 
                 if(buildEntityManager.GetProductionButtonsPanel == null)
                     return;
