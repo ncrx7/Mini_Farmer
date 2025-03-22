@@ -94,8 +94,8 @@ namespace Entities.BuildingEntities
                     entityData.ProductionList.RemoveAt(i);
                     i--;
 
-                    if (entityData.FixedBuildingEntityData.ResourceProduct != null)
-                        GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount -= entityData.FixedBuildingEntityData.ResourceAmount;
+                    //if (entityData.FixedBuildingEntityData.ResourceProduct != null)
+                        //GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount -= entityData.FixedBuildingEntityData.ResourceAmount;
 
                     entityData.CurrentProductInStorage += entityData.FixedBuildingEntityData.ProductAmount;
                 }
