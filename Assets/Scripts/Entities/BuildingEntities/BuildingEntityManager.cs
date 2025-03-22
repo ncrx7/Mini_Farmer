@@ -54,10 +54,25 @@ namespace Entities.BuildingEntities
                 }
             };
 
+            Action reduceButtonEvent = () =>
+            {
+                if (BuildingIsProducting)
+                {
+                    _productionsCommands.Dequeue();
+
+                    entityData.ProductionList = _productionsCommands.Cast<BuildingProduceProduction>().ToList();
+
+                    GameDataManager.Instance.UpdatePlayerDataFile();
+
+                    _storageCapacityRateText.text = GetStorageCapacityRate(1);
+                }
+            };
+
             GameEventHandler.OnBuildingEntitySpawnOnScene?.Invoke(this, entityData.CurrentProductInStorage.ToString(),
                                                                 GetStorageCapacityRate(0),
                                                                 entityData.FixedBuildingEntityData.ProductionProcut.StatSprite,
-                                                                increaseButtonEvent);
+                                                                increaseButtonEvent,
+                                                                reduceButtonEvent);
 
             InitializeBuildingProduction();
         }

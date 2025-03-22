@@ -40,7 +40,7 @@ namespace UI.FarmerScene
 
             GameEventHandler.OnCreateEntity += (fixedEntityData, money) => ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, money.ToString(), _statTexts[StatType.Money]);
 
-            GameEventHandler.OnBuildingEntitySpawnOnScene += (buildEntityManager, currentStorage, storageCapacityRate, productIcon, buttonEvent) =>
+            GameEventHandler.OnBuildingEntitySpawnOnScene += (buildEntityManager, currentStorage, storageCapacityRate, productIcon, buttonIncreaseProductionEvent, buttonReduceProductionEvent) =>
             {
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage, buildEntityManager.GetCurrentStorageText);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "", buildEntityManager.GetProductTimeText);
@@ -51,7 +51,8 @@ namespace UI.FarmerScene
                 if(buildEntityManager.GetProductionButtonsPanel == null)
                     return;
 
-                buildEntityManager.GetProductionButtonsPanel.GetIncreaseButton.onClick.AddListener(() => buttonEvent?.Invoke());
+                buildEntityManager.GetProductionButtonsPanel.GetIncreaseButton.onClick.AddListener(() => buttonIncreaseProductionEvent?.Invoke());
+                buildEntityManager.GetProductionButtonsPanel.GetReduceButton.onClick.AddListener(() => buttonReduceProductionEvent?.Invoke());
             };
 
             GameEventHandler.OnProductionStart += (buildEntityManager, currentRemainTime, statType, storageCapacityRate) =>
@@ -120,15 +121,19 @@ namespace UI.FarmerScene
 
             GameEventHandler.OnCreateEntity -= (fixedEntityData, money) => ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, money.ToString(), _statTexts[StatType.Money]);
 
-            GameEventHandler.OnBuildingEntitySpawnOnScene -= (buildEntityManager, currentStorage, storageCapacityRate, productIcon, buttonEvent) =>
+            GameEventHandler.OnBuildingEntitySpawnOnScene -= (buildEntityManager, currentStorage, storageCapacityRate, productIcon, buttonIncreaseProductionEvent, buttonReduceProductionEvent) =>
             {
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentStorage, buildEntityManager.GetCurrentStorageText);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, "", buildEntityManager.GetProductTimeText);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
                 ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetSlider, 1);
                 ExecuteUIAction<Image, Sprite>(UIActionType.SetImage, buildEntityManager.GetProductionProduceImage, productIcon);
-                
-                buildEntityManager.GetProductionButtonsPanel.GetIncreaseButton.onClick.AddListener(() => buttonEvent?.Invoke());
+
+                if(buildEntityManager.GetProductionButtonsPanel == null)
+                    return;
+
+                buildEntityManager.GetProductionButtonsPanel.GetIncreaseButton.onClick.AddListener(() => buttonIncreaseProductionEvent?.Invoke());
+                buildEntityManager.GetProductionButtonsPanel.GetReduceButton.onClick.AddListener(() => buttonReduceProductionEvent?.Invoke());
             };
 
             GameEventHandler.OnProductionStart -= (buildEntityManager, currentRemainTime, statType, storageCapacityRate) =>
