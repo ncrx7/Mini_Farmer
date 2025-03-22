@@ -49,7 +49,10 @@ namespace UI.FarmerScene
                 ExecuteUIAction<Image, Sprite>(UIActionType.SetImage, buildEntityManager.GetProductionProduceImage, productIcon);
 
                 if(buildEntityManager.GetProductionButtonsPanel == null)
+                {
+                    buildEntityManager.GetStorageCapacityRateText.gameObject.SetActive(false);
                     return;
+                }
 
                 buildEntityManager.GetProductionButtonsPanel.GetIncreaseButton.onClick.AddListener(() => buttonIncreaseProductionEvent?.Invoke());
                 buildEntityManager.GetProductionButtonsPanel.GetReduceButton.onClick.AddListener(() => buttonReduceProductionEvent?.Invoke());
@@ -130,7 +133,10 @@ namespace UI.FarmerScene
                 ExecuteUIAction<Image, Sprite>(UIActionType.SetImage, buildEntityManager.GetProductionProduceImage, productIcon);
 
                 if(buildEntityManager.GetProductionButtonsPanel == null)
+                {
+                    buildEntityManager.GetStorageCapacityRateText.gameObject.SetActive(false);
                     return;
+                }
 
                 buildEntityManager.GetProductionButtonsPanel.GetIncreaseButton.onClick.AddListener(() => buttonIncreaseProductionEvent?.Invoke());
                 buildEntityManager.GetProductionButtonsPanel.GetReduceButton.onClick.AddListener(() => buttonReduceProductionEvent?.Invoke());
