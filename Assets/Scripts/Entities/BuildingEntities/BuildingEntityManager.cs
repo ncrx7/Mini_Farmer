@@ -123,8 +123,8 @@ namespace Entities.BuildingEntities
 
         private void HandleIncreaseProduction()
         {
-            if (GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount -
-                                                            entityData.FixedBuildingEntityData.ResourceAmount < 0)
+            if (GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount - entityData.FixedBuildingEntityData.ResourceAmount < 0
+            || entityData.ProductionList.Count + entityData.CurrentProductInStorage + 1 >= entityData.FixedBuildingEntityData.BuildingStorageMaxCapacity)
                     return;
 
             if (BuildingIsProducting)
