@@ -16,6 +16,9 @@ namespace Entities.BuildingEntities.InterfaceHandlers
 
             if (buildingEntityManager.GetProductionButtonsPanel.gameObject.activeSelf)
             {
+                if(buildingEntityManager.entityData.CurrentProductInStorage <= 0)
+                    return;
+                     
                 GameDataManager.Instance.GetDynamicStatData(buildingEntityManager.entityData.FixedBuildingEntityData.ProductionProcut.StatType).Amount += buildingEntityManager.entityData.CurrentProductInStorage;
                 buildingEntityManager.entityData.CurrentProductInStorage = 0;
                 GameDataManager.Instance.UpdatePlayerDataFile();
