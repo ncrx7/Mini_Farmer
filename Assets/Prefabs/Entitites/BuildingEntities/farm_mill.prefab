@@ -338,6 +338,7 @@ MonoBehaviour:
     ProduceLastProcessTime: 
     ProductionList: []
   IsCreateProcessFinished: 0
+  _spawnVfx: {fileID: 0}
   _buildingEntitySetupper: {fileID: 1679108027700387592}
   _entityType: 2
   BuildingIsProducting: 0
@@ -531,11 +532,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ProductionButtons
-      objectReference: {fileID: 0}
-    - target: {fileID: 6720673937935818601, guid: 76317f7108117b04691365a258738eb7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9176671762239753365, guid: 76317f7108117b04691365a258738eb7,
         type: 3}

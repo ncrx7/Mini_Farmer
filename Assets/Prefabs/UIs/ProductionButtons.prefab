@@ -519,6 +519,7 @@ MonoBehaviour:
   _increaseProductionButton: {fileID: 9072429377138681671}
   _reduceProductionButton: {fileID: 4010075486092974260}
   _resourceAmountText: {fileID: 1644459207985621552}
+  _resourceIcon: {fileID: 4198560517938642270}
 --- !u!1 &7781065022578807629
 GameObject:
   m_ObjectHideFlags: 0

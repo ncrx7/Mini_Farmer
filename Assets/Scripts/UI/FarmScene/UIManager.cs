@@ -61,6 +61,9 @@ namespace UI.FarmerScene
 
                 buildEntityManager.GetProductionButtonsPanel.GetIncreaseButton.onClick.AddListener(() => buttonIncreaseProductionEvent?.Invoke());
                 buildEntityManager.GetProductionButtonsPanel.GetReduceButton.onClick.AddListener(() => buttonReduceProductionEvent?.Invoke());
+
+                buildEntityManager.GetProductionButtonsPanel.GetResourceIcon.sprite =  buildEntityManager.entityData.FixedBuildingEntityData.ResourceProduct.StatSprite;
+                buildEntityManager.GetProductionButtonsPanel.GetResourceAmountText.text = "x" + buildEntityManager.entityData.FixedBuildingEntityData.ResourceAmount;
             };
 
             GameEventHandler.OnProductionStart += (buildEntityManager, currentRemainTime, storageCapacityRate) =>
@@ -150,6 +153,9 @@ namespace UI.FarmerScene
 
                 buildEntityManager.GetProductionButtonsPanel.GetIncreaseButton.onClick.AddListener(() => buttonIncreaseProductionEvent?.Invoke());
                 buildEntityManager.GetProductionButtonsPanel.GetReduceButton.onClick.AddListener(() => buttonReduceProductionEvent?.Invoke());
+
+                buildEntityManager.GetProductionButtonsPanel.GetResourceIcon.sprite =  buildEntityManager.entityData.FixedBuildingEntityData.ResourceProduct.StatSprite;
+                buildEntityManager.GetProductionButtonsPanel.GetResourceAmountText.text = "x" + buildEntityManager.entityData.FixedBuildingEntityData.ResourceAmount;
             };
 
             GameEventHandler.OnProductionStart -= (buildEntityManager, currentRemainTime, storageCapacityRate) =>
