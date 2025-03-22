@@ -7,6 +7,7 @@ using Data.Models.FixedScriptableData;
 using DG.Tweening;
 using Entities;
 using Entities.PlaneEntities;
+using Enums;
 using NodeGridSystem.Models;
 using UnityEngine;
 
@@ -71,5 +72,7 @@ public class EntityLoaderFromJson : MonoBehaviour
         buildingEntity.IsCreateProcessFinished = true;
 
         buildingEntity.gameObject.DoElasticStretch(_scaleFactor, _animationDuration, () => grassAreaManager.entityData.IsEmpty = false);
+
+        GameEventHandler.PlayVfx?.Invoke(targetPos, VfxType.SpawnBuilding);
     }
 }

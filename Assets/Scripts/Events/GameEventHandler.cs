@@ -6,6 +6,7 @@ using Data.Models.FixedScriptableData;
 using Entities;
 using Entities.BuildingEntities;
 using Entities.PlaneEntities;
+using Enums;
 using NodeGridSystem.Models;
 using TMPro;
 using UnityEngine;
@@ -46,5 +47,8 @@ public class GameEventHandler : MonoBehaviour
 
     public static Action<BuildingEntityManager, string, StatType, string> OnClickEntity;
     public static Action OnClickReset;
+
+
+    public static Action<Vector3, VfxType> PlayVfx;
     #endregion
 }

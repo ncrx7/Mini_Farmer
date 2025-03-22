@@ -2,6 +2,7 @@ using System;
 using Data.Controllers;
 using Entities.BuildingEntities;
 using Entities.BuildingEntities.InterfaceHandlers;
+using Enums;
 using Interfaces;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -37,6 +38,8 @@ namespace Entities.Input
                                                  _entityManager.entityData.CurrentProductInStorage.ToString(),
                                                  _entityManager.entityData.FixedBuildingEntityData.ProductionProcut.StatType,
                                                  _entityManager.GetStorageCapacityRate(0));
+
+            GameEventHandler.PlayVfx?.Invoke(_entityManager.transform.position, VfxType.SelectBuilding);
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Data.Controllers;
+using Enums;
 using Interfaces;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ namespace Entities.BuildingEntities.InterfaceHandlers
                 GameDataManager.Instance.GetDynamicStatData(buildingEntityManager.entityData.FixedBuildingEntityData.ProductionProcut.StatType).Amount += buildingEntityManager.entityData.CurrentProductInStorage;
                 buildingEntityManager.entityData.CurrentProductInStorage = 0;
                 GameDataManager.Instance.UpdatePlayerDataFile();
+
+                GameEventHandler.PlayVfx?.Invoke(entityManager.transform.position, VfxType.CollectProduces);
             }
         }
     }

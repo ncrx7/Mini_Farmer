@@ -360,6 +360,7 @@ Transform:
   - {fileID: 1953801391}
   - {fileID: 276620530}
   - {fileID: 901773148}
+  - {fileID: 2085275448}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &639916043
@@ -1506,6 +1507,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1985464080}
   m_CullTransparentMesh: 1
+--- !u!1 &2085275447
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2085275448}
+  - component: {fileID: 2085275449}
+  m_Layer: 0
+  m_Name: VfxManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2085275448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085275447}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 556754873}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2085275449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085275447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88554a24e99bc84a9eba044dff0a720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _visualEffects:
+  - VfxType: 0
+    VfxPrefab: {fileID: 2102999931433593722, guid: ce6e610ad517c44489cb947e1439fc15,
+      type: 3}
+    Duration: 2
+  - VfxType: 2
+    VfxPrefab: {fileID: 2102999931433593722, guid: 40eaa5e0e19606e46a27c6e42bad7ab5,
+      type: 3}
+    Duration: 2
+  - VfxType: 1
+    VfxPrefab: {fileID: 2102999931433593722, guid: 804518c5b43d0604eaa57945bb805250,
+      type: 3}
+    Duration: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

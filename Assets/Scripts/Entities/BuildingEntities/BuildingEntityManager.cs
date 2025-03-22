@@ -16,6 +16,7 @@ namespace Entities.BuildingEntities
 {
     public class BuildingEntityManager : EntityManager<DynamicBuildingEntityData>
     {
+        [SerializeField] private GameObject _spawnVfx;
         [SerializeField] private BuildingEntitySetupper _buildingEntitySetupper;
         [SerializeField] private EntityType _entityType;
         private Queue<IProduction<DynamicBuildingEntityData>> _productionsCommands;

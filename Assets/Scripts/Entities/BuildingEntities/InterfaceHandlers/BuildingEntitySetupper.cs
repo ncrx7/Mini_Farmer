@@ -4,6 +4,7 @@ using Data.Controllers;
 using Data.Models.DynamicData;
 using Data.Models.FixedScriptableData;
 using Entities.PlaneEntities;
+using Enums;
 using Interfaces;
 using NodeGridSystem.Controllers;
 using NodeGridSystem.Models;
@@ -48,6 +49,8 @@ namespace Entities.BuildingEntities.InterfaceHandlers
                         //buildingEntity.entityData.FixedBuildingEntityData = fixedBuildingEntityData;
 
                         buildingEntity.gameObject.DoElasticStretch(new Vector3(0.5f, 2f, 0.5f), 1.5f, () => Debug.Log("entity spawned"));
+
+                        GameEventHandler.PlayVfx?.Invoke(targetPosition, VfxType.SpawnBuilding);
 
                         //buildingEntity.GetComponent<BuildingEntityManager>()
 
