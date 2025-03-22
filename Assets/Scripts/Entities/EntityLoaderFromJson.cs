@@ -74,5 +74,6 @@ public class EntityLoaderFromJson : MonoBehaviour
         buildingEntity.gameObject.DoElasticStretch(_scaleFactor, _animationDuration, () => grassAreaManager.entityData.IsEmpty = false);
 
         GameEventHandler.PlayVfx?.Invoke(targetPos, VfxType.SpawnBuilding);
+        GameEventHandler.PlaySoundClip(SoundType.SpawnBuilding);
     }
 }

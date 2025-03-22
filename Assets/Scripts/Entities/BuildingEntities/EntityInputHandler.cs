@@ -40,6 +40,7 @@ namespace Entities.Input
                                                  _entityManager.GetStorageCapacityRate(0));
 
             GameEventHandler.PlayVfx?.Invoke(_entityManager.transform.position, VfxType.SelectBuilding);
+            GameEventHandler.PlaySoundClip(SoundType.SelectBuilding);
         }
     }
 }

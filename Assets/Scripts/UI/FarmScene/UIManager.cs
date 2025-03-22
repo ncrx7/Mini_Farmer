@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Data.Controllers;
 using Data.Models.DynamicData;
+using Enums;
 using Interfaces;
 using NodeGridSystem.Controllers;
 using TMPro;
@@ -257,6 +258,7 @@ namespace UI.FarmerScene
                     if (entityData.EntityPrefab.TryGetComponent<IEntitySetup>(out var entitySetup))
                     {
                         entitySetup.SetupEntity(GridBoardManager.Instance.GetNodeGridSystem2D, entityData);
+                        GameEventHandler.PlaySoundClip(SoundType.PurchaseEntity);
                     }
                 });
             }

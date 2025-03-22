@@ -51,6 +51,7 @@ namespace Entities.BuildingEntities.InterfaceHandlers
                         buildingEntity.gameObject.DoElasticStretch(new Vector3(0.5f, 2f, 0.5f), 1.5f, () => Debug.Log("entity spawned"));
 
                         GameEventHandler.PlayVfx?.Invoke(targetPosition, VfxType.SpawnBuilding);
+                        GameEventHandler.PlaySoundClip(SoundType.SpawnBuilding);
 
                         //buildingEntity.GetComponent<BuildingEntityManager>()
 

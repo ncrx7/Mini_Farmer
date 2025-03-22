@@ -14,7 +14,7 @@ namespace Entities.BuildingEntities.InterfaceHandlers
         public void TryCollectProduces(EntityManager entityManager, Action callBack)
         {
             BuildingEntityManager buildingEntityManager = entityManager as BuildingEntityManager;
-            
+
             if(buildingEntityManager.entityData.CurrentProductInStorage <= 0)
                 return;
                             
@@ -27,6 +27,7 @@ namespace Entities.BuildingEntities.InterfaceHandlers
             GameDataManager.Instance.UpdatePlayerDataFile();
 
             GameEventHandler.PlayVfx?.Invoke(entityManager.transform.position, VfxType.CollectProduces);
+            GameEventHandler.PlaySoundClip(SoundType.CollectProduces);
         }
 
         private void MakeProductionQueueFull(BuildingEntityManager buildingEntityManager)

@@ -50,5 +50,6 @@ public class GameEventHandler : MonoBehaviour
 
 
     public static Action<Vector3, VfxType> PlayVfx;
+    public static Action<SoundType> PlaySoundClip;
     #endregion
 }

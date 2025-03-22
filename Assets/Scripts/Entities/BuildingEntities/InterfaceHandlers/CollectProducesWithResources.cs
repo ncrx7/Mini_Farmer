@@ -21,6 +21,7 @@ namespace Entities.BuildingEntities.InterfaceHandlers
                 GameDataManager.Instance.UpdatePlayerDataFile();
 
                 GameEventHandler.PlayVfx?.Invoke(entityManager.transform.position, VfxType.CollectProduces);
+                GameEventHandler.PlaySoundClip(SoundType.CollectProduces);
             }
         }
     }
