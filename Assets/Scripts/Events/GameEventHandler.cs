@@ -36,10 +36,11 @@ public class GameEventHandler : MonoBehaviour
     public static Action<BuildingEntityManager, string, string, Sprite, Action, Action> OnBuildingEntitySpawnOnScene;
 
     #region Production Events
-    public static Action<BuildingEntityManager, int, StatType, string> OnProductionStart;
+    public static Action<BuildingEntityManager, int, string> OnProductionStart;
     public static Action<BuildingEntityManager, int, float> OnProductionContinue;
     public static Action<BuildingEntityManager, int, int> OnProductionEnd;
     public static Action<BuildingEntityManager, string, string> OnCompleteCalculateProductByElapsedTime;
+    public static Action<string, StatType> OnClickIncreaseButton;
     #endregion
 
     public static Action<BuildingEntityManager, string, StatType, string> OnClickEntity;

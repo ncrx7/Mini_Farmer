@@ -58,15 +58,10 @@ namespace UI.FarmerScene
                 buildEntityManager.GetProductionButtonsPanel.GetReduceButton.onClick.AddListener(() => buttonReduceProductionEvent?.Invoke());
             };
 
-            GameEventHandler.OnProductionStart += (buildEntityManager, currentRemainTime, statType, storageCapacityRate) =>
+            GameEventHandler.OnProductionStart += (buildEntityManager, currentRemainTime, storageCapacityRate) =>
             {
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentRemainTime.ToString() + "s", buildEntityManager.GetProductTimeText);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
-
-                if(statType == StatType.None)
-                    return;
-
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText); //ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
             };
 
             GameEventHandler.OnProductionContinue += (buildEntityManager, currentRemainTime, sliderValue) => 
@@ -110,6 +105,11 @@ namespace UI.FarmerScene
                 if(_activeProductionButtonPanel != null)
                     _activeProductionButtonPanel.SetActive(false);
             };
+
+            GameEventHandler.OnClickIncreaseButton += (statAmount, statType) =>
+            {
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, statAmount, _statTexts[statType]);
+            };
         }
 
         private void OnDisable()
@@ -142,15 +142,10 @@ namespace UI.FarmerScene
                 buildEntityManager.GetProductionButtonsPanel.GetReduceButton.onClick.AddListener(() => buttonReduceProductionEvent?.Invoke());
             };
 
-            GameEventHandler.OnProductionStart -= (buildEntityManager, currentRemainTime, statType, storageCapacityRate) =>
+            GameEventHandler.OnProductionStart -= (buildEntityManager, currentRemainTime, storageCapacityRate) =>
             {
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentRemainTime.ToString() + "s", buildEntityManager.GetProductTimeText);
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText);
-
-                if(statType == StatType.None)
-                    return;
-                    
-                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetStorageCapacityRateText); //ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
             };
 
             GameEventHandler.OnProductionContinue -= (buildEntityManager, currentTime, sliderValue) => 
@@ -193,6 +188,11 @@ namespace UI.FarmerScene
             {
                 if(_activeProductionButtonPanel != null)
                     _activeProductionButtonPanel.SetActive(false);
+            };
+
+            GameEventHandler.OnClickIncreaseButton -= (statAmount, statType) =>
+            {
+                ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, statAmount, _statTexts[statType]);
             };
         }
 

@@ -19,22 +19,11 @@ namespace Entities.BuildingEntities.InterfaceHandlers
 
         public async UniTask StartProduction(DynamicBuildingEntityData dynamicBuildingEntityData, EntityManager<DynamicBuildingEntityData> entityManager)
         {
-            StatType resourceStatType = StatType.None;
-
-            if (dynamicBuildingEntityData.FixedBuildingEntityData.ResourceProduct != null)
-            {
-                resourceStatType = dynamicBuildingEntityData.FixedBuildingEntityData.ResourceProduct.StatType;
-                GameDataManager.Instance.GetDynamicStatData(resourceStatType).Amount -= dynamicBuildingEntityData.FixedBuildingEntityData.ResourceAmount;
-            }
-
             StatType productStatType = dynamicBuildingEntityData.FixedBuildingEntityData.ProductionProcut.StatType;
-
-            
 
             string remainCommandAmount = $"{dynamicBuildingEntityData.ProductionList.Count + dynamicBuildingEntityData.CurrentProductInStorage} / {dynamicBuildingEntityData.FixedBuildingEntityData.BuildingStorageMaxCapacity}";
 
-            GameEventHandler.OnProductionStart?.Invoke(entityManager as BuildingEntityManager, CurrentRemainProductionTime,
-                                                         resourceStatType, remainCommandAmount);
+            GameEventHandler.OnProductionStart?.Invoke(entityManager as BuildingEntityManager, CurrentRemainProductionTime, remainCommandAmount);
 
             while (CurrentRemainProductionTime > 0)
             {

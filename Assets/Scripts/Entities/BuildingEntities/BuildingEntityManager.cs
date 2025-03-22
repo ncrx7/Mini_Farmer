@@ -34,43 +34,9 @@ namespace Entities.BuildingEntities
         {
             await UniTask.WaitUntil(() => IsCreateProcessFinished == true);
 
-            Action increaseButtonEvent = () =>
-            {
-                if(GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount - 
-                                                                entityData.FixedBuildingEntityData.ResourceAmount - entityData.ProductionList.Count < 0)
-                    return;
+            Action increaseButtonEvent = HandleIncreaseProduction;
 
-                if (BuildingIsProducting)
-                {
-                    _productionsCommands.Enqueue(new BuildingProduceProduction(entityData.FixedBuildingEntityData.ProductionTime));
-
-                    entityData.ProductionList = _productionsCommands.Cast<BuildingProduceProduction>().ToList();
-
-                    GameDataManager.Instance.UpdatePlayerDataFile();
-
-                    _storageCapacityRateText.text = GetStorageCapacityRate(1);
-                }
-                else
-                {
-                    entityData.ProductionList.Add(new BuildingProduceProduction(entityData.FixedBuildingEntityData.ProductionTime));
-
-                    StartBuildingProduction().Forget();
-                }
-            };
-
-            Action reduceButtonEvent = () =>
-            {
-                if (BuildingIsProducting)
-                {
-                    _productionsCommands.Dequeue();
-
-                    entityData.ProductionList = _productionsCommands.Cast<BuildingProduceProduction>().ToList();
-
-                    GameDataManager.Instance.UpdatePlayerDataFile();
-
-                    _storageCapacityRateText.text = GetStorageCapacityRate(1);
-                }
-            };
+            Action reduceButtonEvent = HandleReduceProduction;
 
             GameEventHandler.OnBuildingEntitySpawnOnScene?.Invoke(this, entityData.CurrentProductInStorage.ToString(),
                                                                 GetStorageCapacityRate(0),
@@ -132,9 +98,9 @@ namespace Entities.BuildingEntities
                     entityData.ProductionList.RemoveAt(i);
                     i--;
 
-                    if(entityData.FixedBuildingEntityData.ResourceProduct != null)
+                    if (entityData.FixedBuildingEntityData.ResourceProduct != null)
                         GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount -= entityData.FixedBuildingEntityData.ResourceAmount;
-                    
+
                     entityData.CurrentProductInStorage += entityData.FixedBuildingEntityData.ProductAmount;
                 }
                 else
@@ -157,6 +123,53 @@ namespace Entities.BuildingEntities
             return Mathf.Max((int)timeDifference.TotalSeconds, 0); ;
         }
 
+        private void HandleIncreaseProduction()
+        {
+            if (BuildingIsProducting)
+            {
+                if (GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount -
+                                                            entityData.FixedBuildingEntityData.ResourceAmount - _productionsCommands.Count < 0)
+                    return;
+
+                _productionsCommands.Enqueue(new BuildingProduceProduction(entityData.FixedBuildingEntityData.ProductionTime));
+
+                entityData.ProductionList = _productionsCommands.Cast<BuildingProduceProduction>().ToList();
+
+                GameDataManager.Instance.UpdatePlayerDataFile();
+
+                _storageCapacityRateText.text = GetStorageCapacityRate(1);
+            }
+            else
+            {
+                if (GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount -
+                                                            entityData.FixedBuildingEntityData.ResourceAmount - entityData.ProductionList.Count < 0)
+                    return;
+
+                entityData.ProductionList.Add(new BuildingProduceProduction(entityData.FixedBuildingEntityData.ProductionTime));
+
+                StartBuildingProduction().Forget();
+            }
+
+            GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount -= entityData.FixedBuildingEntityData.ResourceAmount;
+
+            GameEventHandler.OnClickIncreaseButton?.Invoke(GameDataManager.Instance.GetDynamicStatData(entityData.FixedBuildingEntityData.ResourceProduct.StatType).Amount.ToString(),
+                                                            entityData.FixedBuildingEntityData.ResourceProduct.StatType);
+        }
+
+        private void HandleReduceProduction()
+        {
+            if (BuildingIsProducting)
+            {
+                _productionsCommands.Dequeue();
+
+                entityData.ProductionList = _productionsCommands.Cast<BuildingProduceProduction>().ToList();
+
+                GameDataManager.Instance.UpdatePlayerDataFile();
+
+                _storageCapacityRateText.text = GetStorageCapacityRate(1);
+            }
+        }
+
         public string GetStorageCapacityRate(int inProductionCount)
         {
             return $"{entityData.ProductionList.Count + entityData.CurrentProductInStorage + inProductionCount} / {entityData.FixedBuildingEntityData.BuildingStorageMaxCapacity}";
@@ -164,7 +177,7 @@ namespace Entities.BuildingEntities
 
         public void AddProductionToQueue()
         {
-            if(_productionsCommands == null)
+            if (_productionsCommands == null)
                 return;
 
             _productionsCommands.Enqueue(new BuildingProduceProduction(entityData.FixedBuildingEntityData.ProductionTime));
@@ -172,7 +185,7 @@ namespace Entities.BuildingEntities
 
         public void SaveProductionQueue()
         {
-            if(_productionsCommands == null)
+            if (_productionsCommands == null)
                 return;
 
             entityData.ProductionList = _productionsCommands.Cast<BuildingProduceProduction>().ToList();
