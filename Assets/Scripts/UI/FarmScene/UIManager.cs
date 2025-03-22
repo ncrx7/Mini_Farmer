@@ -16,14 +16,18 @@ namespace UI.FarmerScene
 {
     public class UIManager : BaseUIManager
     {
-        [SerializeField] private StatUI _statEmptyPrefab;
-        private Dictionary<StatType, TextMeshProUGUI> _statTexts = new();
-
+        [Header("Store UI")]
+        [SerializeField] private GameObject _storePanel;
+        [SerializeField] private Button _storeButton;
         [SerializeField] private MarketUI _entityMarketPrefab;
-
-        [SerializeField] private Transform _statLayout;
         [SerializeField] private Transform _marketObjLayout;
 
+        [Header("Stat UI")]
+        [SerializeField] private StatUI _statEmptyPrefab;
+        private Dictionary<StatType, TextMeshProUGUI> _statTexts = new();
+        [SerializeField] private Transform _statLayout;
+
+        [Header("Loading UI")]
         [SerializeField] private GameObject _loadingPanel;
         [SerializeField] private TextMeshProUGUI _loadingPanelText;
 
@@ -49,7 +53,7 @@ namespace UI.FarmerScene
                 ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetProductSliderPanel.GetSlider, 1);
                 ExecuteUIAction<Image, Sprite>(UIActionType.SetImage, buildEntityManager.GetProductSliderPanel.GetProductionProduceImage, productIcon);
 
-                if(buildEntityManager.GetProductionButtonsPanel == null)
+                if (buildEntityManager.GetProductionButtonsPanel == null)
                 {
                     buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText.gameObject.SetActive(false);
                     return;
@@ -65,7 +69,7 @@ namespace UI.FarmerScene
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText); //ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
             };
 
-            GameEventHandler.OnProductionContinue += (buildEntityManager, currentRemainTime, sliderValue) => 
+            GameEventHandler.OnProductionContinue += (buildEntityManager, currentRemainTime, sliderValue) =>
             {
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentRemainTime.ToString() + "s", buildEntityManager.GetProductSliderPanel.GetProductTimeText);
                 ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetProductSliderPanel.GetSlider, sliderValue);
@@ -91,10 +95,10 @@ namespace UI.FarmerScene
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText);
 
-                if(buildEntityManager.GetProductionButtonsPanel == null)
+                if (buildEntityManager.GetProductionButtonsPanel == null)
                     return;
 
-                if(_activeProductionButtonPanel != null)
+                if (_activeProductionButtonPanel != null)
                     _activeProductionButtonPanel.SetActive(false);
 
                 _activeProductionButtonPanel = buildEntityManager.GetProductionButtonsPanel.gameObject;
@@ -103,7 +107,7 @@ namespace UI.FarmerScene
 
             GameEventHandler.OnClickReset += () =>
             {
-                if(_activeProductionButtonPanel != null)
+                if (_activeProductionButtonPanel != null)
                     _activeProductionButtonPanel.SetActive(false);
             };
 
@@ -138,7 +142,7 @@ namespace UI.FarmerScene
                 ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetProductSliderPanel.GetSlider, 1);
                 ExecuteUIAction<Image, Sprite>(UIActionType.SetImage, buildEntityManager.GetProductSliderPanel.GetProductionProduceImage, productIcon);
 
-                if(buildEntityManager.GetProductionButtonsPanel == null)
+                if (buildEntityManager.GetProductionButtonsPanel == null)
                 {
                     buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText.gameObject.SetActive(false);
                     return;
@@ -154,7 +158,7 @@ namespace UI.FarmerScene
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText); //ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
             };
 
-            GameEventHandler.OnProductionContinue -= (buildEntityManager, currentTime, sliderValue) => 
+            GameEventHandler.OnProductionContinue -= (buildEntityManager, currentTime, sliderValue) =>
             {
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, currentTime.ToString(), buildEntityManager.GetProductSliderPanel.GetProductTimeText);
                 ExecuteUIAction<Slider, float>(UIActionType.SetSlider, buildEntityManager.GetProductSliderPanel.GetSlider, sliderValue);
@@ -180,10 +184,10 @@ namespace UI.FarmerScene
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, GameDataManager.Instance.GetDynamicStatData(statType).Amount.ToString(), _statTexts[statType]);
                 ExecuteUIAction<string, TextMeshProUGUI>(UIActionType.SetText, storageCapacityRate, buildEntityManager.GetProductSliderPanel.GetStorageCapacityRateText);
 
-                if(buildEntityManager.GetProductionButtonsPanel == null)
+                if (buildEntityManager.GetProductionButtonsPanel == null)
                     return;
 
-                if(_activeProductionButtonPanel != null)
+                if (_activeProductionButtonPanel != null)
                     _activeProductionButtonPanel.SetActive(false);
 
                 _activeProductionButtonPanel = buildEntityManager.GetProductionButtonsPanel.gameObject;
@@ -192,7 +196,7 @@ namespace UI.FarmerScene
 
             GameEventHandler.OnClickReset -= () =>
             {
-                if(_activeProductionButtonPanel != null)
+                if (_activeProductionButtonPanel != null)
                     _activeProductionButtonPanel.SetActive(false);
             };
 
@@ -216,6 +220,8 @@ namespace UI.FarmerScene
         {
             InitializeStatUIs().Forget();
             InitializeMarketUI().Forget();
+
+            _storeButton.onClick.AddListener(OnStoreButtonClick);
         }
 
         private async UniTask InitializeStatUIs()
@@ -258,12 +264,19 @@ namespace UI.FarmerScene
                     if (entityData.EntityPrefab.TryGetComponent<IEntitySetup>(out var entitySetup))
                     {
                         entitySetup.SetupEntity(GridBoardManager.Instance.GetNodeGridSystem2D, entityData);
-                        GameEventHandler.PlaySoundClip(SoundType.PurchaseEntity);
                     }
                 });
             }
 
             //GameEventHandler.OnCompleteStatUILoad?.Invoke();
+        }
+
+        private void OnStoreButtonClick()
+        {
+            if (_storePanel == null)
+                return;
+
+            _storePanel.SetActive(!_storePanel.activeSelf);
         }
     }
 }

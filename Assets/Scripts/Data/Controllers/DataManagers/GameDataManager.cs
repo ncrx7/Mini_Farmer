@@ -12,6 +12,10 @@ namespace Data.Controllers
 {
     public class GameDataManager : SingletonBehavior<GameDataManager>
     {
+        [Header("Starter Stats")]
+        [SerializeField] private int _starterMoney;
+
+        [Header("Fixed Datas")]
         [SerializeField] private List<FixedStatData> _fixedStatDatas;
         [SerializeField] private List<FixedBaseEntityData> _fixedEntityDatas;
         [SerializeField] private GameData _gameData; //**TODO: MAKE HERE READY ONLY NOT SERIALIZEFIELD**
@@ -87,7 +91,7 @@ namespace Data.Controllers
             DynamicStatData breadData = new DynamicStatData(2, 0);
             DynamicStatData levelData = new DynamicStatData(3, 1);
             DynamicStatData xpData = new DynamicStatData(4, 0);
-            DynamicStatData moneyData = new DynamicStatData(5, 4600);
+            DynamicStatData moneyData = new DynamicStatData(5, _starterMoney);
 
             GameData gameData = new GameData(new List<DynamicStatData> { wheatData, flourData, breadData, moneyData, xpData, levelData }, new() { }, new() { });
 

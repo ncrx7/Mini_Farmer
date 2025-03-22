@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Data.Controllers;
 using Data.Models.DynamicData;
 using Data.Models.FixedScriptableData;
+using Enums;
 using Interfaces;
 using NodeGridSystem.Controllers;
 using NodeGridSystem.Models;
@@ -41,6 +42,8 @@ namespace Entities.PlaneEntities.InterfaceHandlers
                         GrassAreaManager grassAreaManager = grassObject.GetComponent<GrassAreaManager>();
 
                         grassObject.gameObject.DoElasticStretch(_scaleFactor, _animationDuration, () => Debug.Log("callback"));
+
+                        GameEventHandler.PlaySoundClip(SoundType.PurchaseEntity);
 
                         GridObject<GrassAreaManager> gridObject = new(gridSystem, x, y);
                         gridObject.SetValue(grassAreaManager);

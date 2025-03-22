@@ -52,6 +52,7 @@ namespace Entities.BuildingEntities.InterfaceHandlers
 
                         GameEventHandler.PlayVfx?.Invoke(targetPosition, VfxType.SpawnBuilding);
                         GameEventHandler.PlaySoundClip(SoundType.SpawnBuilding);
+                        GameEventHandler.PlaySoundClip(SoundType.PurchaseEntity);
 
                         //buildingEntity.GetComponent<BuildingEntityManager>()
 

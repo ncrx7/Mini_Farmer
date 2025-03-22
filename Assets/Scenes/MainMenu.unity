@@ -1638,6 +1638,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5706e73855d599c48912a1eaff01277b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _starterMoney: 500
   _fixedStatDatas:
   - {fileID: 11400000, guid: 705493b58a4fe7f4690bcc4aaff34f61, type: 2}
   - {fileID: 11400000, guid: d6f4ef816dc8d6946b1d251393e176a2, type: 2}
