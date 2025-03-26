@@ -6,6 +6,7 @@ using UnityEngine;
 using Cysharp;
 using Cysharp.Threading.Tasks;
 using Entities.PlaneEntities;
+using Data.Controllers;
 
 namespace GridSystem.Controllers
 {
@@ -44,6 +45,8 @@ namespace GridSystem.Controllers
 
         private async UniTask InitBoard()
         {
+            await UniTask.WaitUntil(() => GameDataManager.Instance.AreDataLoadFinished == true);
+
             _entityLoader.LoadEntitiesFromJson(_gridSystem);
 
             await UniTask.DelayFrame(1);

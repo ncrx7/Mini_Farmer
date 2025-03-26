@@ -23,6 +23,8 @@ public class EntityLoaderFromJson : MonoBehaviour
 
     public async void LoadEntitiesFromJson(GridSystem2D<GridObject<GrassAreaManager>> gridSystem2D)
     {
+        await UniTask.WaitUntil(() => GameDataManager.Instance.AreDataLoadFinished == true);
+        
         GameEventHandler.OnStartEntitesLoad?.Invoke();
 
         await LoadGrassAreaEntities(gridSystem2D);

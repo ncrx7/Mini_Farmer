@@ -78,6 +78,14 @@ namespace Data.Controllers
             }
 
             await UniTask.Delay(700);
+
+            foreach (var grassEntityData in _gameData.GrasAreaDatas)
+            {
+                grassEntityData.DynamicBuildingEntityData.FixedBuildingEntityData = _fixedEntityDatas.First
+                                                        (fixedEntityData => fixedEntityData.EntityType == grassEntityData.DynamicBuildingEntityData.EntityType) as FixedBuildingEntityData;;
+            }
+
+            await UniTask.Delay(700);
         }
 
         public void UpdatePlayerDataFile()
